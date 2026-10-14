@@ -5,6 +5,7 @@ import { ServiceItem, SERVICES_DATA } from './data/servicesData';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ApplianceCategoryGrid } from './components/ApplianceCategoryGrid';
+import { BrandsMarquee } from './components/BrandsMarquee';
 import { PriceCalculator } from './components/PriceCalculator';
 import { ServicesSection } from './components/ServicesSection';
 import { WhyChooseUs } from './components/WhyChooseUs';
@@ -134,6 +135,9 @@ export function App() {
           onOpenBooking={() => setBookingModalOpen(true)}
           onSelectCategory={(cat) => setSelectedCategory(cat)}
         />
+
+        {/* Supported Brands Infinite Marquee */}
+        <BrandsMarquee onOpenBooking={() => setBookingModalOpen(true)} />
 
         {/* 3. Interactive Category Grid */}
         <ApplianceCategoryGrid
