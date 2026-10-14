@@ -99,18 +99,29 @@ export const AppDownloadShowcase: React.FC<AppDownloadShowcaseProps> = ({
                   Full production APK ready for Google Play Console via MSME Organization Account (<strong>UDYAM-AP-05-0026516</strong>).
                 </p>
 
-                <div className="flex items-center justify-between pt-3 border-t border-slate-800 text-[11px]">
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-800 text-[11px]">
                   <div className="flex items-center gap-1.5 text-amber-400 font-black">
                     <Star className="w-3.5 h-3.5 fill-amber-400" />
                     <span>4.9 / 5.0 Rating</span>
                   </div>
-                  <button
-                    onClick={onOpenSimulator}
-                    className="text-red-400 hover:text-red-300 font-bold flex items-center gap-1 transition cursor-pointer"
-                  >
-                    <span>Try In Simulator</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href="/downloads/AS_Refrigeration_v1.0.apk"
+                      download="AS_Refrigeration_v1.0.apk"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold border border-emerald-500/40 transition text-[11px]"
+                      title="Download APK Directly (20.7 MB)"
+                    >
+                      <Download className="w-3 h-3 text-emerald-400" />
+                      <span>Download APK</span>
+                    </a>
+                    <button
+                      onClick={onOpenSimulator}
+                      className="text-red-400 hover:text-red-300 font-bold flex items-center gap-1 transition cursor-pointer"
+                    >
+                      <span>Simulator</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
