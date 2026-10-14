@@ -1077,7 +1077,7 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
             <div className="p-3.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span>Enterprise Verified: <strong>AS REFRIGERATION (UDYAM-AP-05-0026516)</strong></span>
+                <span>Enterprise Verified: <strong>AS REFRIGERATION</strong></span>
               </div>
               <span className="text-slate-400">Option 2 Commercial Roadmap</span>
             </div>

@@ -109,7 +109,7 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({
             <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-5 py-2.5 rounded-full shadow-xl border border-slate-200 flex items-center gap-2 whitespace-nowrap">
               <ShieldCheck className="w-5 h-5 text-emerald-600" />
               <span className="text-xs font-black text-slate-900">
-                Government UDYAM Registered: UDYAM-AP-05-0026516
+                100% Certified Doorstep Service Guarantee
               </span>
             </div>
           </div>

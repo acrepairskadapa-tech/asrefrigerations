@@ -115,7 +115,7 @@ export const AppDownloadShowcase: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              Kotlin + Jetpack Compose native app. MSME registered under <strong className="text-slate-300">UDYAM-AP-05-0026516</strong>. Download the debug build to test on Sameer's phone today.
+              Kotlin + Jetpack Compose 100% native Android app. Fast, fluid doorstep service dispatch. Direct APK download for instant testing.
             </p>
 
             <div className="flex items-center gap-1.5 text-amber-400 font-black text-[11px] mb-3">
@@ -189,7 +189,7 @@ export const AppDownloadShowcase: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 border-t border-slate-800/60">
           <div className="flex items-center gap-2 text-sm text-slate-400">
             <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>MSME Registered · <strong className="text-slate-300">UDYAM-AP-05-0026516</strong></span>
+            <span>Official Registered Business · <strong className="text-slate-300">AS REFRIGERATION</strong></span>
           </div>
           <span className="hidden sm:block text-slate-700">•</span>
           <div className="flex items-center gap-2 text-sm text-slate-400">

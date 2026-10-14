@@ -119,11 +119,11 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Brand Info (Col 4) */}
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-2xl bg-slate-900 border border-slate-700 shadow-md flex items-center justify-center p-1.5 overflow-hidden shrink-0">
+              <div className="h-12 w-20 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 shadow-md flex items-center justify-center p-1 overflow-hidden shrink-0">
                 <img
                   src="/as-logo.png"
                   alt="AS Refrigeration Kadapa Logo"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain scale-110 drop-shadow-sm"
                 />
               </div>
               <div>
@@ -145,7 +145,7 @@ export const Footer: React.FC<FooterProps> = ({
               <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] space-y-1">
                 <div className="flex items-center gap-2 text-white font-bold">
                   <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>UDYAM Government Registered Enterprise</span>
+                  <span>Certified Doorstep Service Enterprise</span>
                 </div>
                 <div className="text-slate-400 pl-6">
                   Serving 50,000+ local Kadapa families with 100% genuine spares.
