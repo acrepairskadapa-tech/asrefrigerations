@@ -239,8 +239,8 @@ export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
 
               {/* Download Android App Button */}
               <a
-                href="/downloads/AS_Refrigeration_v1.0.apk"
-                download="AS_Refrigeration_v1.0.apk"
+                href="/downloads/as-refrigerations-customer.apk"
+                download="as-refrigerations-customer.apk"
                 onClick={() => setSupportSheetOpen(false)}
                 className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-green-600 text-white flex items-center justify-between active:scale-98 transition shadow-md"
               >

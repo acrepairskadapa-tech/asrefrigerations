@@ -126,8 +126,8 @@ export const AppDownloadShowcase: React.FC = () => {
             </div>
 
             <a
-              href="/downloads/AS_Refrigerations_v1.0.apk"
-              download="AS_Refrigerations_v1.0.apk"
+              href="/downloads/as-refrigerations-customer.apk"
+              download="as-refrigerations-customer.apk"
               className="w-full inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-lg shadow-emerald-600/20 active:scale-95 transition"
             >
               <Download className="w-4 h-4" />
@@ -169,8 +169,8 @@ export const AppDownloadShowcase: React.FC = () => {
             </div>
 
             <a
-              href="/downloads/AS_Partner_v1.0.apk"
-              download="AS_Partner_v1.0.apk"
+              href="/downloads/as-refrigerations-partner.apk"
+              download="as-refrigerations-partner.apk"
               className="w-full inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-black text-xs shadow-lg shadow-amber-600/20 active:scale-95 transition"
             >
               <Download className="w-4 h-4" />

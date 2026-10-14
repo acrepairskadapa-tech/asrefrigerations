@@ -180,8 +180,8 @@ export const Footer: React.FC<FooterProps> = ({
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <a
-                    href="/downloads/AS_Refrigerations_v1.0.apk"
-                    download="AS_Refrigerations_v1.0.apk"
+                    href="/downloads/as-refrigerations-customer.apk"
+                    download="as-refrigerations-customer.apk"
                     className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-emerald-500/50 transition flex items-center gap-2 group text-left"
                   >
                     <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="none">
@@ -197,8 +197,8 @@ export const Footer: React.FC<FooterProps> = ({
                   </a>
 
                   <a
-                    href="/downloads/AS_Partner_v1.0.apk"
-                    download="AS_Partner_v1.0.apk"
+                    href="/downloads/as-refrigerations-partner.apk"
+                    download="as-refrigerations-partner.apk"
                     className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-amber-500/50 transition flex items-center gap-2 group text-left"
                   >
                     <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="none">
