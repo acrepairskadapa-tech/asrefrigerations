@@ -121,7 +121,7 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({ lang }) => {
         {/* CTA to write review */}
         <div className="mt-10 p-6 sm:p-7 rounded-[28px] bg-slate-950 text-white border border-slate-800 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-left">
-            <h4 className="font-black text-base text-white">Recently had your AC or Refrigerator serviced by AS Refrigeration?</h4>
+            <h4 className="font-black text-base text-white">Recently had your AC or Refrigerator serviced by AS Refrigerations?</h4>
             <p className="text-xs text-slate-300 mt-1 font-medium">Share your feedback on Google and get a flat 10% discount on your next filter wash!</p>
           </div>
           <a

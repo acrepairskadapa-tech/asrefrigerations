@@ -19,7 +19,7 @@ export const QRCodeStickerModal: React.FC<QRCodeStickerModalProps> = ({
 
   useEffect(() => {
     if (!isOpen) return;
-    const url = `https://asrefrigeration.co.in/?unit=${unitCode}&service=${encodeURIComponent(applianceModel)}`;
+    const url = `https://asrefrigerations.co.in/?unit=${unitCode}&service=${encodeURIComponent(applianceModel)}`;
     QRCode.toDataURL(url, { width: 180, margin: 1 })
       .then(setQrDataUrl)
       .catch(console.error);
@@ -60,7 +60,7 @@ export const QRCodeStickerModal: React.FC<QRCodeStickerModalProps> = ({
             Official Service Protected Unit
           </div>
           <div className="text-base font-black tracking-tight text-white">
-            AS REFRIGERATION KADAPA
+            AS REFRIGERATIONS KADAPA
           </div>
           <div className="text-[10px] text-slate-400">
             Helpline: +91 78158 51330 • Mariapuram, Kadapa

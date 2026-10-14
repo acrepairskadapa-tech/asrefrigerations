@@ -108,7 +108,7 @@ export const InstagramReelsSection: React.FC<InstagramReelsSectionProps> = ({
                 <span className="text-[11px] text-slate-400">Mariapuram, Kadapa</span>
               </div>
               <h4 className="font-extrabold text-sm text-white">
-                Inside AS Refrigeration's Main Workshop in Mariapuram
+                Inside AS Refrigerations' Main Workshop in Mariapuram
               </h4>
               <p className="text-xs text-slate-400 leading-relaxed font-normal">
                 Equipped with nitrogen pressure testing, digital vacuum gauges, and genuine spare parts inventory.

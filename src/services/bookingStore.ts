@@ -519,7 +519,7 @@ class BookingStoreService {
 
     const amount = booking.finalPrice || booking.estimatedPrice;
     const vpa = '8074945415@ybl'; // Shaik Sameer Primary UPI ID
-    const payeeName = 'AS REFRIGERATION';
+    const payeeName = 'AS REFRIGERATIONS';
     const note = `Bill ${booking.id} ${booking.customerName}`;
     const encodedName = encodeURIComponent(payeeName);
     const encodedNote = encodeURIComponent(note);

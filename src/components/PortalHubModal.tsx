@@ -1023,7 +1023,7 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
             <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200">
               <h4 className="font-black text-amber-950 text-sm flex items-center gap-1.5 mb-1">
                 <Sparkles className="w-4 h-4 text-amber-600" />
-                AS REFRIGERATION System Architecture & Operating Rules
+                AS REFRIGERATIONS System Architecture & Operating Rules
               </h4>
               <p className="text-amber-900 leading-relaxed">
                 Summary of the verified decisions codified across the website, database models, and upcoming mobile applications.
@@ -1077,7 +1077,7 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
             <div className="p-3.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span>Enterprise Verified: <strong>AS REFRIGERATION</strong></span>
+                <span>Enterprise Verified: <strong>AS REFRIGERATIONS</strong></span>
               </div>
               <span className="text-slate-400">Option 2 Commercial Roadmap</span>
             </div>

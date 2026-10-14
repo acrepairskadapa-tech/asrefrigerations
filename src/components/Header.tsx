@@ -109,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="h-11 w-18 sm:h-13 sm:w-22 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 shadow-md group-hover:border-red-500/50 group-hover:shadow-red-500/10 group-hover:scale-105 transition-all flex items-center justify-center p-1 overflow-hidden shrink-0">
                 <img
                   src="/as-logo.png"
-                  alt="AS Refrigeration Official Logo"
+                  alt="AS Refrigerations Official Logo"
                   className="w-full h-full object-contain scale-110 drop-shadow-sm transition-transform duration-200 group-hover:scale-115"
                 />
               </div>
@@ -117,7 +117,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="flex flex-col text-left">
                 <div className="flex items-center gap-2">
                   <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-950 group-hover:text-red-600 transition flex items-center leading-none">
-                    AS <span className="text-red-600 ml-1.5">REFRIGERATION</span>
+                    AS <span className="text-red-600 ml-1.5">REFRIGERATIONS</span>
                   </span>
                   <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
                     Verified
@@ -250,7 +250,7 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
 
             <a
-              href="https://wa.me/917815851330?text=Hi%20AS%20Refrigeration%20Kadapa,%20I%20need%20doorstep%20service."
+              href="https://wa.me/917815851330?text=Hi%20AS%20Refrigerations%20Kadapa,%20I%20need%20doorstep%20service."
               target="_blank"
               rel="noopener noreferrer"
               className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center sm:hidden active:scale-90 transition border border-emerald-200 shrink-0"
@@ -399,7 +399,7 @@ export const Header: React.FC<HeaderProps> = ({
               {t.bookService} (60 Min Doorstep)
             </button>
             <a
-              href="https://wa.me/917815851330?text=Hi%20AS%20Refrigeration%20Kadapa,%20I%20need%20doorstep%20service."
+              href="https://wa.me/917815851330?text=Hi%20AS%20Refrigerations%20Kadapa,%20I%20need%20doorstep%20service."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3 rounded-2xl bg-emerald-600 text-white font-bold flex items-center justify-center gap-2 text-center text-xs shadow-md shadow-emerald-600/20 ios-tap"

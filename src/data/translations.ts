@@ -30,7 +30,7 @@ export const TRANSLATIONS = {
     categoryAmc: "Annual AMC Plans",
     calculatorTitle: "Interactive Instant Price Estimator",
     calculatorSub: "Calculate transparent estimates before booking. Zero hidden charges.",
-    whyUsTitle: "Why 50,000+ Kadapa Homes Trust AS Refrigeration",
+    whyUsTitle: "Why 50,000+ Kadapa Homes Trust AS Refrigerations",
     why1Title: "Doorstep Visit in 60 Minutes",
     why1Desc: "Fast response across all 19 major residential and commercial sectors in Kadapa.",
     why2Title: "100% Genuine Gas & Spares",

@@ -37,17 +37,17 @@ export const Footer: React.FC<FooterProps> = ({
 
   const policies: Record<string, { title: string; content: string }> = {
     terms: {
-      title: 'Terms & Conditions - AS Refrigeration Kadapa',
+      title: 'Terms & Conditions - AS Refrigerations Kadapa',
       content:
-        '1. Service Guarantee: All repair services carried out by AS Refrigeration carry a 30-day workmanship and recurring fault warranty.\n' +
+        '1. Service Guarantee: All repair services carried out by AS Refrigerations carry a 30-day workmanship and recurring fault warranty.\n' +
         '2. Diagnostic Fee: The standard diagnostic visiting charge of ₹350 in Kadapa town is 100% waived/adjusted into the final repair bill upon customer approval of the quote.\n' +
         '3. Genuine Spare Parts: All refrigerants (R-32, R-410A, R-134a) and replacement spares are sourced directly from verified manufacturers.\n' +
         '4. Payment Terms: Payment is due immediately upon customer test satisfaction via UPI (PhonePe/Google Pay/Paytm) or Cash.'
     },
     privacy: {
-      title: 'Privacy Policy - AS Refrigeration Kadapa',
+      title: 'Privacy Policy - AS Refrigerations Kadapa',
       content:
-        'AS Refrigeration respects your privacy. We collect customer names, phone numbers, and doorstep service addresses solely for technician dispatch, service scheduling, and 30-day warranty support in Kadapa district. We never sell, rent, or share customer data with third-party telemarketers.'
+        'AS Refrigerations respects your privacy. We collect customer names, phone numbers, and doorstep service addresses solely for technician dispatch, service scheduling, and 30-day warranty support in Kadapa district. We never sell, rent, or share customer data with third-party telemarketers.'
     },
     refund: {
       title: 'Refund & 30-Day Service Guarantee Policy',
@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({
       content:
         '1. Code of Conduct: AS Partner technicians agree to maintain the highest standard of professionalism, arrive within 60 minutes in Kadapa, and adhere strictly to transparent company rate cards.\n' +
         '2. Genuine Spares: Partner technicians must use 100% genuine components and safe manifold testing protocols.\n' +
-        '3. Zero Customer Poaching: All leads routed via AS Refrigeration must be closed through the official company service network.'
+        '3. Zero Customer Poaching: All leads routed via AS Refrigerations must be closed through the official company service network.'
     }
   };
 
@@ -101,7 +101,7 @@ export const Footer: React.FC<FooterProps> = ({
               </button>
 
               <a
-                href="https://wa.me/917815851330?text=Hi%20AS%20Refrigeration%20Kadapa,%20I%20need%20urgent%20doorstep%20service."
+                href="https://wa.me/917815851330?text=Hi%20AS%20Refrigerations%20Kadapa,%20I%20need%20urgent%20doorstep%20service."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-md active:scale-95 transition flex items-center gap-2"
@@ -122,13 +122,13 @@ export const Footer: React.FC<FooterProps> = ({
               <div className="h-12 w-20 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 shadow-md flex items-center justify-center p-1 overflow-hidden shrink-0">
                 <img
                   src="/as-logo.png"
-                  alt="AS Refrigeration Kadapa Logo"
+                  alt="AS Refrigerations Kadapa Logo"
                   className="w-full h-full object-contain scale-110 drop-shadow-sm"
                 />
               </div>
               <div>
                 <span className="text-xl font-black text-white tracking-tight">
-                  AS <span className="text-red-500">REFRIGERATION</span>
+                  AS <span className="text-red-500">REFRIGERATIONS</span>
                 </span>
                 <span className="block text-[11px] font-bold text-slate-400">
                   Kadapa's #1 Doorstep Home Appliance Service Center
@@ -180,8 +180,8 @@ export const Footer: React.FC<FooterProps> = ({
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <a
-                    href="/downloads/AS_Refrigeration_v1.0.apk"
-                    download="AS_Refrigeration_v1.0.apk"
+                    href="/downloads/AS_Refrigerations_v1.0.apk"
+                    download="AS_Refrigerations_v1.0.apk"
                     className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-emerald-500/50 transition flex items-center gap-2 group text-left"
                   >
                     <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="none">
@@ -437,7 +437,7 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Bar & Legal Links */}
         <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-400 text-[11px]">
           <div>
-            © {new Date().getFullYear()} AS Refrigeration Kadapa (Shaik Sameer). All rights reserved.
+            © {new Date().getFullYear()} AS Refrigerations Kadapa (Shaik Sameer). All rights reserved.
           </div>
 
           {/* Legal policy links */}

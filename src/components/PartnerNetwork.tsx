@@ -72,7 +72,7 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
       alert('Please enter your phone number.');
       return;
     }
-    const msg = `*NEW TECHNICIAN PARTNER APPLICATION - AS REFRIGERATION KADAPA*\n\n` +
+    const msg = `*NEW TECHNICIAN PARTNER APPLICATION - AS REFRIGERATIONS KADAPA*\n\n` +
       `Name: ${techName}\n` +
       `WhatsApp Phone: ${techPhone}\n` +
       `Trade / Role: ${selectedTier}\n` +
@@ -115,7 +115,7 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
             <div className="lg:col-span-6 relative aspect-[16/10] lg:aspect-auto h-full min-h-[340px] overflow-hidden">
               <img
                 src="/partner-recruitment-hero.jpg"
-                alt="AS Refrigeration Kadapa Certified Partner Technician with Smartphone Leads"
+                alt="AS Refrigerations Kadapa Certified Partner Technician with Smartphone Leads"
                 className="w-full h-full object-cover object-center hover:scale-105 transition duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent lg:hidden" />
@@ -134,7 +134,7 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
             <div className="lg:col-span-6 p-6 sm:p-10 text-left space-y-6">
               <div>
                 <span className="text-xs font-black text-red-400 uppercase tracking-wider">
-                  Why 50+ Technicians Choose AS Refrigeration
+                  Why 50+ Technicians Choose AS Refrigerations
                 </span>
                 <h3 className="text-2xl font-black text-white mt-1">
                   Transform From a Daily Wager to a Respected Business Partner
@@ -419,7 +419,7 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
               </div>
               <div>
                 <h3 className="text-xl font-black text-slate-900">
-                  Join AS Refrigeration Partner Network
+                  Join AS Refrigerations Partner Network
                 </h3>
                 <p className="text-xs text-slate-500">
                   Earn ₹45,000 to ₹75,000/mo. Start receiving verified customer leads daily.

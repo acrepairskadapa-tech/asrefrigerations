@@ -57,7 +57,7 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({
                 <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white">
                   <img
                     src="/shop-front.jpg"
-                    alt={`${cityConfig.workshopName} - AS Refrigeration`}
+                    alt={`${cityConfig.workshopName} - AS Refrigerations`}
                     className="w-full h-56 sm:h-64 object-cover hover:scale-105 transition duration-300"
                   />
                   <div className="p-3 bg-white text-left">

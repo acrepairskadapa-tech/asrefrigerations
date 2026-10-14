@@ -80,7 +80,7 @@ export const AppDownloadShowcase: React.FC = () => {
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-            The <span className="bg-gradient-to-r from-red-500 via-rose-400 to-amber-400 bg-clip-text text-transparent">AS REFRIGERATION</span><br className="hidden sm:inline" />
+            The <span className="bg-gradient-to-r from-red-500 via-rose-400 to-amber-400 bg-clip-text text-transparent">AS REFRIGERATIONS</span><br className="hidden sm:inline" />
             Native Android App
           </h2>
 
@@ -107,7 +107,7 @@ export const AppDownloadShowcase: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-[10px] text-emerald-400 uppercase tracking-wider font-extrabold block">Customer App</span>
-                    <h4 className="text-sm font-black text-white leading-tight">AS REFRIGERATION</h4>
+                    <h4 className="text-sm font-black text-white leading-tight">AS REFRIGERATIONS</h4>
                   </div>
                 </div>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shrink-0">
@@ -126,8 +126,8 @@ export const AppDownloadShowcase: React.FC = () => {
             </div>
 
             <a
-              href="/downloads/AS_Refrigeration_v1.0.apk"
-              download="AS_Refrigeration_v1.0.apk"
+              href="/downloads/AS_Refrigerations_v1.0.apk"
+              download="AS_Refrigerations_v1.0.apk"
               className="w-full inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-lg shadow-emerald-600/20 active:scale-95 transition"
             >
               <Download className="w-4 h-4" />
@@ -236,7 +236,7 @@ export const AppDownloadShowcase: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 border-t border-slate-800/60">
           <div className="flex items-center gap-2 text-sm text-slate-400">
             <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Official Registered Business · <strong className="text-slate-300">AS REFRIGERATION</strong></span>
+            <span>Official Registered Business · <strong className="text-slate-300">AS REFRIGERATIONS</strong></span>
           </div>
           <span className="hidden sm:block text-slate-700">•</span>
           <div className="flex items-center gap-2 text-sm text-slate-400">

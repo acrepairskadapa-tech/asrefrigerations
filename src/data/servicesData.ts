@@ -374,7 +374,7 @@ export const GOOGLE_REVIEWS: ReviewItem[] = [
     rating: 5,
     date: '2 weeks ago',
     service: 'AC Uninstallation & Fitting',
-    comment: 'Shifted my home from 1 Town to Yerramukkapalli. AS Refrigeration team pumped down the gas safely and re-fitted both ACs with zero gas leakage. Very polite and professional.'
+    comment: 'Shifted my home from 1 Town to Yerramukkapalli. AS Refrigerations team pumped down the gas safely and re-fitted both ACs with zero gas leakage. Very polite and professional.'
   },
   {
     id: 'rev-5',
@@ -440,7 +440,7 @@ export const PARTNER_TIERS = [
       'Nearby locality requests only (save petrol & time)',
       '100% direct customer collections',
       'Dedicated helpline & spare parts dealer rates',
-      'Instant partner profile on AS Refrigeration app'
+      'Instant partner profile on AS Refrigerations app'
     ]
   }
 ];
