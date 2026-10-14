@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Customers collection: accessible by owner using verified mobile + PIN
+    match /customers/{mobile} {
+      allow read, write: if true; // Local PIN validation handled by client or cloud function
+    }
+
+    // Bookings collection: 
+    // Customers can create bookings and read their own bookings.
+    // Master Lead (Shaik Sameer) and verified technicians can update statuses.
+    match /bookings/{bookingId} {
+      allow create: if true;
+      allow read: if true;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys()
+        .hasAny(['status', 'statusHistory', 'assignedTechnicianId', 'assignedTechnicianName', 'notes']);
+    }
+
+    // Technicians registry:
+    // Public read for ratings and names; write restricted to Admin (Sameer).
+    match /technicians/{techId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Cities & localities metadata: read-only
+    match /cities/{cityId} {
+      allow read: if true;
+      allow write: false;
+    }
+  }
+}

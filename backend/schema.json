@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AS Refrigeration Cloud Data Architecture",
+  "version": "1.0.0",
+  "enterprise": {
+    "name": "AS REFRIGERATION",
+    "udyamReg": "UDYAM-AP-05-0026516",
+    "nicCode": "95210"
+  },
+  "collections": {
+    "customers": {
+      "primaryKey": "mobile",
+      "fields": {
+        "mobile": { "type": "string", "description": "10-digit mobile username" },
+        "name": { "type": "string" },
+        "pinHash": { "type": "string", "description": "Hashed 4-digit security PIN" },
+        "city": { "type": "string", "enum": ["kadapa", "bangalore"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "bookings": {
+      "primaryKey": "id",
+      "fields": {
+        "id": { "type": "string", "example": "ASR-9481" },
+        "customerName": { "type": "string" },
+        "customerMobile": { "type": "string" },
+        "serviceTitle": { "type": "string" },
+        "applianceType": { "type": "string" },
+        "city": { "type": "string", "enum": ["kadapa", "bangalore"] },
+        "locality": { "type": "string" },
+        "fullAddress": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "googleMapsUrl": { "type": "string" },
+        "date": { "type": "string" },
+        "timeSlot": { "type": "string" },
+        "estimatedPrice": { "type": "number" },
+        "status": {
+          "type": "string",
+          "enum": [
+            "booking_received",
+            "under_review",
+            "technician_assigned",
+            "technician_on_the_way",
+            "service_in_progress",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "assignedTechnicianId": { "type": "string" },
+        "assignedTechnicianName": { "type": "string" },
+        "assignedTechnicianPhone": { "type": "string" },
+        "isAssignedToSameer": { "type": "boolean", "description": "True for Priority 1 Sameer direct route" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "technicians": {
+      "primaryKey": "id",
+      "fields": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "city": { "type": "string" },
+        "priority": { "type": "number", "enum": [1, 2] },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "rating": { "type": "number" },
+        "totalJobsCompleted": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "isMasterLead": { "type": "boolean" }
+      }
+    }
+  }
+}
