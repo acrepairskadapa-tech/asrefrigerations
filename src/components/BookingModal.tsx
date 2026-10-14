@@ -7,18 +7,19 @@ import {
   CheckCircle2, 
   Phone, 
   User, 
-  Sparkles,
-  ArrowRight,
-  MessageSquare,
-  Wrench,
-  Zap,
-  Navigation
+  Sparkles, 
+  ArrowRight, 
+  MessageSquare, 
+  Wrench, 
+  Zap, 
+  Navigation, 
+  UserCheck 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { SERVICES_DATA, ServiceItem } from '../data/servicesData';
 import { Language } from '../data/translations';
 import { CityId, CITIES_DATA } from '../data/citiesData';
-import { bookingStore } from '../services/bookingStore';
+import { bookingStore, CustomerUser } from '../services/bookingStore';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -60,6 +61,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [streetAddress, setStreetAddress] = useState<string>('');
   const [customerName, setCustomerName] = useState<string>('');
   const [customerPhone, setCustomerPhone] = useState<string>('');
+  const [customerSession, setCustomerSession] = useState<CustomerUser | null>(null);
+  const [isBookingForOther, setIsBookingForOther] = useState<boolean>(false);
   const [notes, setNotes] = useState<string>('');
   const [gpsCoords, setGpsCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [locating, setLocating] = useState<boolean>(false);
@@ -81,21 +84,32 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     setArea(CITIES_DATA[modalCity].localities[0]);
   }, [modalCity]);
 
-  // Auto-restore customer contact from localStorage
+  // Sync logged-in customer session or auto-restore last booking contact
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('as_last_booking_contact');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.name && !customerName) setCustomerName(parsed.name);
-        if (parsed.phone && !customerPhone) setCustomerPhone(parsed.phone);
-        if (parsed.street && !streetAddress) setStreetAddress(parsed.street);
-        if (parsed.area && CITIES_DATA[modalCity].localities.includes(parsed.area)) {
-          setArea(parsed.area);
-        }
+    if (isOpen) {
+      const session = bookingStore.getCustomerSession();
+      setCustomerSession(session);
+      if (session) {
+        setCustomerName(session.name);
+        setCustomerPhone(session.mobile);
+        setIsBookingForOther(false);
+      } else {
+        // Fallback to last local booking contact if guest
+        try {
+          const saved = localStorage.getItem('as_last_booking_contact');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (parsed.name && !customerName) setCustomerName(parsed.name);
+            if (parsed.phone && !customerPhone) setCustomerPhone(parsed.phone);
+            if (parsed.street && !streetAddress) setStreetAddress(parsed.street);
+            if (parsed.area && CITIES_DATA[modalCity].localities.includes(parsed.area)) {
+              setArea(parsed.area);
+            }
+          }
+        } catch {}
       }
-    } catch {}
-  }, [modalCity]);
+    }
+  }, [isOpen, modalCity]);
 
   useEffect(() => {
     if (preSelectedService) {
@@ -192,6 +206,19 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         area
       }));
     } catch {}
+
+    // If guest booking, automatically register customer account so they never need to re-enter details
+    if (!customerSession && customerPhone.trim()) {
+      try {
+        const newUser = bookingStore.registerCustomer(
+          customerPhone.trim(),
+          customerName.trim() || 'Valued Customer',
+          '1234',
+          modalCity
+        );
+        setCustomerSession(newUser);
+      } catch {}
+    }
 
     // Save to centralized Booking Store with Sameer-First Priority Dispatch
     const savedBooking = bookingStore.createBooking({
@@ -390,38 +417,111 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 </div>
               )}
 
-              {/* Customer Contact - Placed Prominently */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                    <Phone className="w-3.5 h-3.5 text-red-600" />
-                    WhatsApp Number <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="e.g. 98765 43210"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-black text-sm"
-                  />
-                </div>
+              {/* Customer Contact - Smart Account Binding (Zero Re-typing for Logged-In Customers!) */}
+              {customerSession && !isBookingForOther ? (
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 rounded-2xl p-3.5 shadow-sm text-left">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-700 text-white font-black text-sm flex items-center justify-center shadow-md shadow-red-950/40 border border-red-400/30 shrink-0">
+                        {customerSession.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="font-bold text-xs sm:text-sm text-white truncate">
+                            {customerSession.name}
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
+                            <CheckCircle2 className="w-2.5 h-2.5" />
+                            Verified Customer
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-300 font-medium mt-0.5 flex items-center gap-1">
+                          <Phone className="w-3 h-3 text-red-400 shrink-0" />
+                          <span>WhatsApp:</span>
+                          <strong className="text-white font-mono">+91 {customerSession.mobile}</strong>
+                        </p>
+                      </div>
+                    </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                    <User className="w-3.5 h-3.5 text-slate-500" />
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Shaik Mehraj"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-red-500"
-                  />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsBookingForOther(true);
+                        setCustomerName('');
+                        setCustomerPhone('');
+                      }}
+                      className="text-[11px] font-bold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-600 px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap shadow-sm shrink-0"
+                      title="Book for family member, tenant or friend"
+                    >
+                      Book for Someone Else
+                    </button>
+                  </div>
+                  <div className="mt-2.5 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                    <span className="truncate">⚡ Logged-in account auto-linked to dispatch</span>
+                    <span className="text-emerald-400 font-bold shrink-0 ml-2">Zero Re-typing ✓</span>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                /* Guest Booking or "Book for Someone Else" Toggle */
+                <div className="space-y-2">
+                  {customerSession && isBookingForOther && (
+                    <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 text-xs text-amber-900">
+                      <span className="font-semibold flex items-center gap-1.5">
+                        👥 Booking for another person (Family / Tenant / Office)
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsBookingForOther(false);
+                          setCustomerName(customerSession.name);
+                          setCustomerPhone(customerSession.mobile);
+                        }}
+                        className="text-[11px] font-black text-red-600 hover:text-red-700 underline cursor-pointer"
+                      >
+                        ← Use My Profile ({customerSession.name})
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+                        <Phone className="w-3.5 h-3.5 text-red-600" />
+                        {isBookingForOther ? "Their WhatsApp Number" : "WhatsApp Number"} <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="e.g. 98765 43210"
+                        value={customerPhone}
+                        onChange={(e) => setCustomerPhone(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-black text-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+                        <User className="w-3.5 h-3.5 text-slate-500" />
+                        {isBookingForOther ? "Their Full Name" : "Your Name"}
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder={isBookingForOther ? "e.g. Brother, Tenant, Parent" : "e.g. Shaik Mehraj"}
+                        value={customerName}
+                        onChange={(e) => setCustomerName(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-red-500"
+                      />
+                    </div>
+                  </div>
+                  {!customerSession && (
+                    <p className="text-[10px] text-slate-500 flex items-center gap-1">
+                      <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                      Your account will be auto-saved so you won't need to re-enter your contact details on future bookings.
+                    </p>
+                  )}
+                </div>
+              )}
 
               {/* 1-Tap Mobile GPS Auto-Fetch Card */}
               <div 
