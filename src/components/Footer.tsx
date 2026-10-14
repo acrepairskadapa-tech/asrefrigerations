@@ -180,7 +180,8 @@ export const Footer: React.FC<FooterProps> = ({
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <a
-                    href="#mobile-app"
+                    href="/downloads/AS_Refrigeration_v1.0.apk"
+                    download="AS_Refrigeration_v1.0.apk"
                     className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-emerald-500/50 transition flex items-center gap-2 group text-left"
                   >
                     <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="none">
@@ -190,21 +191,25 @@ export const Footer: React.FC<FooterProps> = ({
                       <path d="M12 12.7L4 3.5C3.8 3.8 3.7 4.2 3.7 4.7V20.7C3.7 21.2 3.8 21.6 4 21.9L12 12.7Z" fill="#00E676"/>
                     </svg>
                     <div>
-                      <div className="text-[9px] text-slate-400 leading-none">Get it on</div>
-                      <div className="text-[11px] font-bold text-white group-hover:text-emerald-400 transition leading-tight">Google Play</div>
+                      <div className="text-[9px] text-emerald-400 font-bold leading-none">Customer App</div>
+                      <div className="text-[11px] font-bold text-white group-hover:text-emerald-400 transition leading-tight">APK Download</div>
                     </div>
                   </a>
 
                   <a
-                    href="#mobile-app"
-                    className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-sky-500/50 transition flex items-center gap-2 group text-left"
+                    href="/downloads/AS_Partner_v1.0.apk"
+                    download="AS_Partner_v1.0.apk"
+                    className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-amber-500/50 transition flex items-center gap-2 group text-left"
                   >
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white shrink-0">
-                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.84c.62-.76 1.05-1.81.93-2.84-.91.04-2.02.61-2.67 1.37-.58.67-1.1 1.74-.96 2.76 1.02.08 2.07-.53 2.7-1.29z"/>
+                    <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="none">
+                      <path d="M4 3.5C4 2.8 4.6 2.3 5.3 2.6L16.2 9.2L12 13.4L4 3.5Z" fill="#00D2FF"/>
+                      <path d="M16.2 9.2L20.5 11.8C21.2 12.2 21.2 13.2 20.5 13.6L16.2 16.2L12 12.7L16.2 9.2Z" fill="#FFCE00"/>
+                      <path d="M4 21.9C4 22.6 4.6 23.1 5.3 22.8L16.2 16.2L12 12L4 21.9Z" fill="#FF3A44"/>
+                      <path d="M12 12.7L4 3.5C3.8 3.8 3.7 4.2 3.7 4.7V20.7C3.7 21.2 3.8 21.6 4 21.9L12 12.7Z" fill="#00E676"/>
                     </svg>
                     <div>
-                      <div className="text-[9px] text-sky-400 leading-none">iOS App Soon</div>
-                      <div className="text-[11px] font-bold text-white group-hover:text-sky-400 transition leading-tight">App Store</div>
+                      <div className="text-[9px] text-amber-400 font-bold leading-none">Partner App</div>
+                      <div className="text-[11px] font-bold text-white group-hover:text-amber-400 transition leading-tight">APK Download</div>
                     </div>
                   </a>
                 </div>
