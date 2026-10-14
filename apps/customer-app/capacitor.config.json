@@ -1,6 +1,6 @@
 {
   "appId": "com.asrefrigerations.customer",
-  "appName": "AS Refrigeration",
+  "appName": "AS Refrigerations",
   "webDir": "dist",
   "bundledWebRuntime": false,
   "server": {

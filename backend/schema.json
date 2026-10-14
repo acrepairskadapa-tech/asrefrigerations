@@ -1,11 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "AS Refrigeration Cloud Data Architecture",
+  "title": "AS Refrigerations Cloud Data Architecture",
   "version": "1.0.0",
   "enterprise": {
-    "name": "AS REFRIGERATION",
-    "udyamReg": "UDYAM-AP-05-0026516",
-    "nicCode": "95210"
+    "name": "AS REFRIGERATIONS",
+    "foundedYear": "2014"
   },
   "collections": {
     "customers": {

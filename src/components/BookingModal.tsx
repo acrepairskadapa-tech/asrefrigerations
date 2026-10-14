@@ -188,7 +188,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     });
 
     // Send formatted WhatsApp notification directly to Shaik Sameer / Branch
-    const msg = `*🚨 NEW DOORSTEP BOOKING - AS REFRIGERATION*\n` +
+    const msg = `*🚨 NEW DOORSTEP BOOKING - AS REFRIGERATIONS*\n` +
       `Booking ID: ${generatedId}\n` +
       `Mode: ${isExpressMode ? "⚡ 60-MIN EXPRESS ARRIVAL" : "📅 Scheduled Visit"}\n` +
       `City / Branch: ${cityConfig.name} (${cityConfig.workshopName})\n` +

@@ -1,4 +1,4 @@
-# AS REFRIGERATION – Multi-City Appliance Service Platform
+# AS REFRIGERATIONS – Multi-City Appliance Service Platform
 
 [![Vite](https://img.shields.io/badge/Vite-8.3.4-646CFF?logo=vite)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react)](https://react.dev/)
@@ -6,7 +6,7 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)]()
 
-> Official digital web and mobile platform for **AS REFRIGERATION** (Government UDYAM Registration: `UDYAM-AP-05-0026516`, NIC: 95210).
+> Official digital web and mobile platform for **AS REFRIGERATIONS**.
 > Operating across **Kadapa Flagship HQ (Andhra Pradesh)** and **Bangalore East Branch Hub (Kammanahalli, Karnataka)**.
 
 ---
@@ -16,7 +16,7 @@
 1. **Two-Step Doorstep Pricing & Dynamic NPCI UPI QR:**
    - **Step 1:** Customer views estimated starting base online; books with **₹0 advance deposit**.
    - **Step 2:** Shaik Sameer or visiting technician diagnoses physical fault on-site, itemizes spares, and locks final bill. ₹350 diagnostic visit is 100% adjusted into final repair bill upon quote approval.
-   - **Step 3:** System generates a Dynamic NPCI UPI QR code (`upi://pay?pa=8074945415@ybl&pn=AS%20REFRIGERATION&am=...&tn=...&cu=INR`) pre-filling the exact bill for PhonePe, Google Pay, and Paytm with **0% gateway commission**.
+   - **Step 3:** System generates a Dynamic NPCI UPI QR code (`upi://pay?pa=8074945415@ybl&pn=AS%20REFRIGERATIONS&am=...&tn=...&cu=INR`) pre-filling the exact bill for PhonePe, Google Pay, and Paytm with **0% gateway commission**.
    - Automatic 5-star Google Review funnel to [reviewsmart.online/r/as-refrigeration](https://www.reviewsmart.online/r/as-refrigeration).
 
 2. **Multi-City Dual Branch Switching:**
@@ -103,4 +103,4 @@ This repository is pre-configured with `vercel.json` for zero-configuration Vite
 
 ## License & Enterprise Rights
 
-All digital IP, trade secrets, software assets, and brand trademarks are the exclusive proprietary property of **AS REFRIGERATION** (Shaik Sameer). Powered by Momo IT Technologies.
+All digital IP, trade secrets, software assets, and brand trademarks are the exclusive proprietary property of **AS REFRIGERATIONS** (Shaik Sameer). Powered by Momo IT Technologies.

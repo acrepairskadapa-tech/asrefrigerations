@@ -1,7 +1,7 @@
 {
-  "name": "as-refrigeration-customer",
+  "name": "as-refrigerations-customer",
   "version": "1.0.0",
-  "description": "AS REFRIGERATION - Customer Mobile Application (Kadapa & Bangalore)",
+  "description": "AS REFRIGERATIONS - Customer Mobile Application (Kadapa & Bangalore)",
   "private": true,
   "scripts": {
     "build": "vite build",

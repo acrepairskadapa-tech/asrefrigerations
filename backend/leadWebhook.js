@@ -1,5 +1,5 @@
 /**
- * AS REFRIGERATION - Serverless Lead Dispatcher
+ * AS REFRIGERATIONS - Serverless Lead Dispatcher
  * Zero-SMS Architecture: Routes leads directly to Sameer's WhatsApp and updates real-time queues.
  */
 
@@ -22,7 +22,7 @@ exports.onBookingCreated = async (bookingData) => {
 
   // Format WhatsApp message
   const dispatchText = 
-    `*🚨 NEW DOORSTEP BOOKING - AS REFRIGERATION*\n` +
+    `*🚨 NEW DOORSTEP BOOKING - AS REFRIGERATIONS*\n` +
     `Booking ID: ${id}\n` +
     `City / Branch: ${city.toUpperCase()} (${locality})\n` +
     `Customer: ${customerName} (+91 ${customerMobile})\n` +

@@ -1,7 +1,7 @@
 {
-  "name": "as-refrigeration-partner",
+  "name": "as-refrigerations-partner",
   "version": "1.0.0",
-  "description": "AS REFRIGERATION - Partner & Technician Mobile Application",
+  "description": "AS REFRIGERATIONS - Partner & Technician Mobile Application",
   "private": true,
   "scripts": {
     "build": "vite build",

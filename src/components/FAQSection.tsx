@@ -18,7 +18,7 @@ interface FAQItem {
 const FAQS: FAQItem[] = [
   {
     category: 'Doorstep Service',
-    question: 'How fast can an AS Refrigeration technician reach my home in Kadapa?',
+    question: 'How fast can an AS Refrigerations technician reach my home in Kadapa?',
     answer: 'We guarantee doorstep arrival within 60 minutes across all 19 major residential and commercial sectors in Kadapa, including Mariapuram, Chinna Chowk, RIMS Road, RTC Bus Stand, Yerramukkapalli, Co-operative Colony, and Nagarajupalli.'
   },
   {
@@ -34,7 +34,7 @@ const FAQS: FAQItem[] = [
   {
     category: 'Gas Charging',
     question: 'Why should I avoid cheap roadside gas refilling for my AC or fridge?',
-    answer: 'Roadside mechanics frequently use adulterated mixed refrigerants or fail to pull a full nitrogen vacuum before refilling. This introduces moisture that oxidizes compressor oil, causing catastrophic compressor burnout within weeks. AS Refrigeration uses 100% pure factory-sealed cylinders of R-32, R-410A, and R-134a, backed by a 30-day cooling warranty.'
+    answer: 'Roadside mechanics frequently use adulterated mixed refrigerants or fail to pull a full nitrogen vacuum before refilling. This introduces moisture that oxidizes compressor oil, causing catastrophic compressor burnout within weeks. AS Refrigerations uses 100% pure factory-sealed cylinders of R-32, R-410A, and R-134a, backed by a 30-day cooling warranty.'
   },
   {
     category: 'Warranty & Guarantee',
@@ -142,7 +142,7 @@ export const FAQSection: React.FC = () => {
                     <p>{faq.answer}</p>
                     <div className="mt-3 flex items-center gap-2 text-[11px] font-bold text-emerald-700">
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>Verified AS Refrigeration Kadapa Company Policy</span>
+                      <span>Verified AS Refrigerations Kadapa Company Policy</span>
                     </div>
                   </div>
                 )}
@@ -168,7 +168,7 @@ export const FAQSection: React.FC = () => {
             </a>
 
             <a
-              href="https://wa.me/917815851330?text=Hi%20AS%20Refrigeration,%20I%20have%20a%20question%20about%20your%20services."
+              href="https://wa.me/917815851330?text=Hi%20AS%20Refrigerations,%20I%20have%20a%20question%20about%20your%20services."
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-2 transition"

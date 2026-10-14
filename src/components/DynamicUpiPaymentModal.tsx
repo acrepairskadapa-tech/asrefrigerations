@@ -99,7 +99,7 @@ export const DynamicUpiPaymentModal: React.FC<DynamicUpiPaymentModalProps> = ({
                 Doorstep UPI Payment
               </h3>
               <p className="text-xs text-slate-500">
-                Booking ID: <strong className="font-mono text-slate-800">#{details.bookingId}</strong> • Payee: <strong>AS REFRIGERATION</strong>
+                Booking ID: <strong className="font-mono text-slate-800">#{details.bookingId}</strong> • Payee: <strong>AS REFRIGERATIONS</strong>
               </p>
             </div>
 
@@ -250,7 +250,7 @@ export const DynamicUpiPaymentModal: React.FC<DynamicUpiPaymentModalProps> = ({
             {/* Digital Receipt Card */}
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left text-xs space-y-2 max-w-sm mx-auto">
               <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-                <span className="font-bold text-slate-900">AS REFRIGERATION</span>
+                <span className="font-bold text-slate-900">AS REFRIGERATIONS</span>
                 <span className="font-mono text-emerald-700 font-bold">PAID ₹{details.amount}</span>
               </div>
               <div className="space-y-1 text-slate-600 text-[11px]">
@@ -272,7 +272,7 @@ export const DynamicUpiPaymentModal: React.FC<DynamicUpiPaymentModalProps> = ({
               </div>
               <h4 className="font-black text-sm">Loved Shaik Sameer's Doorstep Service?</h4>
               <p className="text-[11px] text-white/90">
-                Please take 15 seconds to leave a 5-star Google review for AS REFRIGERATION.
+                Please take 15 seconds to leave a 5-star Google review for AS REFRIGERATIONS.
               </p>
               <a
                 href="https://www.reviewsmart.online/r/as-refrigeration"
