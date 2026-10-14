@@ -1,42 +1,231 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Sparkles, CheckCircle2, ArrowRight, Wrench } from 'lucide-react';
+import { Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import {
+  DaikinLogo,
+  VoltasLogo,
+  LgLogo,
+  SamsungLogo,
+  BlueStarLogo,
+  WhirlpoolLogo,
+  BoschLogo,
+  CarrierLogo,
+  HitachiLogo,
+  IfbLogo,
+  HaierLogo,
+  GodrejLogo,
+  PanasonicLogo,
+  LloydLogo,
+  MitsubishiLogo,
+  OGeneralLogo,
+  SiemensLogo,
+  LiebherrLogo,
+} from './BrandLogos';
 
-interface BrandItem {
+interface BrandCardItem {
+  id: string;
   name: string;
   category: 'ac' | 'fridge' | 'washer' | 'multi';
   tagline: string;
-  accentColor: string;
   badge: string;
+  renderLogo: () => React.ReactNode;
 }
 
-const ROW_ONE_BRANDS: BrandItem[] = [
-  { name: 'DAIKIN', category: 'ac', tagline: 'Inverter & VRV Specialist', accentColor: '#0097E6', badge: 'Japan Inverter Tech' },
-  { name: 'VOLTAS', category: 'ac', tagline: 'Split & Window ACs', accentColor: '#002B49', badge: 'Tata Enterprise' },
-  { name: 'LG', category: 'multi', tagline: 'Dual Inverter & SmartCool', accentColor: '#A50034', badge: 'DirectDrive & Dual Inv.' },
-  { name: 'SAMSUNG', category: 'multi', tagline: 'WindFree AC & SpaceMax', accentColor: '#1428A0', badge: 'Digital Inverter PCB' },
-  { name: 'BLUE STAR', category: 'ac', tagline: 'Precision Inverter Cooling', accentColor: '#0054A6', badge: 'Tropical High-Ambient' },
-  { name: 'HITACHI', category: 'ac', tagline: 'Tropical Kashikoi Inverters', accentColor: '#E60012', badge: 'Expandable Inverter' },
-  { name: 'CARRIER', category: 'ac', tagline: 'Pioneer Cooling Solutions', accentColor: '#003366', badge: 'Heavy-Duty Compressors' },
-  { name: 'LLOYD', category: 'ac', tagline: 'Havells Heavy Duty ACs', accentColor: '#D32F2F', badge: 'Rapid Cooling 60s' },
-  { name: 'O GENERAL', category: 'ac', tagline: 'Extreme Climate Split ACs', accentColor: '#C41230', badge: 'Hyper Inverter OEM' },
-  { name: 'MITSUBISHI', category: 'ac', tagline: 'Heavy Industries Inverter', accentColor: '#ED1B24', badge: 'Quiet Operation Tech' },
-  { name: 'PANASONIC', category: 'multi', tagline: 'nanoe™X Smart Cooling', accentColor: '#004098', badge: 'Miraie AI Connected' },
-  { name: 'GODREJ', category: 'multi', tagline: '5-Star Green Inverter ACs', accentColor: '#1E7E34', badge: 'Anti-Rust Coating' },
+const ROW_ONE_BRANDS: BrandCardItem[] = [
+  {
+    id: 'daikin',
+    name: 'DAIKIN',
+    category: 'ac',
+    tagline: 'Split, Cassette & Inverter ACs',
+    badge: 'Japan Inverter OEM',
+    renderLogo: () => <DaikinLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'voltas',
+    name: 'VOLTAS',
+    category: 'ac',
+    tagline: 'All-Weather Split & Window ACs',
+    badge: 'Tata Enterprise',
+    renderLogo: () => <VoltasLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'lg',
+    name: 'LG',
+    category: 'multi',
+    tagline: 'Dual Inverter ACs & Smart Fridges',
+    badge: 'Dual Inverter PCB',
+    renderLogo: () => <LgLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'samsung',
+    name: 'SAMSUNG',
+    category: 'multi',
+    tagline: 'WindFree ACs & SpaceMax Fridges',
+    badge: 'Digital Inverter OEM',
+    renderLogo: () => <SamsungLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'bluestar',
+    name: 'BLUE STAR',
+    category: 'ac',
+    tagline: 'Precision Inverter & Deep Freezers',
+    badge: 'Tropical High-Ambient',
+    renderLogo: () => <BlueStarLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'hitachi',
+    name: 'HITACHI',
+    category: 'ac',
+    tagline: 'Kashikoi Tropical Inverters',
+    badge: 'Expandable Inverter',
+    renderLogo: () => <HitachiLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'carrier',
+    name: 'CARRIER',
+    category: 'ac',
+    tagline: 'High-Ambient Split & Duct ACs',
+    badge: 'Heavy-Duty Compressors',
+    renderLogo: () => <CarrierLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'lloyd',
+    name: 'LLOYD',
+    category: 'ac',
+    tagline: 'Havells Heavy Duty Split ACs',
+    badge: 'Rapid 60s Cool',
+    renderLogo: () => <LloydLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'ogeneral',
+    name: 'O GENERAL',
+    category: 'ac',
+    tagline: 'Hyper Tropical Heavy ACs',
+    badge: 'Extreme Climate Tech',
+    renderLogo: () => <OGeneralLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'mitsubishi',
+    name: 'MITSUBISHI ELECTRIC',
+    category: 'ac',
+    tagline: 'Quiet Tropical Heavy Inverter',
+    badge: 'Precision Air Tech',
+    renderLogo: () => <MitsubishiLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'panasonic',
+    name: 'PANASONIC',
+    category: 'multi',
+    tagline: 'nanoe™X AI Inverter ACs',
+    badge: 'Miraie AI Connected',
+    renderLogo: () => <PanasonicLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'godrej',
+    name: 'GODREJ',
+    category: 'multi',
+    tagline: '5-Star Green Inverter ACs',
+    badge: 'Anti-Rust Coating',
+    renderLogo: () => <GodrejLogo className="h-7 sm:h-8 w-auto object-contain" />,
+  },
 ];
 
-const ROW_TWO_BRANDS: BrandItem[] = [
-  { name: 'WHIRLPOOL', category: 'multi', tagline: 'IntelliFresh & 6th Sense', accentColor: '#F58220', badge: 'Microblock Protection' },
-  { name: 'BOSCH', category: 'washer', tagline: 'Front Load & Series 6', accentColor: '#EA1B23', badge: 'German Engineering' },
-  { name: 'IFB', category: 'washer', tagline: 'Aqua Energie Washers', accentColor: '#003366', badge: 'CradleWash Drum' },
-  { name: 'HAIER', category: 'multi', tagline: 'Bottom Mount & Inverter', accentColor: '#005AAA', badge: 'Twin Inverter Tech' },
-  { name: 'VOLTAS BEKO', category: 'multi', tagline: 'ProSmart Inverter Washers', accentColor: '#003366', badge: 'Dual Action Hygiene' },
-  { name: 'SIEMENS', category: 'washer', tagline: 'iQ500 & iSensoric Tech', accentColor: '#00646E', badge: 'Precision German Care' },
-  { name: 'LIEBHERR', category: 'fridge', tagline: 'Precision DuoCooling', accentColor: '#003865', badge: 'BioFresh German OEM' },
-  { name: 'KELVINATOR', category: 'fridge', tagline: 'Direct Cool & Double Door', accentColor: '#C8102E', badge: 'Tough Tropical Cool' },
-  { name: 'TOSHIBA', category: 'multi', tagline: 'GreatWaves Inverter Washers', accentColor: '#E60012', badge: 'Ultra Fine Bubble' },
-  { name: 'ONIDA', category: 'multi', tagline: 'HydroFall Washers & ACs', accentColor: '#E31B23', badge: 'Rapid Jet Cool' },
-  { name: 'CROMPTON', category: 'multi', tagline: 'Smart Inverter Solutions', accentColor: '#0070BA', badge: 'High-Durability Spares' },
-  { name: 'ELECTROLUX', category: 'multi', tagline: 'UltraMix Care Washers', accentColor: '#011E41', badge: 'Fabric Care Eco' },
+const ROW_TWO_BRANDS: BrandCardItem[] = [
+  {
+    id: 'whirlpool',
+    name: 'WHIRLPOOL',
+    category: 'multi',
+    tagline: 'IntelliFresh Fridges & 6th Sense Washers',
+    badge: 'Microblock Tech',
+    renderLogo: () => <WhirlpoolLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'bosch',
+    name: 'BOSCH',
+    category: 'washer',
+    tagline: 'Front Load Washers & Multi-Door Fridges',
+    badge: 'German Engineering',
+    renderLogo: () => <BoschLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'ifb',
+    name: 'IFB',
+    category: 'washer',
+    tagline: 'Aqua Energie Washers & Dryers',
+    badge: 'CradleWash Drum',
+    renderLogo: () => <IfbLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'haier',
+    name: 'HAIER',
+    category: 'multi',
+    tagline: 'Bottom Mount Fridges & Triple Inv. ACs',
+    badge: 'Twin Inverter Tech',
+    renderLogo: () => <HaierLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'siemens',
+    name: 'SIEMENS',
+    category: 'washer',
+    tagline: 'iQ500 & iSensoric Front Loaders',
+    badge: 'Precision German Care',
+    renderLogo: () => <SiemensLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'liebherr',
+    name: 'LIEBHERR',
+    category: 'fridge',
+    tagline: 'Precision DuoCooling German Fridges',
+    badge: 'BioFresh German OEM',
+    renderLogo: () => <LiebherrLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'samsung-washer',
+    name: 'SAMSUNG ECOBUBBLE',
+    category: 'washer',
+    tagline: 'EcoBubble AI Direct Washers',
+    badge: 'Hygiene Steam Wash',
+    renderLogo: () => <SamsungLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'lg-dd',
+    name: 'LG DIRECT DRIVE',
+    category: 'washer',
+    tagline: 'AI DD Front Load Washers & Dryers',
+    badge: '6 Motion DirectDrive',
+    renderLogo: () => <LgLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'godrej-fridge',
+    name: 'GODREJ EDGE',
+    category: 'fridge',
+    tagline: 'Eon Inverter & Direct Cool Refrigerators',
+    badge: 'Farm Fresh Tech',
+    renderLogo: () => <GodrejLogo className="h-7 sm:h-8 w-auto object-contain" />,
+  },
+  {
+    id: 'panasonic-fridge',
+    name: 'PANASONIC PRIME',
+    category: 'fridge',
+    tagline: 'Prime Fresh Inverter Refrigerators',
+    badge: 'Econavi Sensors',
+    renderLogo: () => <PanasonicLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'voltas-commercial',
+    name: 'VOLTAS BEKO',
+    category: 'multi',
+    tagline: 'ProSmart Inverter Washers & Fridges',
+    badge: 'Dual Action Care',
+    renderLogo: () => <VoltasLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
+  {
+    id: 'carrier-midea',
+    name: 'CARRIER COMMERCIAL',
+    category: 'ac',
+    tagline: 'Ductable & Commercial Central ACs',
+    badge: 'Commercial Chillers',
+    renderLogo: () => <CarrierLogo className="h-6 sm:h-7 w-auto object-contain" />,
+  },
 ];
 
 interface BrandsMarqueeProps {
@@ -46,7 +235,7 @@ interface BrandsMarqueeProps {
 export const BrandsMarquee: React.FC<BrandsMarqueeProps> = ({ onOpenBooking }) => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'ac' | 'fridge' | 'washer'>('all');
 
-  const filterBrand = (brand: BrandItem) => {
+  const filterBrand = (brand: BrandCardItem) => {
     if (activeFilter === 'all') return true;
     if (brand.category === 'multi') return true;
     return brand.category === activeFilter;
@@ -58,7 +247,7 @@ export const BrandsMarquee: React.FC<BrandsMarqueeProps> = ({ onOpenBooking }) =
         {/* Header Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-black tracking-wide shadow-xs mb-3">
           <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>SUPPORTED APPLIANCE BRANDS</span>
+          <span>OFFICIAL MULTI-BRAND SERVICE NETWORK</span>
         </div>
 
         {/* Section Heading */}
@@ -73,7 +262,7 @@ export const BrandsMarquee: React.FC<BrandsMarqueeProps> = ({ onOpenBooking }) =
         <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
           <button
             onClick={() => setActiveFilter('all')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-black transition cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full text-xs font-black transition cursor-pointer ${
               activeFilter === 'all'
                 ? 'bg-red-600 text-white shadow-md shadow-red-600/20'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300'
@@ -83,7 +272,7 @@ export const BrandsMarquee: React.FC<BrandsMarqueeProps> = ({ onOpenBooking }) =
           </button>
           <button
             onClick={() => setActiveFilter('ac')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-black transition cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full text-xs font-black transition cursor-pointer ${
               activeFilter === 'ac'
                 ? 'bg-red-600 text-white shadow-md shadow-red-600/20'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300'
@@ -93,7 +282,7 @@ export const BrandsMarquee: React.FC<BrandsMarqueeProps> = ({ onOpenBooking }) =
           </button>
           <button
             onClick={() => setActiveFilter('fridge')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-black transition cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full text-xs font-black transition cursor-pointer ${
               activeFilter === 'fridge'
                 ? 'bg-red-600 text-white shadow-md shadow-red-600/20'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300'
@@ -103,7 +292,7 @@ export const BrandsMarquee: React.FC<BrandsMarqueeProps> = ({ onOpenBooking }) =
           </button>
           <button
             onClick={() => setActiveFilter('washer')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-black transition cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full text-xs font-black transition cursor-pointer ${
               activeFilter === 'washer'
                 ? 'bg-red-600 text-white shadow-md shadow-red-600/20'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300'
@@ -122,37 +311,35 @@ export const BrandsMarquee: React.FC<BrandsMarqueeProps> = ({ onOpenBooking }) =
         {/* Right Edge Fade */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10" />
 
-        {/* Row 1: Flowing Left */}
+        {/* Row 1: Flowing Left (ACs & Climate Control) */}
         <div className="flex animate-marquee-left gap-4 py-2 hover:[animation-play-state:paused]">
           {[...ROW_ONE_BRANDS, ...ROW_ONE_BRANDS].map((brand, idx) => {
             const isMatch = filterBrand(brand);
             return (
               <div
                 key={`r1-${idx}`}
-                className={`flex items-center gap-3.5 px-5 py-3 rounded-2xl border transition-all duration-300 shadow-xs group shrink-0 ${
+                className={`flex items-center gap-4 px-5 py-3 rounded-2xl border transition-all duration-300 shadow-xs group shrink-0 ${
                   isMatch
-                    ? 'bg-white border-slate-200/90 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5'
-                    : 'bg-slate-50/60 border-slate-200/40 opacity-40 grayscale'
+                    ? 'bg-white border-slate-200/90 hover:border-red-400 hover:shadow-lg hover:-translate-y-0.5'
+                    : 'bg-slate-50/60 border-slate-200/40 opacity-35 grayscale'
                 }`}
               >
-                {/* Brand Visual Icon Block */}
-                <div 
-                  className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-white text-xs shrink-0 shadow-2xs"
-                  style={{ backgroundColor: brand.accentColor }}
-                >
-                  {brand.name.slice(0, 2)}
+                {/* Official Brand Logo Box */}
+                <div className="h-9 flex items-center justify-center shrink-0 min-w-[100px] max-w-[140px] px-1">
+                  {brand.renderLogo()}
                 </div>
 
+                {/* Subtle Divider */}
+                <div className="h-8 w-px bg-slate-200/80 shrink-0" />
+
+                {/* Technical Specifications */}
                 <div className="text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="font-black text-slate-900 text-sm tracking-tight group-hover:text-red-600 transition">
-                      {brand.name}
-                    </span>
-                    <span className="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 group-hover:bg-red-50 group-hover:text-red-700 group-hover:border-red-200 transition">
                       {brand.badge}
                     </span>
                   </div>
-                  <div className="text-[11px] font-medium text-slate-500">
+                  <div className="text-[11px] font-bold text-slate-500 mt-0.5 whitespace-nowrap">
                     {brand.tagline}
                   </div>
                 </div>
@@ -161,37 +348,35 @@ export const BrandsMarquee: React.FC<BrandsMarqueeProps> = ({ onOpenBooking }) =
           })}
         </div>
 
-        {/* Row 2: Flowing Right */}
+        {/* Row 2: Flowing Right (Refrigerators & Washers) */}
         <div className="flex animate-marquee-right gap-4 py-2 mt-2 hover:[animation-play-state:paused]">
           {[...ROW_TWO_BRANDS, ...ROW_TWO_BRANDS].map((brand, idx) => {
             const isMatch = filterBrand(brand);
             return (
               <div
                 key={`r2-${idx}`}
-                className={`flex items-center gap-3.5 px-5 py-3 rounded-2xl border transition-all duration-300 shadow-xs group shrink-0 ${
+                className={`flex items-center gap-4 px-5 py-3 rounded-2xl border transition-all duration-300 shadow-xs group shrink-0 ${
                   isMatch
-                    ? 'bg-white border-slate-200/90 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5'
-                    : 'bg-slate-50/60 border-slate-200/40 opacity-40 grayscale'
+                    ? 'bg-white border-slate-200/90 hover:border-red-400 hover:shadow-lg hover:-translate-y-0.5'
+                    : 'bg-slate-50/60 border-slate-200/40 opacity-35 grayscale'
                 }`}
               >
-                {/* Brand Visual Icon Block */}
-                <div 
-                  className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-white text-xs shrink-0 shadow-2xs"
-                  style={{ backgroundColor: brand.accentColor }}
-                >
-                  {brand.name.slice(0, 2)}
+                {/* Official Brand Logo Box */}
+                <div className="h-9 flex items-center justify-center shrink-0 min-w-[100px] max-w-[140px] px-1">
+                  {brand.renderLogo()}
                 </div>
 
+                {/* Subtle Divider */}
+                <div className="h-8 w-px bg-slate-200/80 shrink-0" />
+
+                {/* Technical Specifications */}
                 <div className="text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="font-black text-slate-900 text-sm tracking-tight group-hover:text-red-600 transition">
-                      {brand.name}
-                    </span>
-                    <span className="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 group-hover:bg-red-50 group-hover:text-red-700 group-hover:border-red-200 transition">
                       {brand.badge}
                     </span>
                   </div>
-                  <div className="text-[11px] font-medium text-slate-500">
+                  <div className="text-[11px] font-bold text-slate-500 mt-0.5 whitespace-nowrap">
                     {brand.tagline}
                   </div>
                 </div>
