@@ -63,6 +63,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [notes, setNotes] = useState<string>('');
   const [gpsCoords, setGpsCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [locating, setLocating] = useState<boolean>(false);
+  const [gpsStatusText, setGpsStatusText] = useState<string | null>(null);
 
   const [bookingSuccess, setBookingSuccess] = useState<boolean>(false);
   const [bookingId, setBookingId] = useState<string>('');
@@ -121,16 +122,50 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       return;
     }
     setLocating(true);
+    setGpsStatusText('Capturing high-accuracy device GPS...');
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setGpsCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        setGpsCoords({ lat, lng });
+        setGpsStatusText(`GPS Captured (${lat.toFixed(4)}, ${lng.toFixed(4)}). Finding street...`);
+
+        try {
+          // Free Nominatim reverse geocoding (zero cost)
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
+          );
+          if (res.ok) {
+            const data = await res.json();
+            const addr = data.address || {};
+            const streetParts = [addr.house_number, addr.road, addr.suburb || addr.neighbourhood].filter(Boolean);
+            if (streetParts.length > 0) {
+              setStreetAddress(streetParts.join(', '));
+            }
+
+            // Auto-match locality in Kadapa / Bangalore
+            const rawLoc = addr.suburb || addr.neighbourhood || addr.city_district || addr.locality || '';
+            if (rawLoc) {
+              const matched = cityConfig.localities.find(
+                (loc) => loc.toLowerCase().includes(rawLoc.toLowerCase()) || rawLoc.toLowerCase().includes(loc.toLowerCase())
+              );
+              if (matched) {
+                setArea(matched);
+              }
+            }
+          }
+        } catch {
+          // Keep raw coordinates if offline or network blocks reverse geocoder
+        }
+
         setLocating(false);
+        setGpsStatusText(`✓ GPS Verified (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}) • Shaik Sameer gets 1-tap route`);
       },
       () => {
         setLocating(false);
-        alert('Could not detect location. Please type your street/landmark.');
+        setGpsStatusText('Could not detect location. Please type your street/landmark.');
       },
-      { timeout: 8000, enableHighAccuracy: true }
+      { timeout: 10000, enableHighAccuracy: true }
     );
   };
 
@@ -390,22 +425,43 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 </div>
               </div>
 
-              {/* Locality in Selected City with GPS auto-attach */}
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                    Locality in {cityConfig.name}
-                  </label>
-                  <button
-                    type="button"
-                    onClick={handleDetectLocation}
-                    className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer"
-                  >
-                    <Navigation className="w-3 h-3 text-red-600" />
-                    <span>{locating ? 'Detecting GPS...' : gpsCoords ? '✓ GPS Attached' : 'Auto-Attach GPS'}</span>
-                  </button>
+              {/* 1-Tap Mobile GPS Auto-Fetch Card */}
+              <div 
+                onClick={!locating ? handleDetectLocation : undefined}
+                className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
+                  gpsCoords 
+                    ? 'bg-emerald-50 border-emerald-300' 
+                    : 'bg-blue-50/90 hover:bg-blue-100/80 border-blue-200'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                    gpsCoords ? 'bg-emerald-600 text-white' : 'bg-blue-600 text-white'
+                  }`}>
+                    <Navigation className={`w-4 h-4 ${locating ? 'animate-spin' : ''}`} />
+                  </div>
+                  <div>
+                    <h5 className={`text-xs font-bold ${gpsCoords ? 'text-emerald-900' : 'text-blue-900'}`}>
+                      {gpsCoords ? '✓ Exact Doorstep Location Attached' : '📍 Auto-Fetch Exact Address via Mobile GPS'}
+                    </h5>
+                    <p className={`text-[11px] ${gpsCoords ? 'text-emerald-700' : 'text-blue-700'}`}>
+                      {gpsStatusText || "Tap to auto-detect house, street & closest locality for Sameer's 1-tap route"}
+                    </p>
+                  </div>
                 </div>
+                {!gpsCoords && !locating && (
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg bg-blue-600 text-white shrink-0">
+                    AUTO-FILL
+                  </span>
+                )}
+              </div>
+
+              {/* Locality in Selected City */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-slate-500" />
+                  1. Locality in {cityConfig.name}
+                </label>
                 <select
                   value={area}
                   onChange={(e) => setArea(e.target.value)}
