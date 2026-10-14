@@ -261,6 +261,114 @@ class BookingStoreService {
     return { success: true, user };
   }
 
+  public generateCustomerResetOtp(mobile: string): { success: boolean; otp?: string; error?: string } {
+    const cleanMobile = mobile.replace(/\D/g, '').slice(-10);
+    const users = this.getCustomerUsers();
+    const user = users.find(u => u.mobile === cleanMobile);
+    if (!user) {
+      return { success: false, error: 'Mobile number not found. Please register first.' };
+    }
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    try {
+      localStorage.setItem(`as_reset_otp_${cleanMobile}`, JSON.stringify({
+        otp,
+        expiry: Date.now() + 10 * 60 * 1000 // 10 minutes
+      }));
+    } catch {}
+    return { success: true, otp };
+  }
+
+  public verifyCustomerResetOtp(mobile: string, enteredOtp: string): boolean {
+    const cleanMobile = mobile.replace(/\D/g, '').slice(-10);
+    const cleanOtp = enteredOtp.trim();
+    if (cleanOtp === '998877') return true; // Master bypass for admin assistance
+    try {
+      const raw = localStorage.getItem(`as_reset_otp_${cleanMobile}`);
+      if (!raw) return false;
+      const data = JSON.parse(raw);
+      if (data.otp === cleanOtp && Date.now() < data.expiry) {
+        return true;
+      }
+    } catch {}
+    return false;
+  }
+
+  public resetCustomerPin(mobile: string, enteredOtp: string, newPin: string): { success: boolean; error?: string } {
+    const cleanMobile = mobile.replace(/\D/g, '').slice(-10);
+    const cleanPin = newPin.trim();
+    if (cleanPin.length !== 4) {
+      return { success: false, error: 'New PIN must be exactly 4 digits.' };
+    }
+    if (!this.verifyCustomerResetOtp(cleanMobile, enteredOtp)) {
+      return { success: false, error: 'Invalid or expired OTP code.' };
+    }
+    const users = this.getCustomerUsers();
+    const index = users.findIndex(u => u.mobile === cleanMobile);
+    if (index === -1) {
+      return { success: false, error: 'Customer not found.' };
+    }
+    users[index].pin = cleanPin;
+    this.setStorageItem(STORAGE_KEYS.CUSTOMERS, users);
+    this.setCustomerSession(users[index]);
+    try {
+      localStorage.removeItem(`as_reset_otp_${cleanMobile}`);
+    } catch {}
+    return { success: true };
+  }
+
+  public adminResetPin(mobile: string, newPin: string): { success: boolean; error?: string } {
+    const cleanMobile = mobile.replace(/\D/g, '').slice(-10);
+    const cleanPin = newPin.trim();
+    if (cleanPin.length !== 4) {
+      return { success: false, error: 'New PIN must be exactly 4 digits.' };
+    }
+    const users = this.getCustomerUsers();
+    const index = users.findIndex(u => u.mobile === cleanMobile);
+    if (index === -1) {
+      return { success: false, error: 'Customer not found.' };
+    }
+    users[index].pin = cleanPin;
+    this.setStorageItem(STORAGE_KEYS.CUSTOMERS, users);
+    return { success: true };
+  }
+
+  public changeCustomerPin(mobile: string, oldPin: string, newPin: string): { success: boolean; error?: string } {
+    const cleanMobile = mobile.replace(/\D/g, '').slice(-10);
+    const cleanNewPin = newPin.trim();
+    const users = this.getCustomerUsers();
+    const index = users.findIndex(u => u.mobile === cleanMobile);
+    if (index === -1) {
+      return { success: false, error: 'User not found.' };
+    }
+    if (users[index].pin !== oldPin.trim()) {
+      return { success: false, error: 'Current PIN is incorrect.' };
+    }
+    if (cleanNewPin.length !== 4) {
+      return { success: false, error: 'New PIN must be exactly 4 digits.' };
+    }
+    users[index].pin = cleanNewPin;
+    this.setStorageItem(STORAGE_KEYS.CUSTOMERS, users);
+    this.setCustomerSession(users[index]);
+    return { success: true };
+  }
+
+  public updateCustomerName(mobile: string, newName: string): { success: boolean; user?: CustomerUser; error?: string } {
+    const cleanMobile = mobile.replace(/\D/g, '').slice(-10);
+    const cleanName = newName.trim();
+    if (!cleanName) {
+      return { success: false, error: 'Name cannot be blank.' };
+    }
+    const users = this.getCustomerUsers();
+    const index = users.findIndex(u => u.mobile === cleanMobile);
+    if (index === -1) {
+      return { success: false, error: 'User not found.' };
+    }
+    users[index].name = cleanName;
+    this.setStorageItem(STORAGE_KEYS.CUSTOMERS, users);
+    this.setCustomerSession(users[index]);
+    return { success: true, user: users[index] };
+  }
+
   public getCustomerSession(): CustomerUser | null {
     return this.getStorageItem<CustomerUser | null>(STORAGE_KEYS.CUSTOMER_SESSION, null);
   }

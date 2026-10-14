@@ -22,7 +22,10 @@ import {
   LogOut,
   ChevronRight,
   AlertCircle,
-  QrCode
+  QrCode,
+  KeyRound,
+  Edit2,
+  Check
 } from 'lucide-react';
 import { CityId, CITIES_DATA } from '../data/citiesData';
 import { BookingLead, BookingStatus } from '../types/database';
@@ -44,11 +47,35 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
   
   // State for Customer Auth
   const [customerSession, setCustomerSession] = useState<CustomerUser | null>(null);
-  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  const [authMode, setAuthMode] = useState<'login' | 'register' | 'forgot'>('login');
   const [mobileInput, setMobileInput] = useState('');
   const [pinInput, setPinInput] = useState('');
   const [nameInput, setNameInput] = useState('');
   const [authError, setAuthError] = useState<string | null>(null);
+
+  // Forgot PIN / Reset Flow State
+  const [resetStep, setResetStep] = useState<1 | 2>(1);
+  const [resetOtpInput, setResetOtpInput] = useState('');
+  const [newPinInput, setNewPinInput] = useState('');
+  const [confirmPinInput, setConfirmPinInput] = useState('');
+  const [generatedResetOtp, setGeneratedResetOtp] = useState<string | null>(null);
+
+  // Profile Edit / Change PIN Dialog State
+  const [showChangePinModal, setShowChangePinModal] = useState(false);
+  const [currentPinInput, setCurrentPinInput] = useState('');
+  const [changeNewPinInput, setChangeNewPinInput] = useState('');
+  const [changeConfirmPinInput, setChangeConfirmPinInput] = useState('');
+  const [changePinError, setChangePinError] = useState<string | null>(null);
+
+  const [showEditNameModal, setShowEditNameModal] = useState(false);
+  const [editCustomerNameInput, setEditCustomerNameInput] = useState('');
+
+  // Admin PIN Recovery Console State
+  const [adminSearchMobile, setAdminSearchMobile] = useState('');
+  const [adminLookupUser, setAdminLookupUser] = useState<CustomerUser | null>(null);
+  const [adminNewPinInput, setAdminNewPinInput] = useState('1234');
+  const [adminVerifyChecks, setAdminVerifyChecks] = useState({ phone: false, address: false, appliance: false });
+  const [adminRecoveryNotice, setAdminRecoveryNotice] = useState<string | null>(null);
 
   // State for Bookings & Dispatch
   const [bookingsList, setBookingsList] = useState<BookingLead[]>([]);
@@ -103,6 +130,107 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
     setCustomerSession(user);
     refreshData();
     showNotification(`Account created! PIN set for ${user.mobile}.`);
+  };
+
+  const handleRequestResetOtp = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+    const res = bookingStore.generateCustomerResetOtp(mobileInput);
+    if (res.success && res.otp) {
+      setGeneratedResetOtp(res.otp);
+      setResetOtpInput(res.otp);
+      setResetStep(2);
+      showNotification(`WhatsApp verification OTP code: ${res.otp}`);
+    } else {
+      setAuthError(res.error || 'Mobile number not found. Please register first.');
+    }
+  };
+
+  const handleResetPinSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+    if (newPinInput.length !== 4) {
+      setAuthError('New PIN must be exactly 4 digits.');
+      return;
+    }
+    if (newPinInput !== confirmPinInput) {
+      setAuthError('New PIN and confirmation do not match.');
+      return;
+    }
+    const res = bookingStore.resetCustomerPin(mobileInput, resetOtpInput, newPinInput);
+    if (res.success) {
+      refreshData();
+      setAuthMode('login');
+      setResetStep(1);
+      setGeneratedResetOtp(null);
+      setResetOtpInput('');
+      setNewPinInput('');
+      setConfirmPinInput('');
+      showNotification('PIN successfully reset! You are now logged in.');
+    } else {
+      setAuthError(res.error || 'Failed to reset PIN. Invalid or expired OTP.');
+    }
+  };
+
+  const handleChangePin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setChangePinError(null);
+    if (!customerSession) return;
+    if (changeNewPinInput.length !== 4) {
+      setChangePinError('New PIN must be exactly 4 digits.');
+      return;
+    }
+    if (changeNewPinInput !== changeConfirmPinInput) {
+      setChangePinError('New PIN and confirmation do not match.');
+      return;
+    }
+    const res = bookingStore.changeCustomerPin(customerSession.mobile, currentPinInput, changeNewPinInput);
+    if (res.success) {
+      setShowChangePinModal(false);
+      setCurrentPinInput('');
+      setChangeNewPinInput('');
+      setChangeConfirmPinInput('');
+      refreshData();
+      showNotification('Your 4-digit security PIN has been updated!');
+    } else {
+      setChangePinError(res.error || 'Current PIN is incorrect.');
+    }
+  };
+
+  const handleUpdateName = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customerSession) return;
+    if (!editCustomerNameInput.trim()) return;
+    const res = bookingStore.updateCustomerName(customerSession.mobile, editCustomerNameInput);
+    if (res.success && res.user) {
+      setShowEditNameModal(false);
+      refreshData();
+      showNotification('Profile name updated successfully!');
+    }
+  };
+
+  const handleAdminSearchCustomer = () => {
+    const clean = adminSearchMobile.replace(/\D/g, '').slice(-10);
+    const users = bookingStore.getCustomerUsers();
+    const found = users.find(u => u.mobile === clean);
+    if (found) {
+      setAdminLookupUser(found);
+      setAdminRecoveryNotice(null);
+      setAdminVerifyChecks({ phone: false, address: false, appliance: false });
+    } else {
+      setAdminLookupUser(null);
+      setAdminRecoveryNotice('No customer account found for this mobile number.');
+    }
+  };
+
+  const handleAdminResetCustomerPin = () => {
+    if (!adminLookupUser) return;
+    const res = bookingStore.adminResetPin(adminLookupUser.mobile, adminNewPinInput || '1234');
+    if (res.success) {
+      refreshData();
+      setAdminRecoveryNotice(`PIN for ${adminLookupUser.name} (+91 ${adminLookupUser.mobile}) successfully reset to ${adminNewPinInput}!`);
+      showNotification(`Customer PIN reset to ${adminNewPinInput}`);
+    }
   };
 
   const handleCustomerLogout = () => {
@@ -293,17 +421,21 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
         {activeTab === 'customer' && (
           <div className="space-y-5">
             {!customerSession ? (
-              /* LOGIN / REGISTER WITH PIN */
+              /* LOGIN / REGISTER / FORGOT PIN WITH PIN */
               <div className="max-w-md mx-auto p-5 sm:p-6 rounded-2xl border border-slate-200 bg-slate-50 shadow-xs space-y-4">
                 <div className="text-center space-y-1">
                   <div className="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-2">
-                    <Lock className="w-5 h-5" />
+                    {authMode === 'forgot' ? <KeyRound className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
                   </div>
                   <h4 className="font-black text-slate-900 text-lg">
-                    {authMode === 'login' ? 'Customer PIN Login' : 'Set Up Your PIN'}
+                    {authMode === 'login' && 'Customer PIN Login'}
+                    {authMode === 'register' && 'Set Up Your PIN'}
+                    {authMode === 'forgot' && 'Reset Security PIN'}
                   </h4>
                   <p className="text-xs text-slate-500">
-                    Use your registered mobile number. No SMS OTP wait required.
+                    {authMode === 'login' && 'Use your registered mobile number. No SMS OTP wait required.'}
+                    {authMode === 'register' && 'Quick registration. Choose your personal 4-digit PIN.'}
+                    {authMode === 'forgot' && 'Zero-cost WhatsApp OTP verification or Admin Assistance.'}
                   </p>
                 </div>
 
@@ -314,75 +446,219 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
                   </div>
                 )}
 
-                <form onSubmit={authMode === 'login' ? handleCustomerLogin : handleCustomerRegister} className="space-y-3">
-                  {authMode === 'register' && (
+                {/* MODE 1: FORGOT PIN FLOW */}
+                {authMode === 'forgot' ? (
+                  <div className="space-y-3">
+                    {resetStep === 1 ? (
+                      <form onSubmit={handleRequestResetOtp} className="space-y-3">
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1">Registered Mobile Number (10 Digits)</label>
+                          <input
+                            type="tel"
+                            placeholder="98480 11223"
+                            value={mobileInput}
+                            onChange={(e) => setMobileInput(e.target.value)}
+                            maxLength={10}
+                            required
+                            className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white"
+                          />
+                        </div>
+
+                        <button
+                          type="submit"
+                          className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition"
+                        >
+                          Generate WhatsApp Verification OTP →
+                        </button>
+
+                        <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] space-y-1">
+                          <span className="font-bold flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                            Zero SMS Fees Policy:
+                          </span>
+                          <p>
+                            OTP verification is transmitted via local WhatsApp integration so neither you nor AS Refrigerations incur SMS gateway telecom surcharges.
+                          </p>
+                        </div>
+                      </form>
+                    ) : (
+                      <form onSubmit={handleResetPinSubmit} className="space-y-3">
+                        {generatedResetOtp && (
+                          <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs space-y-1">
+                            <span className="font-bold">✓ Verification OTP Generated:</span>
+                            <div className="flex items-center justify-between">
+                              <span className="font-mono text-base font-black tracking-widest text-emerald-700">
+                                {generatedResetOtp}
+                              </span>
+                              <a
+                                href={`https://wa.me/918074945415?text=Hello%20Sameer%20bhai,%20my%20AS%20Refrigerations%20reset%20OTP%20is%20${generatedResetOtp}%20for%20mobile%20${mobileInput}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold text-[10px] hover:bg-emerald-700 transition"
+                              >
+                                Send to WhatsApp
+                              </a>
+                            </div>
+                          </div>
+                        )}
+
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1">Enter 6-Digit OTP</label>
+                          <input
+                            type="text"
+                            placeholder="6-digit OTP code"
+                            value={resetOtpInput}
+                            onChange={(e) => setResetOtpInput(e.target.value)}
+                            maxLength={6}
+                            required
+                            className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white font-mono text-center tracking-widest font-bold"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="block text-xs font-bold text-slate-700 mb-1">New 4-Digit PIN</label>
+                            <input
+                              type="password"
+                              placeholder="••••"
+                              value={newPinInput}
+                              onChange={(e) => setNewPinInput(e.target.value)}
+                              maxLength={4}
+                              required
+                              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white font-mono text-center tracking-widest font-bold"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-slate-700 mb-1">Confirm New PIN</label>
+                            <input
+                              type="password"
+                              placeholder="••••"
+                              value={confirmPinInput}
+                              onChange={(e) => setConfirmPinInput(e.target.value)}
+                              maxLength={4}
+                              required
+                              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white font-mono text-center tracking-widest font-bold"
+                            />
+                          </div>
+                        </div>
+
+                        <button
+                          type="submit"
+                          className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition"
+                        >
+                          Verify OTP & Save New PIN
+                        </button>
+                      </form>
+                    )}
+
+                    {/* Admin Assistance Callout */}
+                    <div className="p-3 rounded-xl bg-slate-100 border border-slate-200 text-[11px] text-slate-600 flex items-center justify-between">
+                      <div>
+                        <span className="font-bold text-slate-900 block">Stuck or Forgot Mobile?</span>
+                        <span>Call Sameer Bhai directly for admin reset</span>
+                      </div>
+                      <a
+                        href="tel:8074945415"
+                        className="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-[10px] flex items-center gap-1"
+                      >
+                        <Phone className="w-3 h-3 text-emerald-400" />
+                        <span>Call Admin</span>
+                      </a>
+                    </div>
+
+                    <div className="text-center pt-1">
+                      <button
+                        type="button"
+                        onClick={() => { setAuthMode('login'); setAuthError(null); setResetStep(1); }}
+                        className="text-xs text-slate-500 hover:text-slate-900 font-bold"
+                      >
+                        ← Back to Sign In
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  /* MODE 2 & 3: LOGIN / REGISTER */
+                  <form onSubmit={authMode === 'login' ? handleCustomerLogin : handleCustomerRegister} className="space-y-3">
+                    {authMode === 'register' && (
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Ramesh Kumar"
+                          value={nameInput}
+                          onChange={(e) => setNameInput(e.target.value)}
+                          required
+                          className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white"
+                        />
+                      </div>
+                    )}
+
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">Mobile Number (10 Digits)</label>
                       <input
-                        type="text"
-                        placeholder="e.g. Ramesh Kumar"
-                        value={nameInput}
-                        onChange={(e) => setNameInput(e.target.value)}
+                        type="tel"
+                        placeholder="98480 11223"
+                        value={mobileInput}
+                        onChange={(e) => setMobileInput(e.target.value)}
+                        maxLength={10}
                         required
                         className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white"
                       />
                     </div>
-                  )}
 
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Mobile Number (10 Digits)</label>
-                    <input
-                      type="tel"
-                      placeholder="98480 11223"
-                      value={mobileInput}
-                      onChange={(e) => setMobileInput(e.target.value)}
-                      maxLength={10}
-                      required
-                      className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white"
-                    />
-                  </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">4-Digit Security PIN</label>
+                      <input
+                        type="password"
+                        placeholder="••••"
+                        value={pinInput}
+                        onChange={(e) => setPinInput(e.target.value)}
+                        maxLength={4}
+                        required
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white tracking-widest text-center font-mono font-bold"
+                      />
+                    </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">4-Digit Security PIN</label>
-                    <input
-                      type="password"
-                      placeholder="••••"
-                      value={pinInput}
-                      onChange={(e) => setPinInput(e.target.value)}
-                      maxLength={6}
-                      required
-                      className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-red-600 bg-white tracking-widest text-center font-mono font-bold"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition"
-                  >
-                    {authMode === 'login' ? 'Sign In to My Bookings' : 'Save PIN & Sign In'}
-                  </button>
-                </form>
-
-                {/* Switch between Login and Register */}
-                <div className="text-center pt-2 border-t border-slate-200">
-                  {authMode === 'login' ? (
                     <button
-                      type="button"
-                      onClick={() => { setAuthMode('register'); setAuthError(null); }}
-                      className="text-xs text-red-600 hover:underline font-bold"
+                      type="submit"
+                      className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition"
                     >
-                      First time here? Register with your mobile number →
+                      {authMode === 'login' ? 'Sign In to My Bookings' : 'Save PIN & Sign In'}
                     </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => { setAuthMode('login'); setAuthError(null); }}
-                      className="text-xs text-red-600 hover:underline font-bold"
-                    >
-                      Already have a PIN? Sign in →
-                    </button>
-                  )}
-                </div>
+                  </form>
+                )}
+
+                {/* Switch between Login, Register, and Forgot PIN */}
+                {authMode !== 'forgot' && (
+                  <div className="text-center pt-2 border-t border-slate-200 space-y-1.5">
+                    {authMode === 'login' ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => { setAuthMode('register'); setAuthError(null); }}
+                          className="text-xs text-red-600 hover:underline font-bold block mx-auto"
+                        >
+                          First time here? Register with your mobile number →
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { setAuthMode('forgot'); setAuthError(null); setResetStep(1); }}
+                          className="text-[11px] text-slate-500 hover:text-slate-800 font-medium block mx-auto"
+                        >
+                          Forgot PIN? Reset via WhatsApp OTP →
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => { setAuthMode('login'); setAuthError(null); }}
+                        className="text-xs text-red-600 hover:underline font-bold"
+                      >
+                        Already have a PIN? Sign in →
+                      </button>
+                    )}
+                  </div>
+                )}
 
                 {/* Quick 1-Click Demo Logins */}
                 <div className="pt-2">
@@ -418,7 +694,19 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
                       {customerSession.name.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-black text-sm">{customerSession.name}</h4>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-black text-sm">{customerSession.name}</h4>
+                        <button
+                          onClick={() => {
+                            setEditCustomerNameInput(customerSession.name);
+                            setShowEditNameModal(true);
+                          }}
+                          className="text-[10px] text-red-400 hover:text-red-300 font-bold underline flex items-center gap-0.5"
+                        >
+                          <Edit2 className="w-2.5 h-2.5" />
+                          <span>Edit</span>
+                        </button>
+                      </div>
                       <p className="text-xs text-slate-400">
                         +91 {customerSession.mobile} • Branch: <span className="capitalize text-red-400 font-bold">{customerSession.city}</span>
                       </p>
@@ -426,10 +714,13 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                      Session Saved on Device
-                    </span>
+                    <button
+                      onClick={() => setShowChangePinModal(true)}
+                      className="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-amber-400 hover:text-amber-300 border border-slate-700 transition flex items-center gap-1"
+                    >
+                      <KeyRound className="w-3.5 h-3.5" />
+                      <span>Change PIN</span>
+                    </button>
                     <button
                       onClick={handleCustomerLogout}
                       className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white transition flex items-center gap-1"
@@ -439,6 +730,118 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
                     </button>
                   </div>
                 </div>
+
+                {/* Modal: Edit Customer Name */}
+                {showEditNameModal && (
+                  <div className="p-4 rounded-2xl bg-slate-100 border border-slate-200 space-y-3">
+                    <h5 className="font-bold text-xs text-slate-900">Update Profile Name</h5>
+                    <form onSubmit={handleUpdateName} className="flex gap-2">
+                      <input
+                        type="text"
+                        value={editCustomerNameInput}
+                        onChange={(e) => setEditCustomerNameInput(e.target.value)}
+                        placeholder="Enter full name"
+                        className="px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white flex-1 focus:outline-none focus:border-red-600"
+                        required
+                      />
+                      <button
+                        type="submit"
+                        className="px-4 py-2 bg-red-600 text-white rounded-xl text-xs font-bold hover:bg-red-700 transition"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowEditNameModal(false)}
+                        className="px-3 py-2 bg-slate-200 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-300 transition"
+                      >
+                        Cancel
+                      </button>
+                    </form>
+                  </div>
+                )}
+
+                {/* Modal: Change PIN */}
+                {showChangePinModal && (
+                  <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 space-y-3 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-amber-900 flex items-center gap-1.5">
+                        <KeyRound className="w-4 h-4 text-amber-600" />
+                        Change 4-Digit Security PIN
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setShowChangePinModal(false)}
+                        className="text-slate-400 hover:text-slate-700 font-bold"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    {changePinError && (
+                      <div className="p-2 rounded-lg bg-red-100 text-red-700 text-[11px] font-bold">
+                        {changePinError}
+                      </div>
+                    )}
+
+                    <form onSubmit={handleChangePin} className="space-y-2.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-700 mb-1">Current PIN</label>
+                          <input
+                            type="password"
+                            value={currentPinInput}
+                            onChange={(e) => setCurrentPinInput(e.target.value)}
+                            maxLength={4}
+                            placeholder="••••"
+                            required
+                            className="w-full px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-center font-mono font-bold"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-700 mb-1">New 4-Digit PIN</label>
+                          <input
+                            type="password"
+                            value={changeNewPinInput}
+                            onChange={(e) => setChangeNewPinInput(e.target.value)}
+                            maxLength={4}
+                            placeholder="••••"
+                            required
+                            className="w-full px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-center font-mono font-bold"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-700 mb-1">Confirm New PIN</label>
+                          <input
+                            type="password"
+                            value={changeConfirmPinInput}
+                            onChange={(e) => setChangeConfirmPinInput(e.target.value)}
+                            maxLength={4}
+                            placeholder="••••"
+                            required
+                            className="w-full px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-center font-mono font-bold"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => setShowChangePinModal(false)}
+                          className="px-3 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-bold hover:bg-slate-300 transition"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-4 py-1.5 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition"
+                        >
+                          Update PIN
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
 
                 {/* Active Bookings List */}
                 <div className="space-y-3">
@@ -680,6 +1083,140 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
                   ₹{bookingsList.reduce((acc, b) => acc + b.estimatedPrice, 0)}
                 </div>
               </div>
+            </div>
+
+            {/* Customer Account Security & PIN Recovery Console for Admin / Support */}
+            <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-3 text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold">
+                    <KeyRound className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h5 className="font-extrabold text-amber-950 text-xs">Customer PIN Assistance & Security Console</h5>
+                    <p className="text-[11px] text-amber-800">
+                      Shaik Sameer / Support Staff identity verification and secure PIN reset protocol.
+                    </p>
+                  </div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-900 font-extrabold text-[10px]">
+                  Zero Data Leak Protocol
+                </span>
+              </div>
+
+              {/* Mobile Lookup Input */}
+              <div className="flex gap-2">
+                <input
+                  type="tel"
+                  placeholder="Enter customer 10-digit mobile number"
+                  value={adminSearchMobile}
+                  onChange={(e) => setAdminSearchMobile(e.target.value)}
+                  maxLength={10}
+                  className="px-3 py-2 rounded-xl border border-amber-300 bg-white text-xs flex-1 focus:outline-none focus:border-red-600"
+                />
+                <button
+                  type="button"
+                  onClick={handleAdminSearchCustomer}
+                  className="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition"
+                >
+                  Lookup Account
+                </button>
+              </div>
+
+              {adminRecoveryNotice && (
+                <div className="p-2.5 rounded-xl bg-white border border-amber-300 text-amber-950 font-bold text-[11px]">
+                  {adminRecoveryNotice}
+                </div>
+              )}
+
+              {/* Account Found & Security Checklist */}
+              {adminLookupUser && (
+                <div className="p-3.5 rounded-xl bg-white border border-amber-300 space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                    <div>
+                      <span className="font-bold text-slate-900 text-sm block">{adminLookupUser.name}</span>
+                      <span className="text-slate-500 text-xs">+91 {adminLookupUser.mobile} • Branch: {adminLookupUser.city.toUpperCase()}</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-[11px] text-slate-400 block">Current Registered PIN:</span>
+                      <span className="font-mono font-bold text-amber-700 text-sm">•••• ({adminLookupUser.pin})</span>
+                    </div>
+                  </div>
+
+                  {/* Security Verification Checklist */}
+                  <div className="space-y-1.5">
+                    <span className="text-[11px] font-bold text-slate-700 block">
+                      Mandatory Security Checklist (Verify before resetting PIN):
+                    </span>
+                    <label className="flex items-center gap-2 cursor-pointer text-slate-700">
+                      <input
+                        type="checkbox"
+                        checked={adminVerifyChecks.phone}
+                        onChange={(e) => setAdminVerifyChecks({ ...adminVerifyChecks, phone: e.target.checked })}
+                        className="rounded text-red-600 focus:ring-0"
+                      />
+                      <span>Caller is dialing from registered phone number (+91 {adminLookupUser.mobile})</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer text-slate-700">
+                      <input
+                        type="checkbox"
+                        checked={adminVerifyChecks.address}
+                        onChange={(e) => setAdminVerifyChecks({ ...adminVerifyChecks, address: e.target.checked })}
+                        className="rounded text-red-600 focus:ring-0"
+                      />
+                      <span>Customer verbally verified their name and locality/door number</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer text-slate-700">
+                      <input
+                        type="checkbox"
+                        checked={adminVerifyChecks.appliance}
+                        onChange={(e) => setAdminVerifyChecks({ ...adminVerifyChecks, appliance: e.target.checked })}
+                        className="rounded text-red-600 focus:ring-0"
+                      />
+                      <span>Confirmed past service history or appliance type (AC / Refrigerator / Washing Machine)</span>
+                    </label>
+                  </div>
+
+                  {/* Reset PIN Controls */}
+                  <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-slate-700 text-[11px]">New 4-Digit PIN:</span>
+                      <input
+                        type="text"
+                        maxLength={4}
+                        value={adminNewPinInput}
+                        onChange={(e) => setAdminNewPinInput(e.target.value)}
+                        className="w-20 px-2 py-1 rounded border border-slate-300 font-mono text-center font-bold text-xs"
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        disabled={!adminVerifyChecks.phone || !adminVerifyChecks.address}
+                        onClick={handleAdminResetCustomerPin}
+                        className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition ${
+                          adminVerifyChecks.phone && adminVerifyChecks.address
+                            ? 'bg-red-600 text-white hover:bg-red-700'
+                            : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                        }`}
+                      >
+                        Reset Customer PIN
+                      </button>
+
+                      <a
+                        href={`https://wa.me/91${adminLookupUser.mobile}?text=Hello%20${encodeURIComponent(adminLookupUser.name)},%20Shaik%20Sameer%20from%20AS%20Refrigerations%20has%20verified%20your%20account.%20Your%20new%20temporary%20security%20PIN%20is%20${adminNewPinInput}.%20Please%20log%20in%20and%20change%20your%20PIN%20in%20the%20app.`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition flex items-center gap-1"
+                      >
+                        <Phone className="w-3 h-3" />
+                        <span>Send via WhatsApp</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Dispatch Feed */}
