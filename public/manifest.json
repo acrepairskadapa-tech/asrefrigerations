@@ -9,15 +9,15 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/as-logo.jpg",
+      "src": "/as-logo-square.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/as-logo.jpg",
+      "src": "/as-logo-square.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
@@ -27,14 +27,14 @@
       "short_name": "Book AC",
       "description": "Fast 60-min AC doorstep booking",
       "url": "/#services",
-      "icons": [{ "src": "/as-logo.jpg", "sizes": "96x96" }]
+      "icons": [{ "src": "/as-logo-square.png", "sizes": "96x96" }]
     },
     {
       "name": "Track Booking Status",
       "short_name": "Track Lead",
       "description": "Live technician doorstep tracking",
       "url": "/#portals",
-      "icons": [{ "src": "/as-logo.jpg", "sizes": "96x96" }]
+      "icons": [{ "src": "/as-logo-square.png", "sizes": "96x96" }]
     }
   ]
 }

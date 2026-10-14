@@ -103,11 +103,13 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Logo & Identity */}
           <div className="flex items-center gap-3 shrink-0">
             <a href="#" className="flex items-center gap-3 group">
-              <img
-                src="/as-logo.jpg"
-                alt="AS Refrigeration Logo"
-                className="h-11 w-11 sm:h-12 sm:w-12 object-contain rounded-xl border border-slate-200 shadow-xs group-hover:scale-105 transition"
-              />
+              <div className="h-11 w-11 sm:h-12 sm:w-12 rounded-xl bg-slate-900 border border-slate-800 shadow-xs group-hover:scale-105 transition flex items-center justify-center p-1.5 overflow-hidden shrink-0">
+                <img
+                  src="/as-logo.png"
+                  alt="AS Refrigeration Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <div className="flex flex-col text-left">
                 <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 group-hover:text-red-600 transition flex items-center leading-none">
                   AS <span className="text-red-600 ml-1">REFRIGERATION</span>

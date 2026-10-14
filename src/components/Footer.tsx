@@ -119,11 +119,13 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Brand Info (Col 4) */}
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <img
-                src="/as-logo.jpg"
-                alt="AS Refrigeration Kadapa Logo"
-                className="h-12 w-12 rounded-2xl object-contain bg-white p-1 border border-slate-700 shadow-md"
-              />
+              <div className="h-12 w-12 rounded-2xl bg-slate-900 border border-slate-700 shadow-md flex items-center justify-center p-1.5 overflow-hidden shrink-0">
+                <img
+                  src="/as-logo.png"
+                  alt="AS Refrigeration Kadapa Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <div>
                 <span className="text-xl font-black text-white tracking-tight">
                   AS <span className="text-red-500">REFRIGERATION</span>
