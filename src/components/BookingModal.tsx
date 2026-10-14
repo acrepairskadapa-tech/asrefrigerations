@@ -10,7 +10,9 @@ import {
   Sparkles,
   ArrowRight,
   MessageSquare,
-  Wrench
+  Wrench,
+  Zap,
+  Navigation
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { SERVICES_DATA, ServiceItem } from '../data/servicesData';
@@ -42,11 +44,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [modalCity, setModalCity] = useState<CityId>(selectedCity);
   const cityConfig = CITIES_DATA[modalCity];
 
+  // Booking mode: Express 60-min priority dispatch (default) vs scheduled
+  const [isExpressMode, setIsExpressMode] = useState<boolean>(true);
+
   const [selectedService, setSelectedService] = useState<ServiceItem>(
     preSelectedService || SERVICES_DATA[1] // Default to AC Jet Wash
   );
   const [quantity, setQuantity] = useState<number>(preSelectedQuantity);
-  const [slot, setSlot] = useState<string>('Morning (9:00 AM - 12:00 PM)');
+  const [slot, setSlot] = useState<string>('Immediate Urgent Visit (Within 60 Mins)');
   const [date, setDate] = useState<string>(() => {
     const today = new Date();
     return today.toISOString().split('T')[0];
@@ -56,6 +61,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [customerName, setCustomerName] = useState<string>('');
   const [customerPhone, setCustomerPhone] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
+  const [gpsCoords, setGpsCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [locating, setLocating] = useState<boolean>(false);
 
   const [bookingSuccess, setBookingSuccess] = useState<boolean>(false);
   const [bookingId, setBookingId] = useState<string>('');
@@ -71,6 +78,22 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   useEffect(() => {
     setArea(CITIES_DATA[modalCity].localities[0]);
+  }, [modalCity]);
+
+  // Auto-restore customer contact from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('as_last_booking_contact');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.name && !customerName) setCustomerName(parsed.name);
+        if (parsed.phone && !customerPhone) setCustomerPhone(parsed.phone);
+        if (parsed.street && !streetAddress) setStreetAddress(parsed.street);
+        if (parsed.area && CITIES_DATA[modalCity].localities.includes(parsed.area)) {
+          setArea(parsed.area);
+        }
+      }
+    } catch {}
   }, [modalCity]);
 
   useEffect(() => {
@@ -92,6 +115,25 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     }
   };
 
+  const handleDetectLocation = () => {
+    if (!navigator.geolocation) {
+      alert('GPS is not supported by your browser.');
+      return;
+    }
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setGpsCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocating(false);
+      },
+      () => {
+        setLocating(false);
+        alert('Could not detect location. Please type your street/landmark.');
+      },
+      { timeout: 8000, enableHighAccuracy: true }
+    );
+  };
+
   if (!isOpen) return null;
 
   const rawTotal = preSelectedPrice || selectedService.price * quantity;
@@ -104,19 +146,33 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       return;
     }
 
-    const cityPrefix = modalCity === 'kadapa' ? 'KDP' : 'BLR';
-    
+    const effectiveDate = isExpressMode ? 'Today' : (date || 'Today');
+    const effectiveSlot = isExpressMode ? 'Immediate Urgent Visit (Within 60 Mins)' : slot;
+    const mapsLink = gpsCoords ? `https://maps.google.com/?q=${gpsCoords.lat},${gpsCoords.lng}` : undefined;
+
+    // Save contact locally for 1-tap future auto-fills
+    try {
+      localStorage.setItem('as_last_booking_contact', JSON.stringify({
+        name: customerName.trim(),
+        phone: customerPhone.trim(),
+        street: streetAddress.trim(),
+        area
+      }));
+    } catch {}
+
     // Save to centralized Booking Store with Sameer-First Priority Dispatch
     const savedBooking = bookingStore.createBooking({
       customerName: customerName.trim() || 'Customer',
-      customerMobile: customerPhone,
+      customerMobile: customerPhone.trim(),
       serviceTitle: selectedService.name,
       applianceType: selectedService.category.toUpperCase(),
       city: modalCity,
       locality: area || cityConfig.localities[0],
       fullAddress: streetAddress ? `${streetAddress}, ${area}, ${cityConfig.name}` : `${area}, ${cityConfig.name}`,
-      date: date || 'Today',
-      timeSlot: slot,
+      latitude: gpsCoords?.lat,
+      longitude: gpsCoords?.lng,
+      date: effectiveDate,
+      timeSlot: effectiveSlot,
       estimatedPrice: calculatedTotal
     });
 
@@ -131,17 +187,19 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       origin: { y: 0.6 }
     });
 
-    // Send formatted WhatsApp notification
-    const msg = `*NEW DOORSTEP BOOKING - AS REFRIGERATION*\n` +
+    // Send formatted WhatsApp notification directly to Shaik Sameer / Branch
+    const msg = `*🚨 NEW DOORSTEP BOOKING - AS REFRIGERATION*\n` +
       `Booking ID: ${generatedId}\n` +
+      `Mode: ${isExpressMode ? "⚡ 60-MIN EXPRESS ARRIVAL" : "📅 Scheduled Visit"}\n` +
       `City / Branch: ${cityConfig.name} (${cityConfig.workshopName})\n` +
       `Customer: ${customerName || 'Customer'}\n` +
       `Phone: ${customerPhone}\n` +
       `Service: ${selectedService.name} (Qty: ${quantity})\n` +
-      `Estimated Amount: Rs. ${calculatedTotal}\n` +
-      `Date & Slot: ${date} [${slot}]\n` +
+      `Estimated Amount: Rs. ${calculatedTotal} (Pay After Service via UPI)\n` +
+      `Date & Slot: ${effectiveDate} [${effectiveSlot}]\n` +
       `Locality: ${area}\n` +
       `Full Address: ${streetAddress || cityConfig.name}\n` +
+      (mapsLink ? `Google Maps GPS: ${mapsLink}\n` : '') +
       `Notes: ${notes || 'None'}\n\n` +
       `Please dispatch technician.`;
 
@@ -184,20 +242,20 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
             </div>
 
-            {/* City Switcher Tabs in Modal */}
-            <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl mb-4">
+            {/* City Switcher Tabs */}
+            <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl mb-3">
               <button
                 type="button"
                 onClick={() => {
                   setModalCity('kadapa');
                   if (onSelectCity) onSelectCity('kadapa');
                 }}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
                   modalCity === 'kadapa' ? 'bg-red-600 text-white shadow-xs font-black' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 <MapPin className="w-3.5 h-3.5" />
-                <span>Kadapa (Flagship)</span>
+                <span>Kadapa (HQ)</span>
               </button>
               <button
                 type="button"
@@ -205,7 +263,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   setModalCity('bangalore');
                   if (onSelectCity) onSelectCity('bangalore');
                 }}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
                   modalCity === 'bangalore' ? 'bg-red-600 text-white shadow-xs font-black' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -214,10 +272,35 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </button>
             </div>
 
+            {/* Fast-Track Mode Toggle: Express 60-Min vs Custom Schedule */}
+            <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 rounded-2xl mb-4 text-xs font-black">
+              <button
+                type="button"
+                onClick={() => setIsExpressMode(true)}
+                className={`py-2 px-3 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                  isExpressMode ? 'bg-red-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Zap className="w-3.5 h-3.5 text-amber-300" />
+                <span>⚡ Express 60-Min</span>
+                <span className="text-[9px] bg-white/20 px-1.5 py-0.2 rounded font-black">Fastest</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsExpressMode(false)}
+                className={`py-2 px-3 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                  !isExpressMode ? 'bg-slate-900 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Calendar className="w-3.5 h-3.5" />
+                <span>📅 Schedule Later</span>
+              </button>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-4">
               
               {/* Service & Estimated Price Banner */}
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-50 to-red-50/30 border border-slate-200 space-y-2">
+              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-slate-50 to-red-50/30 border border-slate-200 space-y-1.5">
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Selected Service</div>
@@ -229,54 +312,100 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     <div className="text-xl font-black text-red-600 mt-0.5">₹{calculatedTotal}</div>
                   </div>
                 </div>
-                <div className="text-[11px] text-slate-600 bg-white/80 p-2.5 rounded-xl border border-slate-200/80 flex items-start gap-1.5 leading-snug">
-                  <span className="text-red-600 font-bold">ℹ️</span>
-                  <span>
-                    <strong>Doorstep Inspection Model:</strong> The technician inspects the appliance on-site, explains required spares/work, and confirms the final fixed price with you before repair. Zero advance payment required! Pay on completion via Dynamic UPI QR.
-                  </span>
-                </div>
+
+                {isExpressMode && (
+                  <div className="text-[11px] text-red-700 bg-red-100/60 p-2 rounded-xl flex items-center gap-1.5 font-bold">
+                    <span className="flex h-2 w-2 rounded-full bg-red-600 animate-ping"></span>
+                    <span>Express Priority: Shaik Sameer & Team arriving today within 60 mins.</span>
+                  </div>
+                )}
               </div>
 
-              {/* Date & Slot */}
+              {/* Date & Slot (Only displayed if customer selects "Schedule Later") */}
+              {!isExpressMode && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200 animate-fadeIn">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                      Preferred Date
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-semibold"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-slate-500" />
+                      Preferred Time Slot
+                    </label>
+                    <select
+                      value={slot}
+                      onChange={(e) => setSlot(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-semibold"
+                    >
+                      <option value="Morning (9:00 AM - 12:00 PM)">Morning (9:00 AM - 12:00 PM)</option>
+                      <option value="Afternoon (12:00 PM - 3:00 PM)">Afternoon (12:00 PM - 3:00 PM)</option>
+                      <option value="Evening (3:00 PM - 7:00 PM)">Evening (3:00 PM - 7:00 PM)</option>
+                      <option value="Immediate Urgent Visit (Within 60 Mins)">Urgent (Within 60 Mins)</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              {/* Customer Contact - Placed Prominently */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5 text-slate-500" />
-                    Preferred Date
+                    <Phone className="w-3.5 h-3.5 text-red-600" />
+                    WhatsApp Number <span className="text-red-500">*</span>
                   </label>
                   <input
-                    type="date"
+                    type="tel"
                     required
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-semibold"
+                    placeholder="e.g. 98765 43210"
+                    value={customerPhone}
+                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-black text-sm"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-slate-500" />
-                    Preferred Time Slot
+                    <User className="w-3.5 h-3.5 text-slate-500" />
+                    Your Name
                   </label>
-                  <select
-                    value={slot}
-                    onChange={(e) => setSlot(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-semibold"
-                  >
-                    <option value="Morning (9:00 AM - 12:00 PM)">Morning (9:00 AM - 12:00 PM)</option>
-                    <option value="Afternoon (12:00 PM - 3:00 PM)">Afternoon (12:00 PM - 3:00 PM)</option>
-                    <option value="Evening (3:00 PM - 7:00 PM)">Evening (3:00 PM - 7:00 PM)</option>
-                    <option value="Immediate Urgent Visit (Within 60 Mins)">Urgent (Within 60 Mins)</option>
-                  </select>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Shaik Mehraj"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-red-500"
+                  />
                 </div>
               </div>
 
-              {/* Locality in Selected City */}
+              {/* Locality in Selected City with GPS auto-attach */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                  Your Area / Locality in {cityConfig.name}
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-slate-500" />
+                    Locality in {cityConfig.name}
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleDetectLocation}
+                    className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer"
+                  >
+                    <Navigation className="w-3 h-3 text-red-600" />
+                    <span>{locating ? 'Detecting GPS...' : gpsCoords ? '✓ GPS Attached' : 'Auto-Attach GPS'}</span>
+                  </button>
+                </div>
                 <select
                   value={area}
                   onChange={(e) => setArea(e.target.value)}
@@ -293,172 +422,91 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               {/* Street Address */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Street / Landmark / House No.
+                  House / Landmark / Street Address
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Beside 2nd Mariapuram Church, Pulivendula Rd"
+                  placeholder="e.g. Near Mariapuram Church, Pulivendula Road"
                   value={streetAddress}
                   onChange={(e) => setStreetAddress(e.target.value)}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500"
                 />
               </div>
 
-              {/* Customer Contact */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                    <User className="w-3.5 h-3.5 text-slate-500" />
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Shaik Mehraj"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                    <Phone className="w-3.5 h-3.5 text-slate-500" />
-                    WhatsApp Number <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="e.g. 98765 43210"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-bold"
-                  />
-                </div>
-              </div>
-
-              {/* Additional notes */}
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Any specific issue details or symptoms? (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. AC compressor trips after 10 mins, or gas smell observed"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500"
-                />
-              </div>
-
-              {/* Instagram Follower Coupon Code */}
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-extrabold text-slate-800 flex items-center gap-1">
-                    <span>📸 Instagram Follower Coupon</span>
-                  </span>
-                  <a
-                    href="https://www.instagram.com/asrefrigerations.kadapa/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[11px] font-bold text-red-600 hover:underline"
-                  >
-                    Follow @asrefrigerations.kadapa →
-                  </a>
-                </div>
-
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Enter code: INSTA100"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                    className="flex-1 bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-900 uppercase font-mono font-bold focus:outline-none focus:border-red-500"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleApplyCoupon}
-                    className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs cursor-pointer transition active:scale-95"
-                  >
-                    Apply (-₹100)
-                  </button>
-                </div>
-
-                {couponMessage && (
-                  <div className={`text-[11px] font-bold ${discount > 0 ? 'text-emerald-700' : 'text-red-600'}`}>
-                    {couponMessage}
-                  </div>
-                )}
-              </div>
-
-              {/* Submit CTA */}
+              {/* Submit CTA Button */}
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm shadow-xl shadow-red-600/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-sm shadow-xl shadow-red-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                 >
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Confirm Doorstep Booking (Pay After Work)</span>
+                  <Zap className="w-4 h-4 text-amber-300" />
+                  <span>
+                    {isExpressMode ? "Confirm 60-Min Doorstep Dispatch" : "Confirm Doorstep Service Booking"}
+                  </span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
-              </div>
-
-              <div className="text-[11px] text-center text-slate-400 font-medium flex items-center justify-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-                <span>Zero advance deposit. Technician calls 15 mins prior to arrival.</span>
+                
+                <p className="text-[11px] text-center text-slate-500 mt-2">
+                  🔒 Zero advance payment. Pay technician on completion via UPI QR.
+                </p>
               </div>
 
             </form>
           </div>
         ) : (
-          /* Confirmation Success State */
+          /* Booking Success Card */
           <div className="text-center py-6 space-y-4">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-md">
-              <CheckCircle2 className="w-9 h-9 stroke-[2.5]" />
+            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-10 h-10" />
             </div>
 
-            <h3 className="text-2xl font-black text-slate-900">
-              Booking Confirmed!
-            </h3>
-
-            <div className="inline-block bg-slate-100 px-4 py-1.5 rounded-full text-xs font-extrabold text-slate-800">
-              Booking ID: <span className="text-red-600 font-black">{bookingId}</span>
+            <div>
+              <div className="text-xs font-black uppercase text-emerald-600 tracking-wider">Booking Confirmed!</div>
+              <h3 className="text-2xl font-black text-slate-900 mt-0.5">Technician Dispatched</h3>
+              <p className="text-xs text-slate-500 mt-1">
+                Booking ID: <strong className="text-slate-900">{bookingId}</strong>
+              </p>
             </div>
 
-            <p className="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
-              Thank you, <span className="font-bold text-slate-900">{customerName}</span>. Your doorstep service request has been logged and sent directly to Master Shaik Sameer and our local dispatch team in {area}.
-            </p>
-
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left text-xs space-y-2 max-w-sm mx-auto">
-              <div><span className="text-slate-400">Service:</span> <span className="font-bold text-slate-900">{selectedService.name}</span></div>
-              <div><span className="text-slate-400">Slot:</span> <span className="font-bold text-slate-900">{date} • {slot}</span></div>
-              <div className="flex items-center justify-between pt-1 border-t border-slate-200">
-                <span className="text-slate-500 font-semibold">Estimated Base Price:</span>
-                <span className="font-black text-red-600 text-sm">₹{calculatedTotal}</span>
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left text-xs space-y-1.5">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Service:</span>
+                <span className="font-bold text-slate-900">{selectedService.name}</span>
               </div>
-              <div className="text-[11px] text-slate-600 bg-amber-50 p-2 rounded-xl border border-amber-200 leading-tight">
-                💡 Sameer / Technician will inspect on-site, fix the exact final price with your approval, and generate a dynamic UPI QR code on your doorstep.
+              <div className="flex justify-between">
+                <span className="text-slate-500">Estimated Total:</span>
+                <span className="font-bold text-red-600">₹{calculatedTotal}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Dispatched To:</span>
+                <span className="font-bold text-slate-900">{area}, {cityConfig.name}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Master Lead:</span>
+                <span className="font-bold text-emerald-600">Shaik Sameer & Team</span>
               </div>
             </div>
 
-            <div className="pt-2 flex flex-col gap-2 max-w-sm mx-auto">
+            <div className="flex flex-col sm:flex-row gap-2 pt-2">
               <a
-                href="tel:+917815851330"
-                className="py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition"
+                href={`https://wa.me/${cityConfig.phoneRaw}?text=Hi%20Shaik%20Sameer,%20I%20have%20booked%20service%20${bookingId}%20for%20${area}.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition"
               >
-                <Phone className="w-4 h-4" />
-                <span>Call Helpline (+91 78158 51330)</span>
+                <MessageSquare className="w-4 h-4" />
+                <span>Chat with Sameer on WhatsApp</span>
               </a>
 
               <button
                 onClick={handleResetAndClose}
-                className="py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 font-semibold text-xs transition cursor-pointer"
+                className="py-3 px-5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition cursor-pointer"
               >
-                Close Window
+                Done
               </button>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
