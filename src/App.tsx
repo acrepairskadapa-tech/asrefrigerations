@@ -15,7 +15,6 @@ import { CommercialAMC } from './components/CommercialAMC';
 import { PartnerNetwork } from './components/PartnerNetwork';
 import { QRCodeStickerModal } from './components/QRCodeStickerModal';
 import { PortalHubModal } from './components/PortalHubModal';
-import { MobileAppSimulatorModal } from './components/MobileAppSimulatorModal';
 import { BookingModal } from './components/BookingModal';
 import { MobileStickyBar } from './components/MobileStickyBar';
 import { DiagnosticAssistant } from './components/DiagnosticAssistant';
@@ -46,7 +45,6 @@ export function App() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [qrModalOpen, setQrModalOpen] = useState(false);
   const [portalsModalOpen, setPortalsModalOpen] = useState(false);
-  const [mobileAppsModalOpen, setMobileAppsModalOpen] = useState(false);
 
   // Filter & Service selection states
   const [selectedCategory, setSelectedCategory] = useState<ServiceItem['category']>('ac');
@@ -123,7 +121,6 @@ export function App() {
         }}
         onOpenQr={() => setQrModalOpen(true)}
         onOpenPortals={() => setPortalsModalOpen(true)}
-        onOpenMobileApps={() => setMobileAppsModalOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -178,8 +175,8 @@ export function App() {
         {/* 8. Verified Google Reviews (928+ Reviews on GMB Profile) */}
         <GoogleReviews lang={lang} />
 
-        {/* 9. Mobile App Showcase & Store Badges (Google Play & iOS Soon) */}
-        <AppDownloadShowcase onOpenSimulator={() => setMobileAppsModalOpen(true)} />
+        {/* 9. Native Android App Download Showcase */}
+        <AppDownloadShowcase />
 
         {/* 10. Instagram Video Reels Hub & ₹100 Follower Discount */}
         <InstagramReelsSection
@@ -189,16 +186,16 @@ export function App() {
           }}
         />
 
-        {/* 10. Annual Maintenance Contracts (AMC) */}
+        {/* 11. Annual Maintenance Contracts (AMC) */}
         <CommercialAMC
           lang={lang}
           onOpenBooking={() => setBookingModalOpen(true)}
         />
 
-        {/* 11. Technician Partner Network */}
+        {/* 12. Technician Partner Network */}
         <PartnerNetwork lang={lang} />
 
-        {/* 12. Frequently Asked Questions (FAQ) */}
+        {/* 13. Frequently Asked Questions (FAQ) */}
         <FAQSection />
       </main>
 
@@ -212,7 +209,7 @@ export function App() {
         onOpenPortals={() => setPortalsModalOpen(true)}
       />
 
-      {/* Mobile App Bottom Navigation Bar */}
+      {/* Mobile Sticky Navigation Bar */}
       <MobileStickyBar
         lang={lang}
         selectedCity={selectedCity}
@@ -224,35 +221,22 @@ export function App() {
         }}
         onOpenPortals={() => setPortalsModalOpen(true)}
         onOpenQr={() => setQrModalOpen(true)}
-        onOpenMobileApps={() => setMobileAppsModalOpen(true)}
       />
 
-      {/* 14. Smart QR Code AC Sticker Modal */}
+      {/* Smart QR Code AC Sticker Modal */}
       <QRCodeStickerModal
         isOpen={qrModalOpen}
         onClose={() => setQrModalOpen(false)}
       />
 
-      {/* 15. Customer & Partner Management Hub Modal */}
+      {/* Customer & Partner Management Hub Modal */}
       <PortalHubModal
         isOpen={portalsModalOpen}
         onClose={() => setPortalsModalOpen(false)}
         selectedCity={selectedCity}
       />
 
-      {/* 16. Urban Company-Inspired Mobile Applications Simulator */}
-      <MobileAppSimulatorModal
-        isOpen={mobileAppsModalOpen}
-        onClose={() => setMobileAppsModalOpen(false)}
-        selectedCity={selectedCity}
-        onSelectCity={handleSelectCity}
-        onOpenWebBooking={() => {
-          setMobileAppsModalOpen(false);
-          setBookingModalOpen(true);
-        }}
-      />
-
-      {/* 17. 3-Step Booking Modal */}
+      {/* 3-Step Booking Modal */}
       <BookingModal
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}

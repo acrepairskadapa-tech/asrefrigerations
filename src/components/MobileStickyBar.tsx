@@ -24,7 +24,6 @@ interface MobileStickyBarProps {
   onOpenBooking: () => void;
   onOpenPortals?: () => void;
   onOpenQr?: () => void;
-  onOpenMobileApps?: () => void;
 }
 
 export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
@@ -33,8 +32,7 @@ export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
   onSelectCity,
   onOpenBooking,
   onOpenPortals,
-  onOpenQr,
-  onOpenMobileApps
+  onOpenQr
 }) => {
   const cityConfig = CITIES_DATA[selectedCity];
   const [activeTab, setActiveTab] = useState<'home' | 'location' | 'support' | 'services' | 'booking'>('home');
@@ -239,27 +237,26 @@ export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
                 </span>
               </a>
 
-              {/* Dedicated Mobile Apps Button */}
-              <button
-                onClick={() => {
-                  setSupportSheetOpen(false);
-                  if (onOpenMobileApps) onOpenMobileApps();
-                }}
-                className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 text-white flex items-center justify-between active:scale-98 transition shadow-md cursor-pointer"
+              {/* Download Android App Button */}
+              <a
+                href="/downloads/AS_Refrigeration_v1.0.apk"
+                download="AS_Refrigeration_v1.0.apk"
+                onClick={() => setSupportSheetOpen(false)}
+                className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-green-600 text-white flex items-center justify-between active:scale-98 transition shadow-md"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center font-bold text-base">
                     📱
                   </div>
                   <div className="text-left">
-                    <div className="text-[10px] uppercase font-bold text-red-200">Urban Company Aesthetic</div>
-                    <div className="text-sm font-black text-white">Dedicated Mobile Apps (2 Apps)</div>
+                    <div className="text-[10px] uppercase font-bold text-emerald-200">Native Android App</div>
+                    <div className="text-sm font-black text-white">Download APK (v1.0)</div>
                   </div>
                 </div>
-                <span className="text-xs font-bold text-red-950 bg-white px-2.5 py-1 rounded-lg">
-                  Open UI
+                <span className="text-xs font-bold text-emerald-950 bg-white px-2.5 py-1 rounded-lg">
+                  41 MB
                 </span>
-              </button>
+              </a>
 
               {/* WhatsApp Chat Button */}
               <a

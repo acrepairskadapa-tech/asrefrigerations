@@ -19,7 +19,6 @@ interface HeaderProps {
   onOpenBooking: () => void;
   onOpenQr: () => void;
   onOpenPortals: () => void;
-  onOpenMobileApps?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -28,8 +27,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectCity,
   onOpenBooking,
   onOpenQr,
-  onOpenPortals,
-  onOpenMobileApps
+  onOpenPortals
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
@@ -187,13 +185,13 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Reels</span>
               <span className="bg-slate-100 text-slate-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-slate-200">₹100 Off</span>
             </a>
-            <button
-              onClick={onOpenMobileApps}
-              className="hover:text-red-600 transition py-1 flex items-center gap-1.5 text-slate-700 font-bold cursor-pointer"
+            <a
+              href="#mobile-app"
+              className="hover:text-red-600 transition py-1 flex items-center gap-1.5 text-slate-700 font-bold"
             >
-              <span>📱 Mobile Apps</span>
-              <span className="bg-red-50 text-red-600 text-[10px] px-1.5 py-0.2 rounded-full font-bold border border-red-200">Urban UI</span>
-            </button>
+              <span>📱 Android App</span>
+              <span className="bg-emerald-50 text-emerald-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-emerald-200">Download</span>
+            </a>
             <a
               href="#partners"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white transition font-black text-xs shadow-xs"
@@ -302,15 +300,13 @@ export const Header: React.FC<HeaderProps> = ({
             >
               🔧 Join Partner (₹60K)
             </a>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                if (onOpenMobileApps) onOpenMobileApps();
-              }}
-              className="p-3 rounded-xl bg-red-50 text-red-700 border border-red-200 font-extrabold hover:bg-red-100 transition text-left cursor-pointer"
+            <a
+              href="#mobile-app"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-3 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 font-extrabold hover:bg-emerald-100 transition text-left"
             >
-              📱 Mobile Apps Preview
-            </button>
+              📱 Android App (Download)
+            </a>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
