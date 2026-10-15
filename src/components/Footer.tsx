@@ -486,7 +486,7 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Bar & Legal Links */}
         <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-400 text-[11px]">
           <div>
-            © {new Date().getFullYear()} AS Refrigerations Kadapa (Shaik Sameer). All rights reserved.
+            © {new Date().getFullYear()} AS Refrigerations. All rights reserved.
           </div>
 
           {/* Legal policy links */}
