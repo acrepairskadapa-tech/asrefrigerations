@@ -9,7 +9,8 @@ import {
   QrCode, 
   CheckCircle2, 
   MessageSquare,
-  Award
+  Award,
+  Sparkles
 } from 'lucide-react';
 import { KADAPA_AREAS } from '../data/servicesData';
 import { Language } from '../data/translations';
@@ -434,6 +435,44 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
         </div>
 
+        {/* Technology Architecture & Engineering Partner Showcase */}
+        <div className="my-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900/90 via-slate-950 to-slate-900/90 border border-slate-800/80 hover:border-indigo-500/40 transition-all duration-300 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-400 p-[1.5px] shadow-lg shadow-indigo-500/20 shrink-0">
+              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-black text-white text-lg tracking-tight">
+                M
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-indigo-400" />
+                  Official Technology Partner
+                </span>
+                <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                  Engineering & Cloud
+                </span>
+              </div>
+              <h4 className="text-sm sm:text-base font-black text-white tracking-tight mt-0.5">
+                MOMO IT TECHNOLOGIES
+              </h4>
+              <p className="text-[11px] text-slate-400 leading-tight mt-0.5">
+                Architect of AS Refrigerations Cloud Ecosystem, Native Android Apps & Doorstep Dispatch Engine.
+              </p>
+            </div>
+          </div>
+
+          <a
+            href="https://www.momoittechnologies.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-black text-xs shadow-lg shadow-indigo-600/20 active:scale-95 transition-all group shrink-0 cursor-pointer"
+          >
+            <span>Visit momoittechnologies.com</span>
+            <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
+        </div>
+
         {/* Bottom Bar & Legal Links */}
         <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-400 text-[11px]">
           <div>
@@ -471,7 +510,16 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Technology Partner Attribution */}
           <div className="flex items-center gap-1.5 text-slate-400 font-medium">
             <span>Technology Partner:</span>
-            <span className="font-bold text-slate-200 tracking-wide">MOMO IT TECHNOLOGIES</span>
+            <a
+              href="https://www.momoittechnologies.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-extrabold text-indigo-400 hover:text-indigo-300 transition-colors inline-flex items-center gap-1 group"
+              title="Visit MOMO IT TECHNOLOGIES"
+            >
+              <span className="underline decoration-indigo-500/40 hover:decoration-indigo-400">MOMO IT TECHNOLOGIES</span>
+              <ExternalLink className="w-3 h-3 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
           </div>
         </div>
 
