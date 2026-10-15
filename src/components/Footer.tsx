@@ -9,8 +9,7 @@ import {
   QrCode, 
   CheckCircle2, 
   MessageSquare,
-  Award,
-  Sparkles
+  Award
 } from 'lucide-react';
 import { KADAPA_AREAS } from '../data/servicesData';
 import { Language } from '../data/translations';
@@ -433,54 +432,6 @@ export const Footer: React.FC<FooterProps> = ({
               </span>
             ))}
           </div>
-        </div>
-
-        {/* Technology Architecture & Engineering Partner Showcase */}
-        <div className="my-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900/90 via-slate-950 to-slate-900/90 border border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
-          <div className="flex items-center gap-3.5">
-            <a
-              href="https://www.momoittechnologies.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative group/logo shrink-0"
-              title="MOMO IT TECHNOLOGIES Official Website"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-slate-950 p-1 border border-cyan-500/30 group-hover/logo:border-cyan-400 shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-400/40 transition-all duration-300 flex items-center justify-center overflow-hidden">
-                <img
-                  src="/momo-it-logo.png"
-                  alt="MOMO IT TECHNOLOGIES"
-                  className="w-full h-full object-contain rounded-xl group-hover/logo:scale-105 transition-transform duration-300"
-                />
-              </div>
-            </a>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-cyan-400" />
-                  Official Technology Partner
-                </span>
-                <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
-                  Engineering & Cloud
-                </span>
-              </div>
-              <h4 className="text-sm sm:text-base font-black text-white tracking-tight mt-0.5">
-                MOMO IT TECHNOLOGIES
-              </h4>
-              <p className="text-[11px] text-slate-400 leading-tight mt-0.5">
-                Architect of AS Refrigerations Cloud Ecosystem, Native Android Apps & Doorstep Dispatch Engine.
-              </p>
-            </div>
-          </div>
-
-          <a
-            href="https://www.momoittechnologies.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-black text-xs shadow-lg shadow-cyan-600/20 active:scale-95 transition-all group shrink-0 cursor-pointer"
-          >
-            <span>Visit momoittechnologies.com</span>
-            <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
         </div>
 
         {/* Bottom Bar & Legal Links */}
