@@ -231,7 +231,7 @@ export const Header: React.FC<HeaderProps> = ({
               <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
               <span>Android App</span>
               <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] px-1.5 py-0.2 rounded-full font-bold">
-                APK
+                ₹100 Off
               </span>
             </a>
             <a

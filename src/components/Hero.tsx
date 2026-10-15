@@ -9,7 +9,9 @@ import {
   ArrowRight, 
   Wrench, 
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Download,
+  Smartphone
 } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../data/translations';
 import { ServiceItem } from '../data/servicesData';
@@ -199,35 +201,43 @@ export const Hero: React.FC<HeroProps> = ({
               </span>
             </div>
 
-            {/* Native Mobile App Teaser Pill */}
+            {/* Native Mobile App VIP Loyalty Banner */}
             <div className="pt-2">
-              <a
-                href="#mobile-app"
-                className="inline-flex items-center gap-3 p-2.5 pr-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition group shadow-md"
-              >
-                <div className="flex -space-x-1">
-                  <div className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center border border-slate-700 shadow-xs">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
-                      <path d="M4 3.5C4 2.8 4.6 2.3 5.3 2.6L16.2 9.2L12 13.4L4 3.5Z" fill="#00D2FF"/>
-                      <path d="M16.2 9.2L20.5 11.8C21.2 12.2 21.2 13.2 20.5 13.6L16.2 16.2L12 12.7L16.2 9.2Z" fill="#FFCE00"/>
-                      <path d="M4 21.9C4 22.6 4.6 23.1 5.3 22.8L16.2 16.2L12 12L4 21.9Z" fill="#FF3A44"/>
-                      <path d="M12 12.7L4 3.5C3.8 3.8 3.7 4.2 3.7 4.7V20.7C3.7 21.2 3.8 21.6 4 21.9L12 12.7Z" fill="#00E676"/>
-                    </svg>
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/70 via-slate-900 to-slate-900 border border-emerald-500/40 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-left">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 text-xl shadow-xs">
+                    📱
                   </div>
-                  <div className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center border border-slate-700 shadow-xs">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
-                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.84c.62-.76 1.05-1.81.93-2.84-.91.04-2.02.61-2.67 1.37-.58.67-1.1 1.74-.96 2.76 1.02.08 2.07-.53 2.7-1.29z"/>
-                    </svg>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-black text-white text-sm">AS Customer Android App</span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500 text-slate-950 uppercase tracking-wide">
+                        ₹100 OFF
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-300 mt-0.5">
+                      Live GPS arrival radar, 1-tap re-booking & 0% doorstep UPI bills.
+                    </p>
                   </div>
                 </div>
-                <div className="text-left text-xs">
-                  <div className="font-bold text-slate-200 group-hover:text-white transition flex items-center gap-1.5">
-                    <span>Google Play Store APK</span>
-                    <span className="text-[10px] text-sky-400 font-semibold">• iOS App Soon</span>
-                  </div>
-                  <div className="text-[11px] text-slate-400">Track Sameer Bhai live on mobile →</div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href="/downloads/as-refrigerations-customer.apk"
+                    download="as-refrigerations-customer.apk"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-lg shadow-emerald-600/30 transition active:scale-95 cursor-pointer"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download APK</span>
+                  </a>
+                  <a
+                    href="#mobile-app"
+                    className="inline-flex items-center justify-center px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition"
+                  >
+                    Features →
+                  </a>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
 
@@ -355,6 +365,23 @@ export const Hero: React.FC<HeroProps> = ({
                       className="w-full bg-slate-950/90 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition"
                     />
                   </div>
+                </div>
+
+                {/* Mobile App Advantage Callout */}
+                <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base shrink-0">📱</span>
+                    <span className="text-[11px] font-medium text-slate-300">
+                      Prefer <strong className="text-emerald-400">Live GPS Technician Radar</strong>?
+                    </span>
+                  </div>
+                  <a
+                    href="/downloads/as-refrigerations-customer.apk"
+                    download="as-refrigerations-customer.apk"
+                    className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] transition shadow-xs shrink-0 flex items-center gap-1"
+                  >
+                    <span>Use App (₹100 Off)</span>
+                  </a>
                 </div>
 
                 {/* Submit Express Button */}

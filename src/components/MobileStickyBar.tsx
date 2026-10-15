@@ -254,7 +254,7 @@ export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
                   </div>
                 </div>
                 <span className="text-xs font-bold text-emerald-950 bg-white px-2.5 py-1 rounded-lg">
-                  41 MB
+                  18 MB • ₹100 Off
                 </span>
               </a>
 

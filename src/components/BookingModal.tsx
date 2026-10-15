@@ -13,7 +13,9 @@ import {
   Wrench, 
   Zap, 
   Navigation, 
-  UserCheck 
+  UserCheck,
+  Download,
+  Smartphone
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { SERVICES_DATA, ServiceItem } from '../data/servicesData';
@@ -330,6 +332,28 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <MapPin className="w-3.5 h-3.5" />
                 <span>Bangalore (Branch)</span>
               </button>
+            </div>
+
+            {/* App Exclusive Loyalty Bridge Pill */}
+            <div className="mb-3.5 p-2.5 rounded-2xl bg-gradient-to-r from-emerald-950/70 via-slate-900 to-slate-900 border border-emerald-500/30 flex items-center justify-between gap-2 shadow-xs text-left">
+              <div className="flex items-center gap-2">
+                <span className="text-base shrink-0">📱</span>
+                <div>
+                  <div className="text-white text-xs font-black flex items-center gap-1.5">
+                    <span>AS Customer Mobile App</span>
+                    <span className="px-1.5 py-0.2 rounded text-[9px] font-black bg-emerald-500 text-slate-950 uppercase">₹100 OFF</span>
+                  </div>
+                  <p className="text-[10px] text-slate-300">Live GPS technician radar & 1-tap reorders</p>
+                </div>
+              </div>
+              <a
+                href="/downloads/as-refrigerations-customer.apk"
+                download="as-refrigerations-customer.apk"
+                className="px-2.5 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] shrink-0 transition flex items-center gap-1 shadow-xs"
+              >
+                <span>Get App</span>
+                <Download className="w-3 h-3" />
+              </a>
             </div>
 
             {/* Fast-Track Mode Toggle: Express 60-Min vs Custom Schedule */}
@@ -664,6 +688,37 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <span className="text-slate-500">Master Lead:</span>
                 <span className="font-bold text-emerald-600">Shaik Sameer & Team</span>
               </div>
+            </div>
+
+            {/* Post-Booking App Install Bridge Card */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-emerald-500/40 text-left text-white shadow-xl space-y-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-xl shrink-0">
+                    📍
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-black uppercase text-emerald-400 tracking-wider">Live Arrival Radar</div>
+                    <h4 className="text-sm font-black text-white">Track Shaik Sameer in Real-Time</h4>
+                  </div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  ₹100 Off App
+                </span>
+              </div>
+
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Download the official <strong>AS Refrigerations Android App</strong> to track your technician's live route on Google Maps, receive digital bills, and claim <strong>₹100 OFF</strong> on your next repair!
+              </p>
+
+              <a
+                href="/downloads/as-refrigerations-customer.apk"
+                download="as-refrigerations-customer.apk"
+                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition active:scale-95"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download AS Customer App (18 MB)</span>
+              </a>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
