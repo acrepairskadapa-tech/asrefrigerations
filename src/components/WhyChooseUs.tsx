@@ -28,7 +28,7 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({
   const cityConfig = CITIES_DATA[selectedCity];
 
   return (
-    <section className="py-16 bg-slate-50 border-b border-slate-200 scroll-mt-14" id="why-us">
+    <section className="py-16 bg-slate-50 border-b border-slate-200 scroll-mt-14 w-full max-w-full overflow-hidden" id="why-us">
       <div id="location" className="scroll-mt-20" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -106,9 +106,9 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({
             </div>
 
             {/* Floating Trust Badge */}
-            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-5 py-2.5 rounded-full shadow-xl border border-slate-200 flex items-center gap-2 whitespace-nowrap">
-              <ShieldCheck className="w-5 h-5 text-emerald-600" />
-              <span className="text-xs font-black text-slate-900">
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-xl border border-slate-200 flex items-center justify-center gap-1.5 sm:gap-2 max-w-[92vw]">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0" />
+              <span className="text-[11px] sm:text-xs font-black text-slate-900 truncate">
                 100% Certified Doorstep Service Guarantee
               </span>
             </div>

@@ -109,7 +109,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans selection:bg-red-500 selection:text-white">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-slate-50 text-slate-800 font-sans selection:bg-red-500 selection:text-white">
       {/* 1. Sticky Navigation Bar */}
       <Header
         lang={lang}
@@ -125,7 +125,7 @@ export function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 pb-24 md:pb-0">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden pb-24 md:pb-0">
         {/* 2. Hero with Express 30-Sec Booking Card */}
         <Hero
           lang={lang}

@@ -133,57 +133,57 @@ export const Hero: React.FC<HeroProps> = ({
             </p>
 
             {/* Key Trust Highlights Matrix */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 ios-tap">
-                <div className="flex items-center gap-1 text-amber-400 font-black text-lg">
-                  <Star className="w-5 h-5 fill-amber-400" />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-2">
+              <div className="p-2.5 sm:p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 ios-tap">
+                <div className="flex items-center gap-1 text-amber-400 font-black text-base sm:text-lg">
+                  <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-400" />
                   <span>4.9 / 5</span>
                 </div>
-                <div className="text-xs text-slate-300 font-medium mt-0.5">928+ Google Reviews</div>
+                <div className="text-[11px] sm:text-xs text-slate-300 font-medium mt-0.5">928+ Google Reviews</div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 ios-tap">
-                <div className="flex items-center gap-1 text-red-400 font-black text-lg">
-                  <Clock className="w-5 h-5" />
+              <div className="p-2.5 sm:p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 ios-tap">
+                <div className="flex items-center gap-1 text-red-400 font-black text-base sm:text-lg">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>60 Mins</span>
                 </div>
-                <div className="text-xs text-slate-300 font-medium mt-0.5">Express Doorstep Visit</div>
+                <div className="text-[11px] sm:text-xs text-slate-300 font-medium mt-0.5">Express Doorstep Visit</div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 ios-tap">
-                <div className="flex items-center gap-1 text-emerald-400 font-black text-lg">
-                  <ShieldCheck className="w-5 h-5" />
+              <div className="p-2.5 sm:p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 ios-tap">
+                <div className="flex items-center gap-1 text-emerald-400 font-black text-base sm:text-lg">
+                  <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>30 Days</span>
                 </div>
-                <div className="text-xs text-slate-300 font-medium mt-0.5">Service Warranty</div>
+                <div className="text-[11px] sm:text-xs text-slate-300 font-medium mt-0.5">Service Warranty</div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 ios-tap">
-                <div className="flex items-center gap-1 text-sky-400 font-black text-lg">
-                  <Wrench className="w-5 h-5" />
+              <div className="p-2.5 sm:p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 ios-tap">
+                <div className="flex items-center gap-1 text-sky-400 font-black text-base sm:text-lg">
+                  <Wrench className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>10+ Yrs</span>
                 </div>
-                <div className="text-xs text-slate-300 font-medium mt-0.5">Master Sameer Bhai</div>
+                <div className="text-[11px] sm:text-xs text-slate-300 font-medium mt-0.5">Master Sameer Bhai</div>
               </div>
             </div>
 
             {/* Quick Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 pt-2 w-full">
               <a
                 href="tel:+917815851330"
-                className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-red-600 hover:bg-red-700 font-black text-white shadow-lg shadow-red-600/20 ios-tap transition"
+                className="flex items-center justify-center gap-2.5 px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl bg-red-600 hover:bg-red-700 font-black text-white text-sm sm:text-base shadow-lg shadow-red-600/20 ios-tap transition text-center"
               >
-                <Phone className="w-5 h-5" />
-                <span>Call Shaik Sameer: +91 78158 51330</span>
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                <span className="truncate">Call Shaik Sameer: +91 78158 51330</span>
               </a>
 
               <a
                 href="https://wa.me/917815851330?text=Hi%20AS%20Refrigeration,%20I%20am%20looking%20for%20AC%20or%20Fridge%20service%20in%20Kadapa."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 font-black text-white shadow-lg shadow-emerald-600/20 ios-tap transition"
+                className="flex items-center justify-center gap-2.5 px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 font-black text-white text-sm sm:text-base shadow-lg shadow-emerald-600/20 ios-tap transition text-center"
               >
-                <MessageSquare className="w-5 h-5" />
+                <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
                 <span>Instant WhatsApp</span>
               </a>
             </div>

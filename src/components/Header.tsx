@@ -111,33 +111,33 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* 2. Main Executive Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 sm:h-20 gap-3 lg:gap-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4 lg:gap-6 w-full">
           
           {/* Left: Brand Identity & City Selector */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            <a href="#" className="flex items-center gap-3 group focus:outline-none">
+          <div className="flex items-center gap-2 sm:gap-4 shrink min-w-0">
+            <a href="#" className="flex items-center gap-2 sm:gap-3 group focus:outline-none min-w-0">
               {/* Official Brand Logo - Crisp and naturally integrated without artificial cutout box */}
-              <div className="h-10 sm:h-12 w-auto flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105">
+              <div className="h-9 sm:h-12 w-auto flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105">
                 <img
                   src="/as-logo.png"
                   alt="AS Refrigerations Official Logo"
-                  className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_2px_10px_rgba(239,68,68,0.25)]"
+                  className="h-9 sm:h-12 w-auto object-contain drop-shadow-[0_2px_10px_rgba(239,68,68,0.25)]"
                 />
               </div>
 
               {/* Brand Typography */}
-              <div className="flex flex-col text-left">
-                <div className="flex items-center gap-2">
-                  <span className="text-lg sm:text-2xl font-black tracking-tight text-white group-hover:text-red-400 transition flex items-center leading-none">
-                    AS <span className="text-red-500 ml-1.5">REFRIGERATIONS</span>
+              <div className="flex flex-col text-left min-w-0">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="text-base sm:text-2xl font-black tracking-tight text-white group-hover:text-red-400 transition flex items-center leading-none truncate">
+                    AS <span className="text-red-500 ml-1">REFRIGERATIONS</span>
                   </span>
                   <span className="hidden md:inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                     Verified
                   </span>
                 </div>
-                <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 tracking-wide mt-1 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="hidden sm:flex text-[10px] sm:text-[11px] font-semibold text-slate-400 tracking-wide mt-1 items-center gap-1.5 truncate">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
                   {selectedCity === 'kadapa' 
                     ? "Kadapa's #1 Doorstep Service • Est. 2015" 
                     : "Bangalore Hub (Kammanahalli) • 60-Min Express"}
@@ -246,7 +246,7 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Right: Hotline & Primary Booking CTA */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {/* Quick Hotline Pill for Desktop */}
             <a
               href="tel:+917815851330"
@@ -262,37 +262,16 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </a>
 
-            {/* Mobile 1-Tap Quick Action Buttons */}
-            <a
-              href="tel:+917815851330"
-              className="w-9 h-9 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center sm:hidden active:scale-90 transition shrink-0"
-              title="Call 24/7 Hotline"
-              aria-label="Call Shaik Sameer"
-            >
-              <Phone className="w-4 h-4" />
-            </a>
-
-            <a
-              href="https://wa.me/917815851330?text=Hi%20AS%20Refrigerations%20Kadapa,%20I%20need%20doorstep%20service."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center sm:hidden active:scale-90 transition shrink-0"
-              title="WhatsApp Chat"
-              aria-label="Chat on WhatsApp"
-            >
-              <MessageSquare className="w-4 h-4" />
-            </a>
-
             {/* Primary High-Impact Booking CTA Button */}
             <button
               onClick={onOpenBooking}
-              className="flex items-center gap-2 bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-500 hover:to-rose-500 text-white font-black text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-red-600/30 transition-all cursor-pointer active:scale-95 shrink-0"
+              className="flex items-center gap-1.5 bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-500 hover:to-rose-500 text-white font-black text-xs sm:text-sm px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-red-600/30 transition-all cursor-pointer active:scale-95 shrink-0"
             >
               <span>{t.bookService}</span>
-              <span className="bg-white/20 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">60 Min</span>
+              <span className="hidden sm:inline-block bg-white/20 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">60 Min</span>
             </button>
 
-            {/* Mobile Hamburger Drawer Toggle */}
+            {/* Mobile Hamburger Drawer Toggle - Always perfectly in view */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl bg-white/10 text-slate-200 hover:text-white hover:bg-white/15 transition cursor-pointer lg:hidden active:scale-90 shrink-0"

@@ -16,7 +16,7 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({ lang }) => {
     : GOOGLE_REVIEWS.filter((r) => r.service.toLowerCase().includes(activeFilter.toLowerCase()));
 
   return (
-    <section className="py-16 bg-white border-b border-slate-200" id="reviews">
+    <section className="py-16 bg-white border-b border-slate-200 w-full max-w-full overflow-hidden" id="reviews">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header with Google Scorecard */}
@@ -128,7 +128,7 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({ lang }) => {
             href="https://www.reviewsmart.online/r/as-refrigeration"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 rounded-2xl bg-white text-slate-900 font-extrabold text-xs hover:bg-slate-100 transition whitespace-nowrap shadow-md ios-tap"
+            className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-white text-slate-900 font-extrabold text-xs hover:bg-slate-100 transition text-center shadow-md ios-tap shrink-0"
           >
             Leave a Google Review (928+ Total)
           </a>

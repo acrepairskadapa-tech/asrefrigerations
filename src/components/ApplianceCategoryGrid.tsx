@@ -61,7 +61,7 @@ export const ApplianceCategoryGrid: React.FC<ApplianceCategoryGridProps> = ({
   ];
 
   return (
-    <section className="py-14 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200/80" id="categories">
+    <section className="py-14 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200/80 w-full max-w-full overflow-hidden" id="categories">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-10">
           <span className="text-xs font-black uppercase tracking-wider text-red-700 bg-red-50 px-3.5 py-1 rounded-full border border-red-200/80">
@@ -75,7 +75,7 @@ export const ApplianceCategoryGrid: React.FC<ApplianceCategoryGridProps> = ({
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-4">
           {categories.map((cat) => {
             const Icon = cat.icon;
             const isSelected = selectedCategory === cat.id;
@@ -84,7 +84,7 @@ export const ApplianceCategoryGrid: React.FC<ApplianceCategoryGridProps> = ({
               <button
                 key={cat.id}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`group relative text-left p-5 rounded-[26px] border transition-all duration-200 flex flex-col justify-between cursor-pointer ios-tap ${
+                className={`group relative text-left p-3.5 sm:p-5 rounded-2xl sm:rounded-[26px] border transition-all duration-200 flex flex-col justify-between cursor-pointer ios-tap ${
                   isSelected
                     ? 'bg-white border-red-500 shadow-md ring-2 ring-red-500/15'
                     : 'bg-white border-slate-200/90 hover:border-slate-300 hover:shadow-md'

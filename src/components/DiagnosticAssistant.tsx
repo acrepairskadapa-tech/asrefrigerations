@@ -138,7 +138,7 @@ export const DiagnosticAssistant: React.FC<DiagnosticAssistantProps> = ({ onBook
   };
 
   return (
-    <section className="py-16 bg-slate-50/70 border-b border-slate-200/80" id="diagnostics">
+    <section className="py-16 bg-slate-50/70 border-b border-slate-200/80 w-full max-w-full overflow-hidden" id="diagnostics">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         
         {/* Section Header */}
