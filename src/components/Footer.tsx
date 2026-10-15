@@ -436,20 +436,30 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Technology Architecture & Engineering Partner Showcase */}
-        <div className="my-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900/90 via-slate-950 to-slate-900/90 border border-slate-800/80 hover:border-indigo-500/40 transition-all duration-300 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+        <div className="my-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900/90 via-slate-950 to-slate-900/90 border border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-400 p-[1.5px] shadow-lg shadow-indigo-500/20 shrink-0">
-              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-black text-white text-lg tracking-tight">
-                M
+            <a
+              href="https://www.momoittechnologies.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative group/logo shrink-0"
+              title="MOMO IT TECHNOLOGIES Official Website"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-slate-950 p-1 border border-cyan-500/30 group-hover/logo:border-cyan-400 shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-400/40 transition-all duration-300 flex items-center justify-center overflow-hidden">
+                <img
+                  src="/momo-it-logo.png"
+                  alt="MOMO IT TECHNOLOGIES"
+                  className="w-full h-full object-contain rounded-xl group-hover/logo:scale-105 transition-transform duration-300"
+                />
               </div>
-            </div>
+            </a>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-indigo-400" />
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-cyan-400" />
                   Official Technology Partner
                 </span>
-                <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
                   Engineering & Cloud
                 </span>
               </div>
@@ -466,7 +476,7 @@ export const Footer: React.FC<FooterProps> = ({
             href="https://www.momoittechnologies.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-black text-xs shadow-lg shadow-indigo-600/20 active:scale-95 transition-all group shrink-0 cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-black text-xs shadow-lg shadow-cyan-600/20 active:scale-95 transition-all group shrink-0 cursor-pointer"
           >
             <span>Visit momoittechnologies.com</span>
             <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -514,11 +524,16 @@ export const Footer: React.FC<FooterProps> = ({
               href="https://www.momoittechnologies.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-extrabold text-indigo-400 hover:text-indigo-300 transition-colors inline-flex items-center gap-1 group"
+              className="font-extrabold text-cyan-400 hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5 group"
               title="Visit MOMO IT TECHNOLOGIES"
             >
-              <span className="underline decoration-indigo-500/40 hover:decoration-indigo-400">MOMO IT TECHNOLOGIES</span>
-              <ExternalLink className="w-3 h-3 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <img
+                src="/momo-it-logo.png"
+                alt="MOMO IT Logo"
+                className="w-4 h-4 rounded-full object-contain shrink-0 border border-cyan-500/40"
+              />
+              <span className="underline decoration-cyan-500/40 hover:decoration-cyan-300">MOMO IT TECHNOLOGIES</span>
+              <ExternalLink className="w-3 h-3 text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
         </div>
