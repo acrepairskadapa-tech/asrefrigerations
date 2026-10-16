@@ -92,19 +92,16 @@ export const Header: React.FC<HeaderProps> = ({
               className="hidden lg:flex items-center gap-1 hover:text-red-400 transition"
             >
               <span>📸 Follow @asrefrigerations.kadapa</span>
-              <span className="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] px-1.5 py-0.2 rounded font-bold">
-                ₹100 Off
-              </span>
             </a>
 
             <span className="hidden lg:inline text-white/20">|</span>
 
             <a
-              href="tel:+917815851330"
+              href={`tel:${cityConfig.phone}`}
               className="flex items-center gap-1.5 text-slate-300 hover:text-white transition font-bold"
             >
               <Phone className="w-3.5 h-3.5 text-red-400" />
-              <span>24/7 Helpline: +91 78158 51330</span>
+              <span>24/7 Helpline: {cityConfig.phone}</span>
             </a>
           </div>
         </div>
@@ -115,9 +112,9 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4 lg:gap-6 w-full">
           
           {/* Left: Brand Identity & City Selector */}
-          <div className="flex items-center gap-2 sm:gap-4 shrink min-w-0">
-            <a href="#" className="flex items-center gap-2 sm:gap-3 group focus:outline-none min-w-0">
-              {/* Official Brand Logo - Crisp and naturally integrated without artificial cutout box */}
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            <a href="#" className="flex items-center gap-2 sm:gap-3 group focus:outline-none shrink-0">
+              {/* Official Brand Logo */}
               <div className="h-9 sm:h-12 w-auto flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105">
                 <img
                   src="/as-logo.png"
@@ -127,16 +124,13 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               {/* Brand Typography */}
-              <div className="flex flex-col text-left min-w-0">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="text-base sm:text-2xl font-black tracking-tight text-white group-hover:text-red-400 transition flex items-center leading-none truncate">
+              <div className="flex flex-col text-left shrink-0">
+                <div className="flex items-center">
+                  <span className="text-base sm:text-2xl font-black tracking-tight text-white group-hover:text-red-400 transition flex items-center leading-none whitespace-nowrap">
                     AS <span className="text-red-500 ml-1">REFRIGERATIONS</span>
                   </span>
-                  <span className="hidden md:inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                    Verified
-                  </span>
                 </div>
-                <span className="hidden sm:flex text-[10px] sm:text-[11px] font-semibold text-slate-400 tracking-wide mt-1 items-center gap-1.5 truncate">
+                <span className="hidden sm:flex text-[10px] sm:text-[11px] font-semibold text-slate-400 tracking-wide mt-1 items-center gap-1.5 whitespace-nowrap">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
                   {selectedCity === 'kadapa' 
                     ? "Kadapa's #1 Doorstep Service • Est. 2015" 
