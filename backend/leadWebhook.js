@@ -3,8 +3,8 @@
  * Zero-SMS Architecture: Routes leads directly to Sameer's WhatsApp and updates real-time queues.
  */
 
-const SAMEER_PHONE = "918074945415";
-const BANGALORE_BRANCH_PHONE = "918074945415";
+const SAMEER_PHONE = "917815851330";
+const BANGALORE_BRANCH_PHONE = "917815851330";
 
 exports.onBookingCreated = async (bookingData) => {
   const {

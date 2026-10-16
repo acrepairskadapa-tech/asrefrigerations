@@ -22,7 +22,7 @@ export const TECHNICIANS_REGISTRY: TechnicianProfile[] = [
   {
     id: 'tech-sameer-01',
     name: 'Shaik Sameer',
-    phone: '+91 80749 45415',
+    phone: '+91 78158 51330',
     city: 'kadapa',
     priority: 1, // MASTER LEAD - PRIORITY 1
     skills: ['AC Jet Wash', 'Gas Refill', 'Compressor Replacement', 'Refrigerator PCB', 'Washing Machine Motor'],

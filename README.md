@@ -16,7 +16,7 @@
 1. **Two-Step Doorstep Pricing & Dynamic NPCI UPI QR:**
    - **Step 1:** Customer views estimated starting base online; books with **₹0 advance deposit**.
    - **Step 2:** Shaik Sameer or visiting technician diagnoses physical fault on-site, itemizes spares, and locks final bill. ₹350 diagnostic visit is 100% adjusted into final repair bill upon quote approval.
-   - **Step 3:** System generates a Dynamic NPCI UPI QR code (`upi://pay?pa=8074945415@ybl&pn=AS%20REFRIGERATIONS&am=...&tn=...&cu=INR`) pre-filling the exact bill for PhonePe, Google Pay, and Paytm with **0% gateway commission**.
+   - **Step 3:** System generates a Dynamic NPCI UPI QR code (`upi://pay?pa=7815851330-2@ibl&pn=AS%20REFRIGERATIONS&am=...&tn=...&cu=INR`) pre-filling the exact bill for PhonePe, Google Pay, and Paytm with **0% gateway commission**.
    - Automatic 5-star Google Review funnel to [reviewsmart.online/r/as-refrigeration](https://www.reviewsmart.online/r/as-refrigeration).
 
 2. **Multi-City Dual Branch Switching:**

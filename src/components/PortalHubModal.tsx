@@ -491,7 +491,7 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
                                 {generatedResetOtp}
                               </span>
                               <a
-                                href={`https://wa.me/918074945415?text=Hello%20Sameer%20bhai,%20my%20AS%20Refrigerations%20reset%20OTP%20is%20${generatedResetOtp}%20for%20mobile%20${mobileInput}`}
+                                href={`https://wa.me/917815851330?text=Hello%20Sameer%20bhai,%20my%20AS%20Refrigerations%20reset%20OTP%20is%20${generatedResetOtp}%20for%20mobile%20${mobileInput}`}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold text-[10px] hover:bg-emerald-700 transition"
@@ -558,7 +558,7 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
                         <span>Call Sameer Bhai directly for admin reset</span>
                       </div>
                       <a
-                        href="tel:8074945415"
+                        href="tel:7815851330"
                         className="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-[10px] flex items-center gap-1"
                       >
                         <Phone className="w-3 h-3 text-emerald-400" />
