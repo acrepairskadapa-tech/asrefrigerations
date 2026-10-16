@@ -32,6 +32,12 @@ interface BookingModalProps {
   preSelectedService?: ServiceItem | null;
   preSelectedQuantity?: number;
   preSelectedPrice?: number;
+  preFilledContact?: {
+    name?: string;
+    phone?: string;
+    area?: string;
+    notes?: string;
+  } | null;
 }
 
 export const BookingModal: React.FC<BookingModalProps> = ({
@@ -42,7 +48,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   onSelectCity,
   preSelectedService,
   preSelectedQuantity = 1,
-  preSelectedPrice
+  preSelectedPrice,
+  preFilledContact
 }) => {
   const [modalCity, setModalCity] = useState<CityId>(selectedCity);
   const cityConfig = CITIES_DATA[modalCity];
@@ -72,6 +79,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   const [bookingSuccess, setBookingSuccess] = useState<boolean>(false);
   const [bookingId, setBookingId] = useState<string>('');
+  const [bookingWaUrl, setBookingWaUrl] = useState<string>('');
   const [couponCode, setCouponCode] = useState<string>('');
   const [discount, setDiscount] = useState<number>(0);
   const [couponMessage, setCouponMessage] = useState<string>('');
@@ -81,6 +89,15 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       setModalCity(selectedCity);
     }
   }, [selectedCity]);
+
+  useEffect(() => {
+    if (isOpen && preFilledContact) {
+      if (preFilledContact.name) setCustomerName(preFilledContact.name);
+      if (preFilledContact.phone) setCustomerPhone(preFilledContact.phone);
+      if (preFilledContact.area) setArea(preFilledContact.area);
+      if (preFilledContact.notes) setNotes(preFilledContact.notes);
+    }
+  }, [isOpen, preFilledContact]);
 
   useEffect(() => {
     setArea(CITIES_DATA[modalCity].localities[0]);
@@ -240,14 +257,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
     const generatedId = savedBooking.id;
     setBookingId(generatedId);
-    setBookingSuccess(true);
-
-    // Fire celebratory confetti!
-    confetti({
-      particleCount: 80,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
 
     // Send formatted WhatsApp notification directly to Shaik Sameer / Branch
     const msg = `*🚨 NEW DOORSTEP BOOKING - AS REFRIGERATIONS*\n` +
@@ -266,7 +275,27 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       `Please dispatch technician.`;
 
     const waUrl = `https://wa.me/${cityConfig.phoneRaw}?text=${encodeURIComponent(msg)}`;
-    window.open(waUrl, '_blank');
+    setBookingWaUrl(waUrl);
+    setBookingSuccess(true);
+
+    // Fire celebratory confetti!
+    try {
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    } catch {}
+
+    // Open WhatsApp directly
+    try {
+      const opened = window.open(waUrl, '_blank');
+      if (!opened || opened.closed || typeof opened.closed === 'undefined') {
+        window.location.href = waUrl;
+      }
+    } catch {
+      window.location.href = waUrl;
+    }
   };
 
   const handleResetAndClose = () => {
@@ -690,6 +719,40 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
             </div>
 
+            {/* Direct WhatsApp Notification Card to Shaik Sameer */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50/90 border-2 border-emerald-500 text-left space-y-3 shadow-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">📲</span>
+                  <div>
+                    <div className="font-black text-sm text-emerald-950">
+                      Confirm Dispatch with Shaik Sameer
+                    </div>
+                    <div className="text-[11px] text-emerald-700 font-semibold">
+                      WhatsApp Hotline: +91 78158 51330
+                    </div>
+                  </div>
+                </div>
+                <span className="bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded-full font-black animate-pulse">
+                  60-Min Arrival
+                </span>
+              </div>
+
+              <p className="text-xs text-emerald-900 leading-relaxed font-medium">
+                Tap the button below to deliver your complete booking details directly to Master Sameer's WhatsApp. This guarantees instant technician dispatch to your doorstep!
+              </p>
+
+              <a
+                href={bookingWaUrl || `https://wa.me/${cityConfig.phoneRaw}?text=Hi%20Sameer%20bhai,%20I%20have%20booked%20service%20${bookingId}%20for%20${encodeURIComponent(area)}.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition active:scale-95 text-center cursor-pointer"
+              >
+                <MessageSquare className="w-5 h-5" />
+                <span>Send Booking to Sameer on WhatsApp Now</span>
+              </a>
+            </div>
+
             {/* Post-Booking App Install Bridge Card */}
             <div className="p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-emerald-500/40 text-left text-white shadow-xl space-y-3">
               <div className="flex items-start justify-between">
@@ -723,13 +786,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
               <a
-                href={`https://wa.me/${cityConfig.phoneRaw}?text=Hi%20Shaik%20Sameer,%20I%20have%20booked%20service%20${bookingId}%20for%20${area}.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition"
+                href={`tel:${cityConfig.phoneRaw}`}
+                className="flex-1 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition"
               >
-                <MessageSquare className="w-4 h-4" />
-                <span>Chat with Sameer on WhatsApp</span>
+                <Phone className="w-4 h-4 text-emerald-400" />
+                <span>Call Sameer: +91 78158 51330</span>
               </a>
 
               <button

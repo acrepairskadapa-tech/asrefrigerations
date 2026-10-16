@@ -7,12 +7,9 @@ import {
   Phone, 
   Wrench, 
   MessageSquare,
-  TrendingUp,
-  Calculator,
-  Award,
   Sparkles,
   Zap,
-  DollarSign
+  Award
 } from 'lucide-react';
 import { PARTNER_TIERS } from '../data/servicesData';
 import { Language, TRANSLATIONS } from '../data/translations';
@@ -24,10 +21,6 @@ interface PartnerNetworkProps {
 export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
 
-  // Income Calculator States
-  const [selectedSkill, setSelectedSkill] = useState<'ac' | 'fridge' | 'wm'>('ac');
-  const [dailyJobs, setDailyJobs] = useState<number>(3);
-
   // Application Modal States
   const [partnerModalOpen, setPartnerModalOpen] = useState(false);
   const [selectedTier, setSelectedTier] = useState<string>('AC Specialist Technician');
@@ -35,36 +28,6 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
   const [techPhone, setTechPhone] = useState('');
   const [techExperience, setTechExperience] = useState('3-5 Years');
   const [techArea, setTechArea] = useState('Kadapa Central (Mariapuram / RTC)');
-
-  // Dynamic calculations for ROI
-  const skillDetails = {
-    ac: {
-      title: 'AC Specialist',
-      monthlyFee: 8285,
-      avgTicket: 1200,
-      monthlyLeads: '60-90 Leads',
-      daysPerMonth: 25
-    },
-    fridge: {
-      title: 'Refrigerator Specialist',
-      monthlyFee: 6350,
-      avgTicket: 950,
-      monthlyLeads: '45-65 Leads',
-      daysPerMonth: 25
-    },
-    wm: {
-      title: 'Washing Machine Specialist',
-      monthlyFee: 4950,
-      avgTicket: 850,
-      monthlyLeads: '35-50 Leads',
-      daysPerMonth: 25
-    }
-  };
-
-  const activeSkill = skillDetails[selectedSkill];
-  const monthlyCompletedJobs = dailyJobs * activeSkill.daysPerMonth;
-  const estimatedGrossIncome = monthlyCompletedJobs * activeSkill.avgTicket;
-  const netTakeHomeProfit = estimatedGrossIncome - activeSkill.monthlyFee;
 
   const handlePartnerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,10 +63,10 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-            Earn <span className="text-red-500">₹45,000 to ₹75,000+</span> / Month With Zero Commission!
+            Zero Commission Partner Network • <span className="text-red-500">Keep 100% of Your Earnings</span>
           </h2>
           <p className="text-sm sm:text-base text-slate-300 mt-3 leading-relaxed">
-            Are you a skilled AC, fridge, or washing machine mechanic in Kadapa? Join Master Shaik Sameer’s verified partner network. <strong>Keep 100% of customer collections</strong> with zero per-job cuts.
+            Are you a skilled AC, fridge, or washing machine technician in Kadapa? Join Master Shaik Sameer’s verified partner network. Receive direct daily customer calls with <strong>zero per-job cuts</strong>.
           </p>
         </div>
 
@@ -137,7 +100,7 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
                   Why 50+ Technicians Choose AS Refrigerations
                 </span>
                 <h3 className="text-2xl font-black text-white mt-1">
-                  Transform From a Daily Wager to a Respected Business Partner
+                  Transform From a Daily Wager to an Independent Business Partner
                 </h3>
               </div>
 
@@ -153,7 +116,7 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
                 <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
                   <div className="flex items-center gap-1.5 text-amber-400 font-extrabold text-xs">
                     <Check className="w-4 h-4 stroke-[3]" />
-                    <span>60-90 Local Leads</span>
+                    <span>Verified Local Leads</span>
                   </div>
                   <p className="text-[11px] text-slate-400">Pre-booked customer jobs delivered to your phone in your chosen Kadapa locality.</p>
                 </div>
@@ -199,141 +162,7 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Interactive Technician Earnings & ROI Calculator */}
-        <div className="max-w-4xl mx-auto bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl mb-16 text-left">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-800">
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-emerald-400 bg-emerald-950/70 px-3 py-1 rounded-full border border-emerald-800/40">
-                <Calculator className="w-3.5 h-3.5" />
-                Transparent Earnings Simulator
-              </span>
-              <h3 className="text-xl sm:text-2xl font-black text-white mt-2">
-                Calculate Your Monthly Take-Home Profit in Kadapa
-              </h3>
-            </div>
-            <div className="text-xs text-slate-400">
-              *Based on real average ticket values in Kadapa town
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            
-            {/* Inputs (Col 7) */}
-            <div className="md:col-span-7 space-y-6">
-              {/* Select Skill */}
-              <div>
-                <label className="block text-xs font-black text-slate-400 uppercase tracking-wider mb-2">
-                  1. Select Your Core Specialty Trade
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { id: 'ac', label: '❄️ AC Specialist' },
-                    { id: 'fridge', label: '🧊 Refrigerator' },
-                    { id: 'wm', label: '🧺 Washing M/C' }
-                  ].map((trade) => (
-                    <button
-                      key={trade.id}
-                      type="button"
-                      onClick={() => setSelectedSkill(trade.id as any)}
-                      className={`py-2.5 px-2 rounded-xl text-xs font-black border transition cursor-pointer text-center ${
-                        selectedSkill === trade.id
-                          ? 'bg-red-600 text-white border-red-500 shadow-md'
-                          : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'
-                      }`}
-                    >
-                      {trade.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Jobs Slider */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-wider">
-                    2. Service Calls You Can Complete Daily
-                  </label>
-                  <span className="text-sm font-black text-amber-300 bg-slate-950 px-2.5 py-0.5 rounded-lg border border-slate-800">
-                    {dailyJobs} Jobs / Day
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="6"
-                  step="1"
-                  value={dailyJobs}
-                  onChange={(e) => setDailyJobs(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-red-600"
-                />
-                <div className="flex justify-between text-[11px] text-slate-500 font-bold mt-1">
-                  <span>1 Job (Part-time)</span>
-                  <span>3 Jobs (Normal)</span>
-                  <span>6 Jobs (Hard Worker)</span>
-                </div>
-              </div>
-
-              {/* Lead Guarantee callout */}
-              <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-1">
-                <div className="font-bold text-white flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span>Guaranteed Lead Pipeline: {activeSkill.monthlyLeads}</span>
-                </div>
-                <div className="text-[11px] text-slate-400">
-                  Fixed platform fee of just ₹{Math.round(activeSkill.monthlyFee / 30)}/day. No commissions taken from customer bills!
-                </div>
-              </div>
-            </div>
-
-            {/* Income Card (Col 5) */}
-            <div className="md:col-span-5 bg-slate-950 border border-emerald-500/40 rounded-3xl p-6 text-left relative overflow-hidden shadow-2xl">
-              <div className="text-xs uppercase font-black text-emerald-400 tracking-wider mb-1">
-                Estimated Net Monthly Profit
-              </div>
-              <div className="text-4xl font-black text-white tracking-tight">
-                ₹{netTakeHomeProfit.toLocaleString('en-IN')}
-              </div>
-              <div className="text-[11px] text-slate-400 mt-0.5">
-                Clean profit directly into your bank / UPI
-              </div>
-
-              <div className="mt-5 space-y-2 pt-4 border-t border-slate-800 text-xs font-semibold">
-                <div className="flex justify-between text-slate-300">
-                  <span>Monthly Jobs Completed:</span>
-                  <span className="font-bold text-white">{monthlyCompletedJobs} Jobs</span>
-                </div>
-                <div className="flex justify-between text-slate-300">
-                  <span>Gross Customer Billing:</span>
-                  <span className="font-bold text-white">₹{estimatedGrossIncome.toLocaleString('en-IN')}</span>
-                </div>
-                <div className="flex justify-between text-slate-300">
-                  <span>Fixed AS Platform Fee:</span>
-                  <span className="font-bold text-red-400">-₹{activeSkill.monthlyFee.toLocaleString('en-IN')}</span>
-                </div>
-                <div className="flex justify-between text-slate-300">
-                  <span>Hidden Cuts / Commission:</span>
-                  <span className="font-bold text-emerald-400">₹0 (ZERO)</span>
-                </div>
-              </div>
-
-              <div className="pt-6">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedTier(activeSkill.title);
-                    setPartnerModalOpen(true);
-                  }}
-                  className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm shadow-lg shadow-emerald-600/25 active:scale-95 transition cursor-pointer text-center"
-                >
-                  Join As {activeSkill.title} Now
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* 3 Transparent Subscription Tiers */}
+        {/* 3 Transparent Trade Specialist Categories */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {PARTNER_TIERS.map((tier) => (
             <div
@@ -358,11 +187,11 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
                   {tier.role}
                 </h3>
 
-                <div className="my-5">
-                  <span className="text-3xl font-black text-white">₹{tier.monthlyFee.toLocaleString('en-IN')}</span>
-                  <span className="text-xs font-semibold text-slate-400 ml-1.5">
-                    / Month Subscription
-                  </span>
+                <div className="my-5 p-3.5 rounded-2xl bg-slate-950/80 border border-emerald-500/30">
+                  <span className="text-2xl font-black text-emerald-400">0% Commission</span>
+                  <div className="text-xs font-semibold text-slate-400 mt-1">
+                    Keep 100% Customer Payments • Zero Cuts
+                  </div>
                 </div>
 
                 <div className="space-y-2.5 pt-4 border-t border-slate-800">
@@ -422,7 +251,7 @@ export const PartnerNetwork: React.FC<PartnerNetworkProps> = ({ lang }) => {
                   Join AS Refrigerations Partner Network
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Earn ₹45,000 to ₹75,000/mo. Start receiving verified customer leads daily.
+                  Start receiving verified customer leads daily across Kadapa with zero commission.
                 </p>
               </div>
             </div>

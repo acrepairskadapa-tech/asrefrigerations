@@ -49,7 +49,7 @@ const FAQS: FAQItem[] = [
   {
     category: 'Partner Program',
     question: 'How does the AS Partner Program work for local Kadapa technicians?',
-    answer: 'Experienced local technicians join our network for a fixed monthly subscription (starting from ₹4,950/mo) and receive verified daily doorstep job leads with 0% per-job commission. Technicians keep 100% of customer collections, earning ₹45,000 to ₹75,000+ monthly take-home profit.'
+    answer: 'Experienced local technicians join our network to receive verified daily doorstep job leads with 0% per-job commission. Technicians keep 100% of direct customer collections via Cash or UPI, with wholesale spare parts access and technical mentorship from Master Shaik Sameer.'
   },
   {
     category: 'Offers & Discounts',

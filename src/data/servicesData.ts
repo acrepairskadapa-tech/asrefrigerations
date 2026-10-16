@@ -401,46 +401,46 @@ export const PARTNER_TIERS = [
     id: 'tier-fridge',
     role: 'Refrigerator Technician',
     roleTe: 'రిఫ్రిజిరేటర్ టెక్నీషియన్',
-    monthlyFee: 6350,
-    leadsExpected: '40-60 Qualified Leads / Month',
+    planType: 'Zero Commission Partner',
+    leadsExpected: 'Verified Refrigerator Doorstep Leads',
     badge: 'Steady Earner',
     benefits: [
-      'Verified refrigerator repair & gas refill leads',
-      'Preferred service territory in Kadapa district',
-      'Transparent job allocation on mobile dashboard',
+      'Verified refrigerator repair & gas refill leads in Kadapa',
+      'Preferred service territory in your chosen locality',
+      'Transparent job allocation directly to your phone',
       'Support for genuine spare parts & technical escalation',
-      'No hidden commissions per job'
+      '100% direct customer payments (Cash / UPI)'
     ]
   },
   {
     id: 'tier-ac',
     role: 'AC Specialist Technician',
     roleTe: 'ఏసీ స్పెషలిస్ట్ టెక్నీషియన్',
-    monthlyFee: 8285,
-    leadsExpected: '60-90 High-Value Leads / Month',
+    planType: 'Zero Commission Partner',
+    leadsExpected: 'High-Demand AC Service Leads',
     badge: 'Most Popular',
     popular: true,
     benefits: [
-      'Peak-season priority job allocation for AC repairs',
+      'Priority job allocation for AC repairs & jet washing',
       'High ticket service calls (Jet wash, Gas refills, Installations)',
       'Direct customer WhatsApp contact & route guidance',
-      'Technical backup from Master Shaik Sameer',
-      'Weekly payouts & clear earnings record'
+      'Direct technical backup from Master Shaik Sameer',
+      'Wholesale dealer pricing on R32/R410A refrigerant and copper'
     ]
   },
   {
     id: 'tier-wm',
     role: 'Washing Machine Specialist',
     roleTe: 'వాషింగ్ మెషిన్ టెక్నీషియన్',
-    monthlyFee: 4950,
-    leadsExpected: '35-50 Verified Leads / Month',
+    planType: 'Zero Commission Partner',
+    leadsExpected: 'Verified Daily Washing Machine Leads',
     badge: 'Quick Join',
     benefits: [
       'Automatic & semi-automatic machine service calls',
-      'Nearby locality requests only (save petrol & time)',
-      '100% direct customer collections',
+      'Nearby locality requests only (save petrol & travel time)',
+      '100% direct customer collections into your own pocket',
       'Dedicated helpline & spare parts dealer rates',
-      'Instant partner profile on AS Refrigerations app'
+      'Instant partner profile activation on AS Refrigerations app'
     ]
   }
 ];

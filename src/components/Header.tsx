@@ -218,30 +218,18 @@ export const Header: React.FC<HeaderProps> = ({
             >
               Pricing
             </a>
-            <a 
-              href="#reviews" 
-              className="px-3 py-1.5 rounded-lg hover:text-white hover:bg-white/5 transition"
-            >
-              Reviews
-            </a>
             <a
               href="#mobile-app"
               className="px-3 py-1.5 rounded-lg hover:text-white hover:bg-white/5 transition flex items-center gap-1.5"
             >
               <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
               <span>Android App</span>
-              <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] px-1.5 py-0.2 rounded-full font-bold">
-                ₹100 Off
-              </span>
             </a>
             <a
               href="#partners"
               className="px-3 py-1.5 rounded-lg hover:text-white hover:bg-white/5 transition flex items-center gap-1.5"
             >
               <span>Join as Partner</span>
-              <span className="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] px-1.5 py-0.2 rounded-full font-bold">
-                ₹60K
-              </span>
             </a>
           </nav>
 
@@ -330,32 +318,25 @@ export const Header: React.FC<HeaderProps> = ({
               💰 Price Estimator
             </a>
             <a
-              href="#reviews"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 hover:text-red-400 transition"
-            >
-              ⭐ 928+ Reviews
-            </a>
-            <a
-              href="#reels"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 hover:text-red-400 transition"
-            >
-              📸 Reels (₹100 Off)
-            </a>
-            <a
               href="#mobile-app"
               onClick={() => setMobileMenuOpen(false)}
               className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold hover:bg-emerald-500/20 transition"
             >
-              📱 Android App (APK)
+              📱 Android App
             </a>
             <a
               href="#partners"
               onClick={() => setMobileMenuOpen(false)}
               className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 font-black hover:bg-amber-500/20 transition"
             >
-              🔧 Join Partner (₹60K)
+              🔧 Join Partner
+            </a>
+            <a
+              href="#reels"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 hover:text-red-400 transition"
+            >
+              📸 Work Reels
             </a>
             <button
               onClick={() => {

@@ -52,6 +52,12 @@ export function App() {
   const [preSelectedService, setPreSelectedService] = useState<ServiceItem | null>(null);
   const [preSelectedQuantity, setPreSelectedQuantity] = useState<number>(1);
   const [preSelectedPrice, setPreSelectedPrice] = useState<number | undefined>(undefined);
+  const [preFilledContact, setPreFilledContact] = useState<{
+    name?: string;
+    phone?: string;
+    area?: string;
+    notes?: string;
+  } | null>(null);
 
   // Handler for Hero Express Booking Form
   const handleExpressBook = (data: {
@@ -77,6 +83,12 @@ export function App() {
     setPreSelectedService(matched);
     setPreSelectedQuantity(1);
     setPreSelectedPrice(matched.price);
+    setPreFilledContact({
+      name: data.name,
+      phone: data.phone,
+      area: data.area,
+      notes: `${data.appliance}: ${data.issue}`
+    });
     setBookingModalOpen(true);
   };
 
@@ -250,6 +262,7 @@ export function App() {
         preSelectedService={preSelectedService}
         preSelectedQuantity={preSelectedQuantity}
         preSelectedPrice={preSelectedPrice}
+        preFilledContact={preFilledContact}
       />
     </div>
   );
