@@ -726,10 +726,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   <span className="text-2xl">📲</span>
                   <div>
                     <div className="font-black text-sm text-emerald-950">
-                      Confirm Dispatch with Shaik Sameer
+                      {modalCity === 'kadapa' ? 'Confirm Dispatch with Shaik Sameer' : 'Confirm Dispatch with Bangalore Hub'}
                     </div>
                     <div className="text-[11px] text-emerald-700 font-semibold">
-                      WhatsApp Hotline: +91 78158 51330
+                      WhatsApp Hotline: {cityConfig.phone}
                     </div>
                   </div>
                 </div>
@@ -739,17 +739,19 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
 
               <p className="text-xs text-emerald-900 leading-relaxed font-medium">
-                Tap the button below to deliver your complete booking details directly to Master Sameer's WhatsApp. This guarantees instant technician dispatch to your doorstep!
+                {modalCity === 'kadapa'
+                  ? "Tap the button below to deliver your complete booking details directly to Master Sameer's WhatsApp. This guarantees instant technician dispatch to your doorstep!"
+                  : "Tap the button below to deliver your complete booking details directly to Bangalore Branch WhatsApp. This guarantees instant technician dispatch to your doorstep!"}
               </p>
 
               <a
-                href={bookingWaUrl || `https://wa.me/${cityConfig.phoneRaw}?text=Hi%20Sameer%20bhai,%20I%20have%20booked%20service%20${bookingId}%20for%20${encodeURIComponent(area)}.`}
+                href={bookingWaUrl || `https://wa.me/${cityConfig.phoneRaw}?text=${encodeURIComponent(`Hi AS Refrigeration ${cityConfig.name}, I have booked service ${bookingId} for ${area}.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition active:scale-95 text-center cursor-pointer"
               >
                 <MessageSquare className="w-5 h-5" />
-                <span>Send Booking to Sameer on WhatsApp Now</span>
+                <span>{modalCity === 'kadapa' ? 'Send Booking to Sameer on WhatsApp Now' : 'Send Booking to Bangalore Hub on WhatsApp Now'}</span>
               </a>
             </div>
 
@@ -762,16 +764,18 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   </div>
                   <div>
                     <div className="text-[10px] font-black uppercase text-emerald-400 tracking-wider">Live Arrival Radar</div>
-                    <h4 className="text-sm font-black text-white">Track Shaik Sameer in Real-Time</h4>
+                    <h4 className="text-sm font-black text-white">
+                      {modalCity === 'kadapa' ? 'Track Shaik Sameer in Real-Time' : 'Track Assigned Technician in Real-Time'}
+                    </h4>
                   </div>
                 </div>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  ₹100 Off App
+                  Free Native App
                 </span>
               </div>
 
               <p className="text-xs text-slate-300 leading-relaxed">
-                Download the official <strong>AS Refrigerations Android App</strong> to track your technician's live route on Google Maps, receive digital bills, and claim <strong>₹100 OFF</strong> on your next repair!
+                Download the official <strong>AS Refrigerations Android App</strong> to track your technician's live route on Google Maps, receive digital bills, and check warranty status.
               </p>
 
               <a
@@ -786,11 +790,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
               <a
-                href={`tel:${cityConfig.phoneRaw}`}
+                href={`tel:${cityConfig.phone}`}
                 className="flex-1 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition"
               >
                 <Phone className="w-4 h-4 text-emerald-400" />
-                <span>Call Sameer: +91 78158 51330</span>
+                <span>{modalCity === 'kadapa' ? `Call Sameer: ${cityConfig.phone}` : `Call Bangalore: ${cityConfig.phone}`}</span>
               </a>
 
               <button

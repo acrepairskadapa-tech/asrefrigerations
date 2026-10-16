@@ -170,21 +170,23 @@ export const Hero: React.FC<HeroProps> = ({
             {/* Quick Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 pt-2 w-full">
               <a
-                href="tel:+917815851330"
+                href={`tel:${cityConfig.phone}`}
                 className="flex items-center justify-center gap-2.5 px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl bg-red-600 hover:bg-red-700 font-black text-white text-sm sm:text-base shadow-lg shadow-red-600/20 ios-tap transition text-center"
               >
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-                <span className="truncate">Call Shaik Sameer: +91 78158 51330</span>
+                <span className="truncate">
+                  {selectedCity === 'kadapa' ? `Call Shaik Sameer: ${cityConfig.phone}` : `Call Bangalore Hub: ${cityConfig.phone}`}
+                </span>
               </a>
 
               <a
-                href="https://wa.me/917815851330?text=Hi%20AS%20Refrigeration,%20I%20am%20looking%20for%20AC%20or%20Fridge%20service%20in%20Kadapa."
+                href={`https://wa.me/${cityConfig.phoneRaw}?text=${encodeURIComponent(`Hi AS Refrigeration, I am looking for AC or Fridge service in ${cityConfig.name}.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2.5 px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 font-black text-white text-sm sm:text-base shadow-lg shadow-emerald-600/20 ios-tap transition text-center"
               >
                 <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-                <span>Instant WhatsApp</span>
+                <span>Instant WhatsApp ({cityConfig.name})</span>
               </a>
             </div>
 

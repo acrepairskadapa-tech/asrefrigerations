@@ -4,7 +4,7 @@
  */
 
 const SAMEER_PHONE = "917815851330";
-const BANGALORE_BRANCH_PHONE = "917815851330";
+const BANGALORE_BRANCH_PHONE = "918073206402";
 
 exports.onBookingCreated = async (bookingData) => {
   const {

@@ -13,9 +13,11 @@ import {
 } from 'lucide-react';
 import { Language } from '../data/translations';
 import { SERVICES_DATA, ServiceItem } from '../data/servicesData';
+import { CityId, CITIES_DATA } from '../data/citiesData';
 
 interface ServicesSectionProps {
   lang: Language;
+  selectedCity?: CityId;
   activeCategory: ServiceItem['category'] | 'all';
   onSelectCategory: (cat: ServiceItem['category'] | 'all') => void;
   onBookService: (service: ServiceItem) => void;
@@ -23,10 +25,12 @@ interface ServicesSectionProps {
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({
   lang,
+  selectedCity = 'kadapa',
   activeCategory,
   onSelectCategory,
   onBookService
 }) => {
+  const cityConfig = CITIES_DATA[selectedCity];
   const [filter, setFilter] = useState<ServiceItem['category'] | 'all'>(activeCategory);
 
   const handleFilterChange = (cat: ServiceItem['category'] | 'all') => {
@@ -180,7 +184,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
                   <div className="flex items-center gap-1.5">
                     <a
-                      href={`https://wa.me/917815851330?text=Hi%20AS%20Refrigeration,%20I%20am%20interested%20in%20${encodeURIComponent(service.name)}%20(₹${service.price}).`}
+                      href={`https://wa.me/${cityConfig.phoneRaw}?text=${encodeURIComponent(`Hi AS Refrigeration ${cityConfig.name}, I am interested in ${service.name} (₹${service.price}).`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2.5 rounded-xl border border-slate-200 text-slate-700 hover:text-emerald-600 hover:border-emerald-500 hover:bg-emerald-50 transition ios-tap"

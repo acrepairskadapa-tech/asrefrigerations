@@ -254,13 +254,13 @@ export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
                   </div>
                 </div>
                 <span className="text-xs font-bold text-emerald-950 bg-white px-2.5 py-1 rounded-lg">
-                  18 MB • ₹100 Off
+                  18 MB • Direct Install
                 </span>
               </a>
 
               {/* WhatsApp Chat Button */}
               <a
-                href="https://wa.me/917815851330?text=Hi%20AS%20Refrigeration%20Kadapa,%20I%20need%20doorstep%20service."
+                href={`https://wa.me/${cityConfig.phoneRaw}?text=${encodeURIComponent(`Hi AS Refrigeration ${cityConfig.name}, I need doorstep service.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3.5 rounded-2xl bg-emerald-600 text-white flex items-center justify-between active:scale-98 transition shadow-md"

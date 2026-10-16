@@ -174,6 +174,7 @@ export function App() {
         {/* 6. Services Catalogue Section */}
         <ServicesSection
           lang={lang}
+          selectedCity={selectedCity}
           activeCategory={selectedCategory}
           onSelectCategory={(cat) => {
             if (cat !== 'all') setSelectedCategory(cat);

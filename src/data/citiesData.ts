@@ -64,9 +64,9 @@ export const CITIES_DATA: Record<CityId, CityConfig> = {
     displayName: 'Bangalore (Kammanahalli Branch)',
     state: 'Karnataka',
     tagline: 'Doorstep AC & Appliance Repair in North-East Bangalore',
-    phone: '+91 78158 51330', // Can be updated with new dedicated Bangalore SIM
-    phoneRaw: '917815851330',
-    whatsappNumber: '917815851330',
+    phone: '+91 80732 06402',
+    phoneRaw: '918073206402',
+    whatsappNumber: '918073206402',
     email: 'asrefrigerationbangalore@gmail.com',
     workshopName: 'Kammanahalli Service Hub',
     workshopAddress: '#2, Sree Residency, Venkateshappa Layout, Kammanahalli, Bangalore – 560084',

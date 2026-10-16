@@ -101,13 +101,13 @@ export const Footer: React.FC<FooterProps> = ({
               </button>
 
               <a
-                href="https://wa.me/917815851330?text=Hi%20AS%20Refrigerations%20Kadapa,%20I%20need%20urgent%20doorstep%20service."
+                href={`https://wa.me/${cityConfig.phoneRaw}?text=${encodeURIComponent(`Hi AS Refrigerations ${cityConfig.name}, I need urgent doorstep service.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-md active:scale-95 transition flex items-center gap-2"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>WhatsApp (+91 78158 51330)</span>
+                <span>WhatsApp ({cityConfig.phone})</span>
               </a>
             </div>
           </div>

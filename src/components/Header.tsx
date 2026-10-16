@@ -237,16 +237,16 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {/* Quick Hotline Pill for Desktop */}
             <a
-              href="tel:+917815851330"
+              href={`tel:${cityConfig.phone}`}
               className="hidden xl:flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white transition group"
-              title="Call Shaik Sameer directly"
+              title={`Call ${cityConfig.name} Hotline directly`}
             >
               <div className="w-7 h-7 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center shrink-0 group-hover:bg-red-500 group-hover:text-white transition">
                 <Phone className="w-3.5 h-3.5" />
               </div>
               <div className="text-left leading-tight">
-                <div className="text-[9px] text-slate-400 uppercase font-black tracking-wider">Direct Hotline</div>
-                <div className="font-extrabold text-xs text-white group-hover:text-red-400 transition">+91 78158 51330</div>
+                <div className="text-[9px] text-slate-400 uppercase font-black tracking-wider">{cityConfig.name} Hotline</div>
+                <div className="font-extrabold text-xs text-white group-hover:text-red-400 transition">{cityConfig.phone}</div>
               </div>
             </a>
 
@@ -384,13 +384,13 @@ export const Header: React.FC<HeaderProps> = ({
               {t.bookService} (60 Min Doorstep)
             </button>
             <a
-              href="https://wa.me/917815851330?text=Hi%20AS%20Refrigerations%20Kadapa,%20I%20need%20doorstep%20service."
+              href={`https://wa.me/${cityConfig.phoneRaw}?text=${encodeURIComponent(`Hi AS Refrigerations ${cityConfig.name}, I need doorstep service.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center justify-center gap-2 text-center text-xs shadow-md shadow-emerald-600/20 transition"
             >
               <MessageSquare className="w-4 h-4" />
-              Chat on WhatsApp (+91 78158 51330)
+              Chat on WhatsApp ({cityConfig.phone})
             </a>
           </div>
         </div>

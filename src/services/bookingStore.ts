@@ -61,7 +61,7 @@ export const TECHNICIANS_REGISTRY: TechnicianProfile[] = [
   {
     id: 'tech-bangalore-prasad-04',
     name: 'M. Prasad',
-    phone: '+91 97410 88210',
+    phone: '+91 80732 06402',
     city: 'bangalore',
     priority: 1, // BANGALORE BRANCH LEAD
     skills: ['Inverter AC Repair', 'Daikin/Voltas PCB', 'Jet Wash'],
