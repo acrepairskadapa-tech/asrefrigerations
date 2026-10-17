@@ -19,7 +19,7 @@ const FAQS: FAQItem[] = [
   {
     category: 'Doorstep Service',
     question: 'How fast can an AS Refrigerations technician reach my home in Kadapa?',
-    answer: 'We guarantee doorstep arrival within 60 minutes across all 19 major residential and commercial sectors in Kadapa, including Mariapuram, Chinna Chowk, RIMS Road, RTC Bus Stand, Yerramukkapalli, Co-operative Colony, and Nagarajupalli.'
+    answer: 'We guarantee rapid doorstep arrival within 60 minutes across Kadapa City Central (Mariapuram, Chinna Chowk, RIMS Road, RTC Bus Stand, Yerramukkapalli, Co-operative Colony, Nagarajupalli, etc.) and provide same-day doorstep service across all towns and mandals in Kadapa District (Proddatur, Pulivendula, Badvel, Rayachoty, Jammalamadugu, Mydukur & beyond).'
   },
   {
     category: 'Billing & Charges',

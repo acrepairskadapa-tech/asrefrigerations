@@ -62,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
             <span className="font-semibold text-slate-200 tracking-wide truncate">
               {selectedCity === 'kadapa'
-                ? '⚡ 60-Min Doorstep AC & Appliance Service in Kadapa • Master Technician Shaik Sameer'
+                ? '⚡ 100% Kadapa District Doorstep Service • Master Specialist Shaik Sameer'
                 : '⚡ Bangalore Doorstep Service • Kammanahalli Branch Hub (Express 60-Min Dispatch)'}
             </span>
           </div>
@@ -170,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <span>Kadapa Flagship HQ</span>
                         <span className="px-1.5 py-0.2 rounded text-[9px] bg-red-500 text-white font-bold">Fastest</span>
                       </div>
-                      <div className="text-[10px] text-slate-400 font-normal">Mariapuram • 19 Sectors Covered</div>
+                      <div className="text-[10px] text-slate-400 font-normal">Entire District • 100% Coverage</div>
                     </div>
                     {selectedCity === 'kadapa' && <Check className="w-4 h-4 text-red-400" />}
                   </button>
@@ -189,7 +189,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <span>Bangalore Branch Hub</span>
                         <span className="px-1.5 py-0.2 rounded text-[9px] bg-emerald-500 text-white font-bold">Express</span>
                       </div>
-                      <div className="text-[10px] text-slate-400 font-normal">Kammanahalli • 25 Areas Covered</div>
+                      <div className="text-[10px] text-slate-400 font-normal">Kammanahalli & Nearby Areas Only</div>
                     </div>
                     {selectedCity === 'bangalore' && <Check className="w-4 h-4 text-red-400" />}
                   </button>

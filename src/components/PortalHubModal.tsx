@@ -1594,8 +1594,8 @@ export const PortalHubModal: React.FC<PortalHubModalProps> = ({
                   <h5 className="font-black text-slate-900 text-sm">Multi-City Branch Boundaries</h5>
                 </div>
                 <p className="text-slate-600 leading-relaxed">
-                  <strong>Kadapa:</strong> Mariapuram / Lohiya Nagar Flagship HQ (19 wards).<br/>
-                  <strong>Bangalore:</strong> Kammanahalli Branch (#2 Sree Residency, 25 localities).<br/>
+                  <strong>Kadapa:</strong> Entire Kadapa (YSR) District Doorstep Coverage (Flagship HQ: Mariapuram / Lohiya Nagar; all towns & mandals).<br/>
+                  <strong>Bangalore:</strong> Kammanahalli Branch (#2 Sree Residency, Venkateshappa Layout; Kammanahalli & immediate North-East Bangalore localities only).<br/>
                   Pre-indexed localities prevent expensive Google Maps API reverse-geocoding calls.
                 </p>
               </div>

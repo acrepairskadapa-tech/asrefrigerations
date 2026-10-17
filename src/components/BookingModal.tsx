@@ -623,7 +623,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <input
                   type="text"
                   required
-                  placeholder={`e.g. ${modalCity === 'kadapa' ? 'Mariapuram, Nagarajupet, Seven Roads, Aravinda Nagar...' : 'Kammanahalli, Kalyan Nagar, Indiranagar...'}`}
+                  placeholder={`e.g. ${modalCity === 'kadapa' ? 'Mariapuram, Proddatur, Pulivendula, Chinna Chowk...' : 'Kammanahalli, Kalyan Nagar, Banaswadi...'}`}
                   value={area}
                   onChange={(e) => setArea(e.target.value)}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-red-500 font-bold bg-white"

@@ -21,27 +21,76 @@ export interface ReviewItem {
   comment: string;
 }
 
-export const KADAPA_AREAS = [
-  'Mariapuram (HQ)',
+export const KADAPA_CITY_AREAS = [
+  'Mariapuram (HQ / Workshop)',
   'Lohiya Nagar',
   'Pulivendula Road',
-  'Built-Up Circle',
-  '1 Town Area',
   'RTC Bus Stand Circle',
-  'Yerramukkapalli',
-  'Nagarajupalli',
+  'Chinna Chowk',
+  'Pedda Chowk',
   'Akkayapalli',
   'NGO Colony',
   'RIMS Hospital Area',
-  'Chinna Chowk',
-  'Pedda Chowk',
   'Ravindra Nagar',
   'Prakash Nagar',
+  '1 Town Area',
+  'Yerramukkapalli',
+  'Nagarajupalli',
   'Almaspet',
   'Co-operative Colony',
   'Madhavaram Road',
+  'Built-Up Circle',
   'Devuni Kadapa'
 ];
+
+export const KADAPA_DISTRICT_TOWNS = [
+  'Proddatur',
+  'Pulivendula',
+  'Badvel',
+  'Rayachoty',
+  'Jammalamadugu',
+  'Mydukur',
+  'Kamalapuram',
+  'Yerraguntla',
+  'Vontimitta',
+  'Rajampet',
+  'Chennur',
+  'Porumamilla',
+  'Lakkireddipalli',
+  'Sidhout (Siddhavatam)',
+  'Vempalli',
+  'Vallur',
+  'Pendlimarri',
+  'Sambepalli',
+  'Galiveedu',
+  'Chapadu',
+  'Duvvur',
+  'Khajipet',
+  'Muddanur',
+  'Simhadripuram',
+  'Lingala'
+];
+
+export const BANGALORE_KAMMANAHALLI_AREAS = [
+  'Kammanahalli (Branch Hub)',
+  'Venkateshappa Layout',
+  'Kalyan Nagar (HRBR Layout)',
+  'Banaswadi',
+  'HBR Layout',
+  'Hennur & Hennur Cross',
+  'Lingarajapuram',
+  'Ramamurthy Nagar',
+  'Horamavu',
+  'Kasturi Nagar',
+  'Cooke Town',
+  'Cox Town',
+  'Frazer Town (Pulikeshi Nagar)',
+  'Babu Sahib Palya (Babusapalya)',
+  'Kothanur',
+  'Richards Town'
+];
+
+export const KADAPA_AREAS = [...KADAPA_CITY_AREAS, ...KADAPA_DISTRICT_TOWNS];
 
 export const SERVICES_DATA: ServiceItem[] = [
   // AC Services

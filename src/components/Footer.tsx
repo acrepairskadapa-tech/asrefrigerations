@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Phone, 
   Mail, 
@@ -11,7 +11,11 @@ import {
   MessageSquare,
   Award
 } from 'lucide-react';
-import { KADAPA_AREAS } from '../data/servicesData';
+import { 
+  KADAPA_CITY_AREAS, 
+  KADAPA_DISTRICT_TOWNS, 
+  BANGALORE_KAMMANAHALLI_AREAS 
+} from '../data/servicesData';
 import { Language } from '../data/translations';
 import { CityId, CITIES_DATA } from '../data/citiesData';
 
@@ -33,6 +37,12 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenPortals
 }) => {
   const [activePolicyModal, setActivePolicyModal] = useState<string | null>(null);
+  const [coverageTab, setCoverageTab] = useState<CityId>(selectedCity);
+
+  useEffect(() => {
+    setCoverageTab(selectedCity);
+  }, [selectedCity]);
+
   const cityConfig = CITIES_DATA[selectedCity];
 
   const policies: Record<string, { title: string; content: string }> = {
@@ -81,13 +91,25 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="space-y-2 max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-extrabold text-[11px] tracking-wide uppercase">
                 <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
-                <span>Kadapa Rapid Doorstep Dispatch • 60-Minute Response</span>
+                <span>
+                  {selectedCity === 'kadapa'
+                    ? 'Kadapa District-Wide Doorstep Dispatch • 100% Complete Coverage'
+                    : 'Bangalore North-East Rapid Dispatch • Kammanahalli Branch Hub'}
+                </span>
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                 Facing an AC, Refrigerator or Washing Machine Breakdown?
               </h3>
               <p className="text-slate-400 text-xs sm:text-sm font-normal leading-relaxed">
-                Shaik Sameer & our certified technicians are on standby across all 19 Kadapa localities. Diagnostic fee is ₹350 (100% waived in final repair bill).
+                {selectedCity === 'kadapa' ? (
+                  <>
+                    <strong className="text-white">Master Lead Shaik Sameer</strong> & certified technicians provide 100% comprehensive doorstep repair coverage across Kadapa City Central (60-min express arrival) and all district towns & mandals (Proddatur, Pulivendula, Badvel, Rayachoty, Jammalamadugu & beyond). Diagnostic fee is ₹350 (100% waived in final repair bill).
+                  </>
+                ) : (
+                  <>
+                    Our certified technicians operate directly from our <strong className="text-white">Kammanahalli Branch Hub</strong>, providing 60-minute express doorstep repairs exclusively across Kammanahalli, Kalyan Nagar, Banaswadi, HBR Layout, and nearby North-East Bangalore localities. Diagnostic fee is ₹400 (100% waived in final repair bill).
+                  </>
+                )}
               </p>
             </div>
 
@@ -137,7 +159,7 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             <p className="text-slate-400 text-xs leading-relaxed font-normal">
-              Founded in 2015 by Master HVAC Specialist <strong className="text-white">Shaik Sameer</strong> (formerly operating as <em className="text-slate-300 not-italic">Duniya Repairs</em>). Proudly delivering certified doorstep AC servicing, high-pressure foam jet wash, genuine refrigerant refills, and domestic appliance repairs across Kadapa district.
+              Founded in 2015 by Master HVAC Specialist <strong className="text-white">Shaik Sameer</strong> (formerly operating as <em className="text-slate-300 not-italic">Duniya Repairs</em>). Proudly delivering certified doorstep AC servicing, high-pressure foam jet wash, genuine refrigerant refills, and domestic appliance repairs across all of Kadapa district, along with an express branch serving Kammanahalli and nearby areas in Bangalore.
             </p>
 
             {/* Badges */}
@@ -333,7 +355,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li className="pt-1">
                 <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>Visiting fee ₹350 adjusted upon service approval</span>
+                  <span>Visiting fee ₹{cityConfig.diagnosticFee} adjusted upon service approval</span>
                 </div>
               </li>
             </ul>
@@ -361,7 +383,7 @@ export const Footer: React.FC<FooterProps> = ({
                     {cityConfig.phone}
                   </a>
                   <span className="block text-[10px] text-slate-400">
-                    {selectedCity === 'kadapa' ? 'Shaik Sameer (Master HVAC Lead)' : 'Kammanahalli Branch Support'}
+                    {selectedCity === 'kadapa' ? 'Shaik Sameer (Master HVAC Lead • Kadapa District-Wide)' : 'Kammanahalli Branch Support (Kammanahalli & Nearby)'}
                   </span>
                 </div>
               </div>
@@ -411,27 +433,168 @@ export const Footer: React.FC<FooterProps> = ({
 
         </div>
 
-        {/* 3. Hyper-Local Kadapa Service Coverage Tags */}
-        <div className="py-6 border-t border-slate-900">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
-            <div className="text-[11px] font-black text-slate-400 uppercase tracking-wider flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-red-500" />
-              <span>Doorstep Service Coverage across Kadapa District (Dispatched within 60 Mins):</span>
+        {/* 3. Doorstep Service Coverage Areas & Regional Scope */}
+        <div className="py-8 border-t border-slate-900 space-y-5">
+          {/* Header with Switcher Tabs */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-red-500 shrink-0" />
+                <span>Verified Doorstep Service Coverage & Operating Boundaries</span>
+              </div>
+              <p className="text-[11px] text-slate-400 font-normal">
+                Shaik Sameer provides 100% complete coverage across Kadapa District; Bangalore branch exclusively serves Kammanahalli & nearby areas.
+              </p>
             </div>
-            <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              ● 19 Localities Active Daily
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {KADAPA_AREAS.map((area, idx) => (
-              <span
-                key={idx}
-                className="px-2.5 py-1 rounded-md bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition text-[11px]"
+
+            {/* City Hub Switcher Tabs */}
+            <div className="flex items-center gap-2 bg-slate-900/90 p-1 rounded-xl border border-slate-800 shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setCoverageTab('kadapa');
+                  if (onSelectCity) onSelectCity('kadapa');
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+                  coverageTab === 'kadapa'
+                    ? 'bg-red-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
               >
-                {area}
-              </span>
-            ))}
+                <span>🏢 Kadapa District Hub</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded font-extrabold ${coverageTab === 'kadapa' ? 'bg-black/25 text-white' : 'bg-slate-800 text-slate-400'}`}>
+                  100% District
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setCoverageTab('bangalore');
+                  if (onSelectCity) onSelectCity('bangalore');
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+                  coverageTab === 'bangalore'
+                    ? 'bg-red-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <span>📍 Bangalore Branch</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded font-extrabold ${coverageTab === 'bangalore' ? 'bg-black/25 text-white' : 'bg-slate-800 text-slate-400'}`}>
+                  Kammanahalli Only
+                </span>
+              </button>
+            </div>
           </div>
+
+          {/* Kadapa Coverage Tab Content */}
+          {coverageTab === 'kadapa' && (
+            <div className="space-y-4 bg-slate-900/40 rounded-2xl p-4 sm:p-5 border border-slate-800/80">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                <div className="text-[12px] font-black text-slate-200 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Shaik Sameer Doorstep Service • Complete 100% Coverage Across Kadapa (YSR) District</span>
+                </div>
+                <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                  ● 36+ Mandals & All District Towns Active
+                </span>
+              </div>
+
+              {/* Segment 1: Kadapa City Central (60-Min Express Hub) */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-300">
+                  <span className="flex items-center gap-1.5 text-red-400">
+                    <span>⚡ Kadapa City Central (60-Minute Rapid Arrival Localities):</span>
+                  </span>
+                  <span className="text-[10px] text-slate-500">19 Municipal Localities</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {KADAPA_CITY_AREAS.map((area, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2.5 py-1 rounded-md bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition text-[11px] font-medium"
+                    >
+                      {area}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Segment 2: District Towns & Mandals (100% Complete Reach) */}
+              <div className="space-y-2 pt-2 border-t border-slate-800/60">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-300">
+                  <span className="flex items-center gap-1.5 text-amber-400">
+                    <span>🌍 Kadapa District Towns & Mandals (Doorstep Technicians Dispatched Across Whole District):</span>
+                  </span>
+                  <span className="text-[10px] text-emerald-400 font-bold">100% District Coverage</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {KADAPA_DISTRICT_TOWNS.map((town, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2.5 py-1 rounded-md bg-slate-950 border border-slate-800/80 text-amber-300/90 hover:text-amber-200 hover:border-amber-500/40 transition text-[11px] font-medium"
+                    >
+                      {town}
+                    </span>
+                  ))}
+                  <span className="px-2.5 py-1 rounded-md bg-emerald-950/40 border border-emerald-800/40 text-emerald-300 text-[11px] font-bold">
+                    + All 36+ YSR Kadapa Rural Mandals
+                  </span>
+                </div>
+              </div>
+
+              {/* Reassurance Banner */}
+              <div className="pt-2 text-[11px] text-slate-400 flex items-start gap-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800/60">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span>
+                  <strong className="text-slate-200">District-Wide Doorstep Commitment:</strong> Whether you are located in Kadapa city, Proddatur, Pulivendula, Badvel, Rayachoty, Jammalamadugu, Mydukur, or any village mandal, Shaik Sameer coordinates doorstep technician dispatch with standard company rate cards, 100% genuine parts, and our official 30-day warranty.
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Bangalore Coverage Tab Content */}
+          {coverageTab === 'bangalore' && (
+            <div className="space-y-4 bg-slate-900/40 rounded-2xl p-4 sm:p-5 border border-slate-800/80">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                <div className="text-[12px] font-black text-slate-200 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                  <span>Bangalore Branch Hub • Exclusively Serving Kammanahalli & Nearby Localities</span>
+                </div>
+                <span className="text-[10px] text-amber-400 font-bold bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">
+                  ● 60-Min Express Hub Radius
+                </span>
+              </div>
+
+              {/* Bangalore Localities */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-300">
+                  <span className="flex items-center gap-1.5 text-red-400">
+                    <span>⚡ Kammanahalli & Immediate Surrounding Neighborhoods:</span>
+                  </span>
+                  <span className="text-[10px] text-slate-500">Fast Doorstep Dispatch</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {BANGALORE_KAMMANAHALLI_AREAS.map((area, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2.5 py-1 rounded-md bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition text-[11px] font-medium"
+                    >
+                      {area}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Strict Boundary Notice */}
+              <div className="pt-2 text-[11px] text-slate-400 flex items-start gap-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800/60">
+                <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <span>
+                  <strong className="text-slate-200">Branch Geographic Boundary:</strong> The Bangalore branch operates strictly from Venkateshappa Layout, Kammanahalli (#2 Sree Residency) to guarantee rapid 60-minute doorstep service in Kammanahalli and contiguous East Bangalore neighborhoods. We do not service outer South/West Bangalore. For custom queries, WhatsApp <a href="https://wa.me/918073206402" className="text-emerald-400 underline font-bold">+91 80732 06402</a>.
+                </span>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Bottom Bar & Legal Links */}
