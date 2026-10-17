@@ -442,18 +442,22 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Legal policy links */}
           <div className="flex flex-wrap items-center gap-4">
-            <button
-              onClick={() => setActivePolicyModal('terms')}
-              className="hover:text-slate-200 transition cursor-pointer"
+            <a
+              href="/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-slate-200 transition"
             >
               Terms & Conditions
-            </button>
-            <button
-              onClick={() => setActivePolicyModal('privacy')}
-              className="hover:text-slate-200 transition cursor-pointer"
+            </a>
+            <a
+              href="/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-slate-200 transition"
             >
               Privacy Policy
-            </button>
+            </a>
             <button
               onClick={() => setActivePolicyModal('refund')}
               className="hover:text-slate-200 transition cursor-pointer"
