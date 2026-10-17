@@ -1,5 +1,7 @@
 import { CityId } from '../data/citiesData';
 import { BookingLead, BookingStatus, TechnicianProfile } from '../types/database';
+import { db } from './firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 export interface CustomerUser {
   mobile: string;
@@ -195,6 +197,16 @@ class BookingStoreService {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
       console.warn('LocalStorage save failed:', e);
+    }
+  }
+
+  public syncBookingToFirestore(booking: BookingLead): void {
+    try {
+      setDoc(doc(db, 'bookings', booking.id), booking, { merge: true }).catch((err) => {
+        console.warn('Firestore booking sync background error:', err);
+      });
+    } catch (e) {
+      console.warn('Firestore booking sync error:', e);
     }
   }
 
@@ -467,6 +479,7 @@ class BookingStoreService {
 
     bookings.unshift(newBooking);
     this.setStorageItem(STORAGE_KEYS.BOOKINGS, bookings);
+    this.syncBookingToFirestore(newBooking);
 
     // Also ensure customer account exists or gets created
     const users = this.getCustomerUsers();
@@ -498,6 +511,7 @@ class BookingStoreService {
 
     bookings[index] = booking;
     this.setStorageItem(STORAGE_KEYS.BOOKINGS, bookings);
+    this.syncBookingToFirestore(booking);
     return booking;
   }
 
@@ -531,6 +545,7 @@ class BookingStoreService {
 
     bookings[index] = booking;
     this.setStorageItem(STORAGE_KEYS.BOOKINGS, bookings);
+    this.syncBookingToFirestore(booking);
     return booking;
   }
 
@@ -568,6 +583,7 @@ class BookingStoreService {
 
     bookings[index] = booking;
     this.setStorageItem(STORAGE_KEYS.BOOKINGS, bookings);
+    this.syncBookingToFirestore(booking);
     return booking;
   }
 
@@ -588,6 +604,7 @@ class BookingStoreService {
 
     bookings[index] = booking;
     this.setStorageItem(STORAGE_KEYS.BOOKINGS, bookings);
+    this.syncBookingToFirestore(booking);
     return booking;
   }
 
@@ -617,6 +634,7 @@ class BookingStoreService {
 
     bookings[index] = booking;
     this.setStorageItem(STORAGE_KEYS.BOOKINGS, bookings);
+    this.syncBookingToFirestore(booking);
     return booking;
   }
 
